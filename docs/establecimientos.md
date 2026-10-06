@@ -4,7 +4,7 @@
 
 Tres capturas adicionales muestran la hoja de datos de `ESTABLECIMIENTOS1`, desplazada horizontalmente, y el administrador de tablas vinculadas. No muestran Vista Diseño: aún no conocemos los tipos declarados, las claves, los índices ni las restricciones.
 
-Actualización: una captura posterior de Relaciones muestra `Ficha` con icono de clave en ESTABLECIMIENTOS1. Ver [claves y relaciones observadas](relaciones-access.md). Los tipos e índices siguen pendientes de Vista Diseño.
+Actualización: una vista ampliada de Relaciones muestra `Ficha` con icono de clave y permite leer la lista completa de campos de ESTABLECIMIENTOS1. Ver [claves y relaciones observadas](relaciones-access.md). Los tipos e índices siguen pendientes de Vista Diseño.
 
 El contador de Access muestra 2077 registros. Es el volumen indicado en esa vista, no un recuento independiente del archivo original. No se transcriben datos personales de las filas.
 
@@ -35,51 +35,51 @@ El sufijo local no demuestra una versión de campaña ni una tabla distinta en e
 
 ## Columnas observadas
 
-Los encabezados cortados se conservan con puntos suspensivos. El contenido visible ayuda a interpretar su función, pero no acredita el tipo de datos declarado en Access.
+La vista ampliada de Relaciones resolvió los nombres internos que antes aparecían cortados en la hoja de datos. El encabezado mostrado al usuario puede ser una propiedad Caption distinta del nombre interno. El contenido visible ayuda a interpretar la función, pero no acredita el tipo de datos declarado en Access.
 
 | Encabezado visible | Observación y pendiente |
 |---|---|
-| Renspa | Identificador con puntos y barra. Conservar como texto con su formato; falta confirmar unicidad y clave. |
+| Ficha (mostrado como Renspa en la hoja) | Clave visible en Relaciones. Los valores se muestran con puntos y barra. Confirmar en Vista Diseño si `Renspa` es la etiqueta de presentación de Ficha. Conservar como texto con su formato durante la migración. |
 | Propietario | Nombre de persona o razón social. |
 | Tipo de Doc | Se observan CUIT, CUIL, DNI y celdas vacías. Confirmar catálogo y reglas. |
-| Nro Docume… | Identificación documental; se observan formatos con y sin separadores. Conservar el valor original y validar según tipo, sin convertirlo a número. |
-| Clasificació… | No se distingue una clasificación informada en las filas visibles. Confirmar finalidad y valores. |
-| Domicilio Prop… | Domicilio del propietario, según el encabezado. No confundir con ubicación del predio. |
-| Localidad Pr… | Localidad del propietario, pendiente nombre completo. |
+| Nro_doc | Identificación documental; se observan formatos con y sin separadores. Conservar el valor original y validar según tipo, sin convertirlo a número. |
+| Clasi | No se distingue una clasificación informada en las filas visibles. Confirmar finalidad y valores. |
+| Domicilio | La hoja lo presenta como domicilio del propietario. No confundir con ubicación del predio. |
+| Localidad | La hoja parece presentarlo como localidad del propietario; confirmar. |
 | Telefono | Contacto. Tratar como texto en la propuesta de modelo. |
-| Boleto de M… | Se observan números y ceros; confirmar si corresponde a boleto de marca y qué significa cero. |
-| Nombre del … | Se observan nombres de establecimientos. Confirmar encabezado completo. |
-| Departame… | Se observan códigos numéricos; falta catálogo y jurisdicción. |
+| Boleto | Se observan números y ceros; confirmar si corresponde a boleto de marca y qué significa cero. |
+| Establecimiento | Nombre del establecimiento. |
+| Departamento | Se observan códigos numéricos; se relacionaría con DPTO de TABGEO. Confirmar. |
 | Distrito | Se observan códigos numéricos; falta catálogo. |
-| Tipo de Expl… | Se observan Cría, Invernada y Tambo. |
-| Explo2 | Segunda columna de explotación; se observan Invernada, Tambo y vacíos. Confirmar si representa actividad secundaria. |
-| Cani… (primera captura) | Encabezado incompleto, junto a categorías de ganado. No asignar significado hasta verlo completo. |
-| Vaq… | Posiblemente vaquillonas; requiere confirmación. |
-| Torc… | Posiblemente toros; requiere confirmación del encabezado exacto. |
+| Explotación | Se observan Cría, Invernada y Tambo. |
+| Explotacion2 | Segunda columna de explotación; se observan Invernada, Tambo y vacíos. Confirmar si representa actividad secundaria. |
+| Vacas | Cantidades visibles. |
+| Vaquillonas | Cantidades visibles. |
+| Toros | Cantidades visibles. |
 | Toritos | Categoría visible; las cantidades no se distinguen en el área mostrada. |
 | Terneros | Cantidades visibles. |
 | Terneras | Cantidades visibles. |
 | Novillos | Cantidades visibles. |
 | Novillitos | Cantidades visibles. |
-| Búfalos may… | Categoría incompleta; confirmar nombre y límite de edad. |
-| Búfalos Mer… | Categoría incompleta; confirmar nombre y límite de edad. |
+| Búfalos_may | Categoría cuyo sufijo parece indicar mayores; confirmar significado y límite de edad. |
+| Bufalos_men | Categoría cuyo sufijo parece indicar menores; confirmar significado y límite de edad. |
 | Marca | Se observan Marca a Fuego, Señal y Ninguna. Confirmar si describe el método de identificación. |
-| Estado Sanitario B… | Se observan Sin Datos, En Saneamiento y Libre. Confirmar enfermedad; no dar por hecho brucelosis por la inicial. |
-| Estado Sanitar… | Otra columna sanitaria con valores similares; falta identificar enfermedad y diferencia con la anterior. |
-| Regimen de … | Se observan Propietario, Arrendatario y Pastajero. Confirmar nombre completo y si se aplica al vínculo productor–predio. |
-| Cani… (segunda captura) | Otra columna de encabezado incompleto con cantidades. No asumir superficie, capacidad ni total de rodeo. |
-| Caprinc… | Parece referirse a caprinos; confirmar nombre completo. |
+| Estado Sanitario B | Se observan Sin Datos, En Saneamiento y Libre. Probablemente refiere a brucelosis, pendiente confirmación. |
+| Estado Sanitario T | Se observan valores similares. Probablemente refiere a tuberculosis, pendiente confirmación. |
+| Regimen | Se observan Propietario, Arrendatario y Pastajero. Confirmar si se aplica al vínculo productor–predio. |
+| Has | Cantidad; probablemente hectáreas por abreviatura, pendiente confirmación. |
+| Caprinos | Cantidades visibles. |
 | Ovinos | Cantidades visibles. |
-| Porc… | Posiblemente porcinos; confirmar. |
+| Porcinos | Cantidades visibles. |
 | Equinos | Cantidades visibles. |
-| Otrc… (primera aparición) | Cantidades visibles; significado pendiente. |
-| Otrc… (segunda aparición) | Columna distinta también truncada; significado pendiente. |
+| Otros | Cantidades visibles; confirmar qué especies incluye. |
+| Otros_aclarar | Texto o código para especificar Otros; confirmar tipo. |
 | Provincia | Nombres de provincias. Confirmar si corresponde al domicilio del propietario o al establecimiento. |
-| Empre… | Se observan ceros; confirmar si es referencia a EMPRESA y si cero es un valor especial. |
-| Farrgapata | Encabezado que se lee en la captura, pendiente verificación ortográfica. Se observan fechas y vacíos; confirmar si registra una fecha relacionada con garrapata. |
+| ID_EMPRE | Referencia aparente a EMPRESA.ID_EMPRE en una relación uno a muchos. Se observan ceros; confirmar si cero es un valor especial o un registro válido. |
+| Fgarrapata | Se observan fechas y vacíos; confirmar si registra una fecha relacionada con garrapata. |
 | Presencia | Casillas marcadas y desmarcadas; confirmar de qué presencia se trata. No interpretar como vacunación realizada. |
 
-Puede haber columnas fuera de las áreas capturadas. Esta lista no certifica que el esquema esté completo. Los signos «+» de las filas indican subhojas expandibles, pero no permiten identificar relaciones ni cardinalidades.
+La vista de Relaciones muestra el cuadro completo, aunque Vista Diseño debe confirmar que no existan particularidades no representadas. Los signos «+» de las filas indican subhojas expandibles, pero no identifican por sí solos qué relación muestra cada una.
 
 ## Consecuencias para el nuevo modelo (propuestas)
 

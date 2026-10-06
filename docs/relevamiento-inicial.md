@@ -16,13 +16,13 @@ Fuente: capturas de Microsoft Access aportadas por el usuario. No se dispone tod
 | Veterinarias | Diseño y finalidad por revisar. |
 | DISTRI-VETE | Diseño y finalidad por revisar; no asumir su relación con Veterinarias. |
 | DISTRUBUCION | Nombre transcrito tal como aparece. Diseño por revisar. |
-| EMPRESA | Diseño y finalidad por revisar. |
+| EMPRESA | Campos visibles ID_EMPRE y NOMBRE; relación uno a muchos hacia ESTABLECIMIENTOS. Su significado operativo sigue pendiente. |
 | ESTABLECIMIENTOS | Columnas de propietario, establecimiento, existencias y sanidad observadas mediante el vínculo ESTABLECIMIENTOS1; [detalle](establecimientos.md). Diseño por revisar. |
 | LABORATORIO | Diseño por revisar. |
 | TABGEO | Diseño y relación con TABGEO1 por revisar. |
 | UEL | Diseño y significado exacto de la sigla por confirmar. |
-| VACUNA | Diseño por revisar. |
-| VACUNABT | Diseño y finalidad por revisar. |
+| VACUNA | Registros por establecimiento y fecha de vacunación, vinculados con vacunador; no parece ser un catálogo de productos. Diseño y significado exacto por revisar. |
+| VACUNABT | Estructura semejante a VACUNA, con campos adicionales distintos. Enfermedad y finalidad exactas por revisar. |
 | VACUNADOR | Diseño por revisar. |
 
 El administrador de tablas vinculadas confirma dos archivos Access de origen y las correspondencias del grupo expandido, documentadas en el [detalle](establecimientos.md). También aparece la tabla EPIDEMIA, no observada en las primeras capturas. Falta confirmar el archivo operativo vigente antes de planificar la extracción.
