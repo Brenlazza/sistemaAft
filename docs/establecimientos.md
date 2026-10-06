@@ -4,6 +4,8 @@
 
 Tres capturas adicionales muestran la hoja de datos de `ESTABLECIMIENTOS1`, desplazada horizontalmente, y el administrador de tablas vinculadas. No muestran Vista Diseño: aún no conocemos los tipos declarados, las claves, los índices ni las restricciones.
 
+Actualización: una captura posterior de Relaciones muestra `Ficha` con icono de clave en ESTABLECIMIENTOS1. Ver [claves y relaciones observadas](relaciones-access.md). Los tipos e índices siguen pendientes de Vista Diseño.
+
 El contador de Access muestra 2077 registros. Es el volumen indicado en esa vista, no un recuento independiente del archivo original. No se transcriben datos personales de las filas.
 
 ## Origen de datos confirmado

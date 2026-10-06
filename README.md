@@ -7,3 +7,5 @@ La etapa actual es la recopilación de información y definición del modelo de 
 Ver [relevamiento inicial de tablas y funcionalidades](docs/relevamiento-inicial.md).
 
 Ver [detalle de establecimientos y orígenes de tablas vinculadas](docs/establecimientos.md).
+
+Ver [claves y relaciones observadas en Access](docs/relaciones-access.md).

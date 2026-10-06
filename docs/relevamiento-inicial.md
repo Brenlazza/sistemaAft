@@ -69,6 +69,8 @@ Los campos siguientes son candidatos, no un esquema definitivo ni una transcripc
 
 ## Relaciones y reglas que debemos confirmar
 
+La captura posterior de Relaciones aporta claves visibles, incluida Ficha en ESTABLECIMIENTOS y claves compuestas en VACUNA, VACUNABT y TABGEO. Ver [detalle de relaciones](relaciones-access.md). Los campos visibles de VACUNA y VACUNABT sugieren registros de vacunación; su equivalencia con las tablas propuestas aún no está definida.
+
 - Cómo se relacionan productor, establecimiento e identificadores de SENASA.
 - Qué animales debe incluir cada campaña y cómo se registran existencias y vacunados.
 - Si se admiten actas parciales, varias visitas o revacunaciones y cómo se calcula el cumplimiento.
