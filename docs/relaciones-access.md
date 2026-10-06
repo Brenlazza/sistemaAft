@@ -38,7 +38,7 @@ Los símbolos `1` y `∞` expresan las cardinalidades que muestra el diagrama. L
 ## Hallazgos que cambian el relevamiento
 
 1. `ESTABLECIMIENTOS` tiene una clave visible llamada `Ficha`. RENSPA sigue siendo un identificador importante, pero no es la clave que muestra esta captura. Falta conocer el tipo de Ficha y su relación con RENSPA.
-2. `VACUNA` y `VACUNABT` contienen Ficha, Fecha de Vacuna, Acta y Matricula. Esto sugiere registros de vacunación, no simples catálogos de productos. No reutilizar esos nombres con una equivalencia funcional no comprobada. La enfermedad registrada por cada tabla sigue pendiente.
+2. `VACUNA` y `VACUNABT` contienen Ficha, Fecha de Vacunación, Acta y Matricula. Vista Diseño confirma sus tipos y la clave compuesta; ver [relevamiento de las tablas de vacunación](vacunaciones-access.md). Son registros de vacunación, no simples catálogos de productos. La enfermedad o proceso registrado por cada tabla sigue pendiente.
 3. Las claves visibles de VACUNA y VACUNABT combinan Ficha y Fecha de Vacunación. Revisar cómo se registran varias actas o visitas en una misma fecha y si la fecha incluye hora.
 4. `TABGEO` muestra una clave compuesta por DPTO y LOCA. No asumir que el código de localidad es único fuera de su departamento.
 5. `DISTRUBUCION` incluye Serie y Fecha Vencimiento, además de Marca, UEL y Cantidad. Relevar si Serie representa un lote y qué significa Marca en esta tabla; no confundirla automáticamente con la marca del ganado.
@@ -50,7 +50,7 @@ Los símbolos `1` y `∞` expresan las cardinalidades que muestra el diagrama. L
 
 - Vista Diseño de ESTABLECIMIENTOS para identificar tipos y confirmar si la etiqueta RENSPA de la hoja corresponde al campo Ficha.
 - Diálogo Editar relaciones de EMPRESA1–ESTABLECIMIENTOS1: confirmar ID_EMPRE, integridad referencial y opciones de cascada.
-- Vista Diseño de VACUNA y VACUNABT y formulario de ingreso de actas para confirmar qué datos almacenan y qué enfermedad corresponde a cada una.
+- Formulario de ingreso de actas y datos de ejemplo anonimizados para confirmar qué proceso representa VACUNA y cuál VACUNABT.
 - Diálogos de las relaciones geográficas para confirmar los pares de campos.
 
 Inspeccionar sin modificar las relaciones del sistema original. No se ha creado todavía un esquema de base de datos nuevo: seguimos recopilando evidencia.

@@ -10,20 +10,21 @@ Fuente: capturas de Microsoft Access aportadas por el usuario. No se dispone tod
 
 | Nombre visible | Información disponible |
 |---|---|
-| semanas | Columnas visibles: año, mes, semana, fechad, fecgah. Las dos últimas muestran fechas que parecen delimitar un período; confirmar su significado. |
-| senasa | Diseño y finalidad por revisar. El menú incluye consulta del padrón de SENASA. |
+| semanas | Calendario local para informes con año, mes, semana y fechas desde/hasta; no representa por sí solo una campaña. Ver [campañas y calendario](campanias-calendario.md). |
+| senasa | Tabla local simplificada con RENSPA, productor y establecimiento, sin clave ni fecha de importación. Ver [padrón SENASA](padron-senasa.md). |
 | TABGEO1 | Diseño y finalidad por revisar. |
-| Veterinarias | Diseño y finalidad por revisar. |
-| DISTRI-VETE | Diseño y finalidad por revisar; no asumir su relación con Veterinarias. |
-| DISTRUBUCION | Nombre transcrito tal como aparece. Diseño por revisar. |
-| EMPRESA | Campos visibles ID_EMPRE y NOMBRE; relación uno a muchos hacia ESTABLECIMIENTOS. Su significado operativo sigue pendiente. |
+| Veterinarias | Tabla local con IdVeterinario y nombre de la veterinaria; VACUNA guarda esa referencia. Ver [vacunadores y veterinarias](vacunadores-veterinarias.md). |
+| DISTRI-VETE | Entregas por marca y UEL a un vacunador identificado por matrícula; no tiene clave primaria ni lote. Ver [stock y distribución](stock-vacunas.md). |
+| DISTRUBUCION | Recepciones o entregas por marca, UEL y fecha, con vencimiento, serie y cantidad; ver [stock y distribución](stock-vacunas.md). |
+| EMPRESA | ID_EMPRE numérico y NOMBRE; relación uno a muchos hacia ESTABLECIMIENTOS. Ver [establecimientos](establecimientos.md); significado operativo pendiente. |
+| EPIDEMIA | Controles por establecimiento y fecha con muestras, protocolo, laboratorio y resultado. Ver [relevamiento sanitario](sanidad.md). |
 | ESTABLECIMIENTOS | Columnas de propietario, establecimiento, existencias y sanidad observadas mediante el vínculo ESTABLECIMIENTOS1; [detalle](establecimientos.md). Diseño por revisar. |
-| LABORATORIO | Diseño por revisar. |
-| TABGEO | Diseño y relación con TABGEO1 por revisar. |
-| UEL | Diseño y significado exacto de la sigla por confirmar. |
-| VACUNA | Registros por establecimiento y fecha de vacunación, vinculados con vacunador; no parece ser un catálogo de productos. Diseño y significado exacto por revisar. |
-| VACUNABT | Estructura semejante a VACUNA, con campos adicionales distintos. Enfermedad y finalidad exactas por revisar. |
-| VACUNADOR | Diseño por revisar. |
+| LABORATORIO | Catálogo con Nro, nombre, localidad y teléfono; no se observa relación formal con Marca. Ver [stock y distribución](stock-vacunas.md). |
+| TABGEO | Catálogo geográfico con clave compuesta de departamento y distrito/localidad. Ver [geografía](geografia.md). |
+| UEL | Unidad responsable de stock y actas, con autoridades, ubicación y datos institucionales. Ver [relevamiento de UEL](uel.md); significado exacto de la sigla pendiente. |
+| VACUNA | Registros por establecimiento y fecha de vacunación, vinculados con vacunador. Tipos documentados en [VACUNA y VACUNABT](vacunaciones-access.md); significado exacto por revisar. |
+| VACUNABT | Estructura semejante a VACUNA, con campos adicionales distintos. Tipos documentados; enfermedad y finalidad exactas por revisar. |
+| VACUNADOR | Personas vacunadoras, de tipo veterinario o idóneo, identificadas por matrícula. Ver [vacunadores y veterinarias](vacunadores-veterinarias.md). |
 
 El administrador de tablas vinculadas confirma dos archivos Access de origen y las correspondencias del grupo expandido, documentadas en el [detalle](establecimientos.md). También aparece la tabla EPIDEMIA, no observada en las primeras capturas. Falta confirmar el archivo operativo vigente antes de planificar la extracción.
 
