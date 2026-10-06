@@ -4,7 +4,7 @@
 
 Crear un sistema para campañas de vacunación antiaftosa reutilizando los datos y las funcionalidades útiles del sistema existente, e incorporando mejoras. Esta primera etapa documenta el modelo antes de implementar la aplicación.
 
-Fuente: dos capturas de Microsoft Access aportadas por el usuario. No se dispone todavía de la base original, su diseño de tablas ni sus relaciones. Los nombres visibles están confirmados; las equivalencias y los campos propuestos requieren validación.
+Fuente: capturas de Microsoft Access aportadas por el usuario. No se dispone todavía de la base original, su diseño de tablas ni sus relaciones. Los nombres visibles están confirmados; las equivalencias y los campos propuestos requieren validación. El detalle de las capturas adicionales está en [relevamiento de establecimientos y tablas vinculadas](establecimientos.md).
 
 ## Tablas visibles en el sistema anterior
 
@@ -17,7 +17,7 @@ Fuente: dos capturas de Microsoft Access aportadas por el usuario. No se dispone
 | DISTRI-VETE | Diseño y finalidad por revisar; no asumir su relación con Veterinarias. |
 | DISTRUBUCION | Nombre transcrito tal como aparece. Diseño por revisar. |
 | EMPRESA | Diseño y finalidad por revisar. |
-| ESTABLECIMIENTOS | Diseño por revisar. |
+| ESTABLECIMIENTOS | Columnas de propietario, establecimiento, existencias y sanidad observadas mediante el vínculo ESTABLECIMIENTOS1; [detalle](establecimientos.md). Diseño por revisar. |
 | LABORATORIO | Diseño por revisar. |
 | TABGEO | Diseño y relación con TABGEO1 por revisar. |
 | UEL | Diseño y significado exacto de la sigla por confirmar. |
@@ -25,7 +25,7 @@ Fuente: dos capturas de Microsoft Access aportadas por el usuario. No se dispone
 | VACUNABT | Diseño y finalidad por revisar. |
 | VACUNADOR | Diseño por revisar. |
 
-Varias tablas muestran el icono de tabla vinculada en Access. Se deberá identificar su origen antes de planificar la extracción; las capturas no permiten determinar dónde están almacenados sus datos.
+El administrador de tablas vinculadas confirma dos archivos Access de origen y las correspondencias del grupo expandido, documentadas en el [detalle](establecimientos.md). También aparece la tabla EPIDEMIA, no observada en las primeras capturas. Falta confirmar el archivo operativo vigente antes de planificar la extracción.
 
 ## Funciones visibles para conservar y revisar
 
