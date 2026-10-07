@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Remito R-000001 — vista de impresión</title>
+  <style>
+    :root { --ink:#111; --muted:#555; --line:#222; --soft:#eef4f8; --brand:#8f1f2e; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:#d9dde2; font-family:Arial,sans-serif; }
+    .toolbar { position:sticky; top:0; z-index:2; padding:10px 18px; display:flex; justify-content:center; gap:10px; background:#28313b; box-shadow:0 2px 8px #0003; }
+    .toolbar button,.toolbar a { padding:9px 14px; border:1px solid #ffffff55; border-radius:5px; color:#fff; background:transparent; text-decoration:none; font:600 13px Arial,sans-serif; cursor:pointer; }
+    .toolbar .primary { border-color:var(--brand); background:var(--brand); }
+    .page { width:210mm; min-height:297mm; margin:10mm auto; padding:13mm 14mm 12mm; background:#fff; box-shadow:0 3px 18px #0003; }
+    .header { display:grid; grid-template-columns:72mm 1fr; gap:8mm; align-items:start; padding-bottom:5mm; border-bottom:.5mm solid var(--line); }
+    .organization { display:grid; grid-template-columns:22mm 1fr; gap:3mm; align-items:start; }
+    .logo-placeholder { width:22mm; height:22mm; display:grid; place-items:center; color:#777; border:.25mm dashed #aaa; font-size:7pt; text-align:center; }
+    .organization h1 { margin:1mm 0 .8mm; font-size:10.5pt; line-height:1.15; }
+    .organization p { margin:.6mm 0; color:#333; font-size:7.5pt; }
+    .document { position:relative; padding-left:7mm; }
+    .document h2 { margin:0 0 3mm; font-size:15pt; letter-spacing:.6mm; }
+    .invalid { position:absolute; top:-2mm; right:0; color:#444; font-size:6.5pt; }
+    .revision { margin:0 0 2.5mm; padding:1.2mm 2mm; color:#7a1524; background:#fae9ec; border:.25mm solid #c56d7a; font-size:7pt; font-weight:bold; text-align:center; letter-spacing:.2mm; }
+    .meta { width:100%; border-collapse:collapse; font-size:7.5pt; }
+    .meta th,.meta td { padding:.6mm 0; border:0; text-align:left; vertical-align:top; }
+    .meta th { width:29mm; font-weight:bold; }
+    .meta td { font-weight:normal; }
+    .section { margin-top:5mm; }
+    .section-title { margin:0 0 1.5mm; padding-bottom:1mm; border-bottom:.25mm solid #555; font-size:8pt; text-transform:uppercase; letter-spacing:.2mm; }
+    .details { display:grid; grid-template-columns:1fr 1fr; gap:2mm 12mm; font-size:8pt; }
+    .field { display:grid; grid-template-columns:29mm 1fr; gap:2mm; min-height:5mm; align-items:start; }
+    .field strong { font-size:7pt; }
+    table.data { width:100%; border-collapse:collapse; table-layout:fixed; font-size:7.2pt; }
+    .data thead { display:table-header-group; }
+    .data tr { break-inside:avoid; page-break-inside:avoid; }
+    .data th { padding:1.5mm 1.4mm; color:#102f4f; background:var(--soft); border-top:.25mm solid #7b9ab4; border-bottom:.25mm solid #7b9ab4; text-align:left; }
+    .data td { padding:1.8mm 1.4mm; border-bottom:.2mm solid #bbb; vertical-align:top; }
+    .data .number { text-align:right; font-variant-numeric:tabular-nums; }
+    .totals { width:80mm; margin:2mm 0 0 auto; border-collapse:collapse; font-size:8pt; }
+    .totals th,.totals td { padding:1.2mm 1.5mm; border-bottom:.2mm solid #aaa; }
+    .totals th { text-align:left; }
+    .totals td { text-align:right; font-variant-numeric:tabular-nums; }
+    .totals .grand { font-size:9pt; border-top:.35mm solid #222; border-bottom:.35mm solid #222; }
+    .observations { min-height:18mm; padding:2mm 0; font-size:8pt; white-space:pre-line; }
+    .legal { margin-top:4mm; color:#444; font-size:6.7pt; line-height:1.35; }
+    .signatures { margin-top:31mm; display:grid; grid-template-columns:1fr 1fr; gap:18mm; }
+    .signature { padding-top:1.5mm; border-top:.25mm solid #222; font-size:7pt; text-align:center; }
+    .signature strong { display:block; margin-bottom:.7mm; font-size:7.5pt; }
+    .footer { margin-top:17mm; padding-top:2mm; display:flex; justify-content:space-between; color:#555; border-top:.2mm solid #aaa; font-size:6.5pt; }
+    @page { size:A4 portrait; margin:0; }
+    @media print {
+      body { background:#fff; }
+      .toolbar { display:none; }
+      .page { width:210mm; min-height:297mm; margin:0; box-shadow:none; break-after:page; page-break-after:always; }
+      .page:last-child { break-after:auto; page-break-after:auto; }
+    }
+    @media (max-width:850px) { .page { margin:0; transform-origin:top left; } }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <a href="remito-vacunas.html">Volver al remito</a>
+    <button class="primary" type="button" onclick="window.print()">Imprimir remito</button>
+  </div>
+
+  <main class="page">
+    <header class="header">
+      <div class="organization">
+        <div class="logo-placeholder">LOGO<br>PENDIENTE</div>
+        <div>
+          <h1>Fundación Control Fiebre Aftosa<br>San Cristóbal Este</h1>
+          <p>Alvear 769 — San Cristóbal, Santa Fe</p>
+          <p>Tel. 03408 422992</p>
+        </div>
+      </div>
+      <div class="document">
+        <span class="invalid">Documento no válido como factura</span>
+        <h2>REMITO DE VACUNA</h2>
+        <div class="revision">REIMPRESIÓN MODIFICADA — VERSIÓN 2</div>
+        <table class="meta">
+          <tr><th>Número:</th><td><strong>R-000001</strong></td></tr>
+          <tr><th>Versión vigente:</th><td><strong>2</strong></td></tr>
+          <tr><th>Fecha de retiro:</th><td>07/10/2026</td></tr>
+          <tr><th>Campaña:</th><td>2026 — Segunda campaña</td></tr>
+          <tr><th>UEL:</th><td>San Cristóbal Este</td></tr>
+          <tr><th>Estado:</th><td>Entregado</td></tr>
+        </table>
+      </div>
+    </header>
+
+    <section class="section">
+      <h3 class="section-title">Veterinaria propietaria y autorización</h3>
+      <div class="details">
+        <div class="field"><strong>Veterinaria:</strong><span>Veterinaria San Martín</span></div>
+        <div class="field"><strong>Autorización:</strong><span>Autorización 184/26</span></div>
+        <div class="field"><strong>Domicilio:</strong><span>Av. San Martín 124</span></div>
+        <div class="field"><strong>Fecha:</strong><span>07/10/2026</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 class="section-title">Profesional receptor</h3>
+      <div class="details">
+        <div class="field"><strong>Nombre:</strong><span>Dr. Juan Pérez</span></div>
+        <div class="field"><strong>Matrícula:</strong><span>012345</span></div>
+        <div class="field"><strong>Documento:</strong><span>28.456.789</span></div>
+        <div class="field"><strong>Condición:</strong><span>Veterinario habilitado</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 class="section-title">Productores y establecimientos de destino</h3>
+      <table class="data">
+        <thead><tr><th style="width:25%">Cliente / productor</th><th style="width:22%">RENSPA</th><th>Establecimiento</th><th style="width:17%" class="number">Dosis previstas</th></tr></thead>
+        <tbody>
+          <tr><td>Productor A</td><td>00/001/0/00001/00</td><td>Establecimiento Norte</td><td class="number">50</td></tr>
+          <tr><td>Productor B</td><td>00/001/0/00002/00</td><td>La Esperanza</td><td class="number">50</td></tr>
+          <tr><td>Productor C</td><td>00/001/0/00003/00</td><td>El Ombú</td><td class="number">25</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h3 class="section-title">Vacuna entregada</h3>
+      <table class="data">
+        <thead><tr><th>Marca</th><th>Serie / lote</th><th>Vencimiento</th><th class="number">Frascos</th><th class="number">Dosis por frasco</th><th class="number">Dosis teóricas</th></tr></thead>
+        <tbody><tr><td>Biogénesis</td><td>AF-26091</td><td>31/03/2027</td><td class="number">1</td><td class="number">125</td><td class="number">125</td></tr></tbody>
+      </table>
+      <table class="totals">
+        <tr><th>Dosis previstas</th><td>125</td></tr>
+        <tr><th>Total de frascos</th><td>1</td></tr>
+        <tr class="grand"><th>Total de dosis retiradas</th><td><strong>125</strong></td></tr>
+      </table>
+    </section>
+
+    <section class="section">
+      <h3 class="section-title">Observaciones</h3>
+      <div class="observations">Retiro autorizado para los productores y establecimientos detallados en el presente remito.</div>
+    </section>
+
+    <p class="legal">El profesional receptor declara recibir conforme los frascos y lotes detallados, quedando bajo su custodia hasta su aplicación o devolución a la UEL. La conciliación definitiva se realizará con las actas confirmadas, los frascos llenos devueltos y los sobrantes registrados.</p>
+
+    <div class="signatures">
+      <div class="signature"><strong>Firma del profesional receptor</strong>Aclaración y matrícula</div>
+      <div class="signature"><strong>Firma del responsable de entrega UEL</strong>Aclaración</div>
+    </div>
+
+    <footer class="footer"><span>Remito R-000001 · Versión 2</span><span>Reimpreso por modificación el 07/10/2026 — Sistema AFT</span><span>Página 1 de 1</span></footer>
+  </main>
+</body>
+</html>

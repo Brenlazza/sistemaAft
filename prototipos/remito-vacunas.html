@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Remito de vacunas — prototipo funcional</title>
+  <style>
+    :root {
+      --brand:#8f1f2e; --brand-dark:#671522; --navy:#183965; --ink:#17202a;
+      --muted:#647180; --line:#dce1e7; --surface:#fff; --canvas:#f3f5f7;
+      --ok:#177245; --warn:#9a6500; --danger:#b3261e; --soft:#f8fafc;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--canvas); font:14px/1.4 Arial,sans-serif; }
+    button,input,select,textarea { font:inherit; }
+    button { cursor:pointer; }
+    .app { min-height:100vh; display:grid; grid-template-columns:220px 1fr; }
+    aside { padding:24px 14px; color:#fff; background:linear-gradient(180deg,var(--brand),var(--brand-dark)); }
+    .identity { padding:0 10px 24px; border-bottom:1px solid #ffffff35; }
+    .identity strong { display:block; font-size:16px; }
+    .identity span { font-size:11px; opacity:.8; }
+    nav { margin-top:18px; display:grid; gap:4px; }
+    nav a { padding:10px 12px; color:#fff; text-decoration:none; border-radius:7px; opacity:.82; }
+    nav a.active,nav a:hover { background:#ffffff1f; opacity:1; }
+    main { min-width:0; }
+    .topbar { min-height:64px; padding:12px 28px; display:flex; align-items:center; justify-content:space-between; background:#fff; border-bottom:1px solid var(--line); }
+    .topbar h1 { margin:0; font-size:21px; }
+    .topbar small { color:var(--muted); }
+    .user { display:flex; gap:10px; align-items:center; color:var(--muted); }
+    .avatar { width:34px; height:34px; display:grid; place-items:center; border-radius:50%; color:#fff; background:var(--navy); font-weight:bold; }
+    .content { max-width:1450px; margin:auto; padding:22px 28px 96px; }
+    .title-row { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:18px; }
+    .title-row h2 { margin:0 0 3px; font-size:24px; }
+    .title-row p { margin:0; color:var(--muted); }
+    .status { display:inline-flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px; background:#fff0cf; color:#754d00; font-weight:bold; }
+    .status::before { content:""; width:7px; height:7px; border-radius:50%; background:#d89400; }
+    .tabs { display:flex; gap:4px; margin-bottom:14px; border-bottom:1px solid var(--line); }
+    .tab { padding:11px 15px; border:0; border-bottom:3px solid transparent; color:var(--muted); background:transparent; }
+    .tab.active { color:var(--brand); border-bottom-color:var(--brand); font-weight:bold; }
+    .tab[disabled] { opacity:.45; cursor:not-allowed; }
+    .panel { margin-bottom:14px; background:var(--surface); border:1px solid var(--line); border-radius:10px; box-shadow:0 1px 2px #19202a0a; }
+    .panel-head { padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; border-bottom:1px solid var(--line); }
+    .panel-head h3 { margin:0; font-size:16px; }
+    .panel-head p { margin:2px 0 0; color:var(--muted); font-size:12px; }
+    .panel-body { padding:17px 18px; }
+    .grid { display:grid; gap:15px; grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .span-2 { grid-column:span 2; }
+    label { display:block; margin-bottom:5px; color:#4b5866; font-size:12px; font-weight:bold; }
+    .required::after { content:" *"; color:var(--danger); }
+    input,select,textarea { width:100%; padding:9px 10px; color:var(--ink); border:1px solid #cbd2da; border-radius:6px; background:#fff; }
+    input:focus,select:focus,textarea:focus { outline:3px solid #8f1f2e18; border-color:var(--brand); }
+    input[readonly] { color:#53606d; background:#f1f3f5; }
+    .hint { display:block; margin-top:4px; color:var(--muted); font-size:11px; }
+    .btn { padding:9px 13px; border:1px solid #c9d0d7; border-radius:7px; color:#263442; background:#fff; font-weight:bold; text-decoration:none; }
+    .btn:hover { background:#f6f7f9; }
+    .btn.primary { color:#fff; border-color:var(--brand); background:var(--brand); }
+    .btn.primary:hover { background:var(--brand-dark); }
+    .btn.ghost { border:0; color:var(--brand); background:transparent; }
+    .btn.danger { color:var(--danger); }
+    .btn.small { padding:6px 9px; font-size:12px; }
+    table { width:100%; border-collapse:collapse; }
+    th { padding:9px 8px; color:#52606d; background:#f7f8fa; border-bottom:1px solid var(--line); font-size:11px; text-align:left; text-transform:uppercase; letter-spacing:.03em; }
+    td { padding:9px 8px; border-bottom:1px solid #e8ebef; vertical-align:middle; }
+    tbody tr:last-child td { border-bottom:0; }
+    td input,td select { min-width:110px; padding:7px 8px; }
+    .num { text-align:right; font-variant-numeric:tabular-nums; }
+    .valid { display:inline-block; padding:4px 7px; border-radius:999px; color:var(--ok); background:#e7f5ed; font-size:11px; font-weight:bold; }
+    .summary { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+    .metric { padding:13px; border:1px solid var(--line); border-radius:8px; background:var(--soft); }
+    .metric span { display:block; color:var(--muted); font-size:11px; text-transform:uppercase; }
+    .metric strong { display:block; margin-top:4px; font-size:21px; font-variant-numeric:tabular-nums; }
+    .metric.accent { border-color:#dec2c6; background:#fff7f8; }
+    .metric.accent strong { color:var(--brand); }
+    .notice { margin-top:13px; padding:11px 13px; border-left:4px solid #d49716; border-radius:5px; color:#6b4d0b; background:#fff7df; }
+    .footer-actions { position:fixed; right:0; bottom:0; left:220px; padding:13px 28px; display:flex; align-items:center; justify-content:space-between; gap:10px; background:#ffffffed; border-top:1px solid var(--line); backdrop-filter:blur(8px); }
+    .actions { display:flex; gap:8px; }
+    .quiet { color:var(--muted); font-size:12px; }
+    .remove { width:30px; height:30px; border:0; color:var(--danger); background:transparent; font-size:18px; }
+    @media (max-width:1000px) {
+      .app { grid-template-columns:1fr; } aside { display:none; }
+      .footer-actions { left:0; } .grid { grid-template-columns:repeat(2,1fr); }
+      .summary { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:650px) {
+      .content,.topbar { padding-left:14px; padding-right:14px; }
+      .grid { grid-template-columns:1fr; } .span-2 { grid-column:auto; }
+      .title-row { align-items:flex-start; flex-direction:column; }
+      .table-wrap { overflow:auto; } .footer-actions { position:static; flex-direction:column; align-items:stretch; }
+      .actions { flex-wrap:wrap; } .summary { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="identity"><strong>Sistema AFT</strong><span>Fundación San Cristóbal Este</span></div>
+    <nav>
+      <a href="#">Inicio</a><a href="#">Campañas</a><a href="#">Padrón y productores</a>
+      <a class="active" href="#">Remitos</a><a href="#">Actas</a><a href="#">Stock UEL</a><a href="#">Informes</a>
+    </nav>
+  </aside>
+  <main>
+    <header class="topbar">
+      <div><h1>Remitos de vacuna</h1><small>Nuevo retiro desde stock UEL</small></div>
+      <div class="user"><div class="avatar">AM</div><span>Administrador</span></div>
+    </header>
+    <div class="content">
+      <div class="title-row">
+        <div><h2>Remito <span style="color:#7b8793">pendiente de numeración</span></h2><p>Complete los datos y guarde el borrador antes de imprimir.</p></div>
+        <span class="status">Borrador</span>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active">Retiro</button><button class="tab" disabled>Actas vinculadas</button>
+        <button class="tab" disabled>Devoluciones</button><button class="tab" disabled>Conciliación</button>
+      </div>
+
+      <section class="panel">
+        <div class="panel-head"><div><h3>Datos generales</h3><p>Campaña y lugar desde el que se entrega la vacuna.</p></div></div>
+        <div class="panel-body grid">
+          <div><label class="required">Campaña</label><select><option>2026 — Segunda campaña</option></select></div>
+          <div><label class="required">UEL de salida</label><select><option>San Cristóbal Este</option></select></div>
+          <div><label class="required">Fecha de retiro</label><input type="date" value="2026-10-07"></div>
+          <div><label>Estado</label><input value="Borrador" readonly></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><h3>Veterinaria propietaria y autorización</h3><p>La vacuna se descontará únicamente del stock de esta veterinaria.</p></div><button class="btn small">Adjuntar autorización</button></div>
+        <div class="panel-body grid">
+          <div class="span-2"><label class="required">Veterinaria propietaria</label><select id="vet"><option>Veterinaria San Martín</option><option>Veterinaria del Centro</option></select><span class="hint">Stock disponible en UEL: 18 frascos llenos</span></div>
+          <div><label class="required">Referencia de autorización</label><input placeholder="Ej.: autorización 184/26"></div>
+          <div><label class="required">Fecha de autorización</label><input type="date" value="2026-10-07"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><h3>Profesional receptor</h3><p>Persona que firma y asume la custodia de los frascos retirados.</p></div><span class="valid">Habilitado</span></div>
+        <div class="panel-body grid">
+          <div class="span-2"><label class="required">Vacunador / veterinario</label><select><option>Dr. Juan Pérez — Matrícula 012345</option><option>María Gómez — Idónea 0042</option></select></div>
+          <div><label>Matrícula</label><input value="012345" readonly></div>
+          <div><label>Documento</label><input value="28.456.789" readonly></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><h3>Productores y establecimientos de destino</h3><p>Puede seleccionar varios destinos para un mismo retiro.</p></div><button id="add-destination" class="btn small">+ Agregar destino</button></div>
+        <div class="panel-body table-wrap">
+          <table>
+            <thead><tr><th>Cliente / productor</th><th>RENSPA</th><th>Establecimiento</th><th>Vínculo SENASA</th><th class="num">Dosis previstas</th><th></th></tr></thead>
+            <tbody id="destinations">
+              <tr><td><select><option>Productor A</option><option>Productor B</option><option>Productor C</option></select></td><td><select><option>00/001/0/00001/00</option></select></td><td>Establecimiento Norte</td><td><span class="valid">Vinculado</span></td><td><input class="planned num" type="number" min="0" value="50"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+              <tr><td><select><option>Productor B</option><option>Productor A</option><option>Productor C</option></select></td><td><select><option>00/001/0/00002/00</option></select></td><td>La Esperanza</td><td><span class="valid">Vinculado</span></td><td><input class="planned num" type="number" min="0" value="50"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+              <tr><td><select><option>Productor C</option><option>Productor A</option><option>Productor B</option></select></td><td><select><option>00/001/0/00003/00</option></select></td><td>El Ombú</td><td><span class="valid">Vinculado</span></td><td><input class="planned num" type="number" min="0" value="25"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><h3>Vacuna a entregar</h3><p>Solo se muestran lotes llenos, vigentes y propiedad de la veterinaria seleccionada.</p></div><button id="add-lot" class="btn small">+ Agregar lote</button></div>
+        <div class="panel-body table-wrap">
+          <table>
+            <thead><tr><th>Marca</th><th>Serie / lote</th><th>Vencimiento</th><th class="num">Disponible</th><th class="num">Frascos a retirar</th><th class="num">Dosis teóricas</th><th></th></tr></thead>
+            <tbody id="lots">
+              <tr><td>Biogénesis</td><td><select><option>AF-26091</option><option>AF-26088</option></select></td><td>31/03/2027</td><td class="num">18 frascos</td><td><input class="bottles num" type="number" min="1" max="18" value="1"></td><td class="lot-doses num">125</td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><h3>Resumen del retiro</h3><p>Los totales se actualizan a partir de destinos y lotes.</p></div></div>
+        <div class="panel-body">
+          <div class="summary">
+            <div class="metric"><span>Destinos</span><strong id="destination-count">3</strong></div>
+            <div class="metric"><span>Dosis previstas</span><strong id="planned-total">125</strong></div>
+            <div class="metric"><span>Frascos</span><strong id="bottle-total">1</strong></div>
+            <div class="metric accent"><span>Dosis retiradas</span><strong id="dose-total">125</strong></div>
+            <div class="metric"><span>Diferencia prevista</span><strong id="forecast-difference">0</strong></div>
+          </div>
+          <div id="notice" class="notice">La previsión coincide con las dosis teóricas del retiro.</div>
+        </div>
+      </section>
+    </div>
+    <footer class="footer-actions">
+      <span class="quiet">Los datos técnicos de auditoría no se muestran en esta pantalla.</span>
+      <div class="actions"><button class="btn danger">Anular</button><button class="btn">Guardar borrador</button><a class="btn" href="remito-vacunas-impresion.html" target="_blank">Vista previa / imprimir</a><button class="btn primary">Confirmar entrega</button></div>
+    </footer>
+  </main>
+</div>
+
+<template id="destination-template">
+  <tr><td><select><option>Seleccionar productor…</option><option>Productor A</option><option>Productor B</option><option>Productor C</option></select></td><td><select><option>Seleccionar RENSPA…</option></select></td><td>—</td><td><span class="valid">Vinculado</span></td><td><input class="planned num" type="number" min="0" value="0"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+</template>
+<template id="lot-template">
+  <tr><td>Biogénesis</td><td><select><option>Seleccionar lote…</option><option>AF-26091</option><option>AF-26088</option></select></td><td>—</td><td class="num">—</td><td><input class="bottles num" type="number" min="1" value="1"></td><td class="lot-doses num">125</td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+</template>
+<script>
+  const destinations = document.querySelector('#destinations');
+  const lots = document.querySelector('#lots');
+
+  function calculate() {
+    const planned = [...document.querySelectorAll('.planned')].reduce((sum, field) => sum + (Number(field.value) || 0), 0);
+    const bottles = [...document.querySelectorAll('.bottles')].reduce((sum, field) => sum + (Number(field.value) || 0), 0);
+    document.querySelectorAll('#lots tr').forEach(row => {
+      const count = Number(row.querySelector('.bottles')?.value) || 0;
+      const target = row.querySelector('.lot-doses');
+      if (target) target.textContent = String(count * 125);
+    });
+    const doses = bottles * 125;
+    const difference = doses - planned;
+    document.querySelector('#destination-count').textContent = String(destinations.children.length);
+    document.querySelector('#planned-total').textContent = String(planned);
+    document.querySelector('#bottle-total').textContent = String(bottles);
+    document.querySelector('#dose-total').textContent = String(doses);
+    document.querySelector('#forecast-difference').textContent = String(difference);
+    const notice = document.querySelector('#notice');
+    notice.textContent = difference === 0
+      ? 'La previsión coincide con las dosis teóricas del retiro.'
+      : `Existe una diferencia prevista de ${difference} dosis. Al confirmar se solicitará un motivo.`;
+  }
+
+  document.querySelector('#add-destination').addEventListener('click', () => {
+    destinations.append(document.querySelector('#destination-template').content.cloneNode(true)); calculate();
+  });
+  document.querySelector('#add-lot').addEventListener('click', () => {
+    lots.append(document.querySelector('#lot-template').content.cloneNode(true)); calculate();
+  });
+  document.addEventListener('input', event => {
+    if (event.target.matches('.planned,.bottles')) calculate();
+  });
+  document.addEventListener('click', event => {
+    if (!event.target.matches('.remove')) return;
+    const tbody = event.target.closest('tbody');
+    if (tbody.children.length > 1) event.target.closest('tr').remove();
+    calculate();
+  });
+  calculate();
+</script>
+</body>
+</html>

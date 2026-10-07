@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acta de vacunación — prototipo fiel al formulario actual</title>
+  <style>
+    :root { --ink:#111; --line:#222; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#d9dde0; color:var(--ink); font-family:"Times New Roman",serif; }
+    .sheet { width:210mm; height:297mm; margin:8mm auto; padding:9mm 36mm 6mm 8mm; overflow:hidden; background:#fff; break-after:page; page-break-after:always; }
+    .sheet:last-of-type { break-after:auto; page-break-after:auto; }
+    .form { width:166mm; }
+    .header { position:relative; height:28mm; padding-right:27mm; text-align:center; }
+    .header-logo-frame { position:absolute; top:-3mm; right:0; width:25mm; height:25mm; overflow:hidden; background:#fff; }
+    h1 { margin:0; font-family:Arial,sans-serif; font-size:19pt; line-height:1; letter-spacing:.2mm; }
+    .plan { margin:.3mm 0 0; font-family:Arial,sans-serif; font-size:8pt; font-weight:bold; letter-spacing:1.2mm; }
+    .org { margin:.8mm 0 0; font-size:10.5pt; font-weight:bold; line-height:1.05; }
+    .address { margin:.4mm 0 0; font-size:8pt; font-weight:bold; }
+    .section { margin-top:1.2mm; }
+    .section-title { margin:0 0 .3mm; font-size:9pt; font-weight:bold; line-height:1; }
+    .border { border:1px solid var(--line); }
+    .top-row,.two-col,.owner,.signatures { display:grid; gap:3.5mm; }
+    .top-row { grid-template-columns:47% 53%; }
+    .two-col { grid-template-columns:1fr 1fr; }
+    .owner { grid-template-columns:1fr 28mm; gap:0; }
+    .signatures { grid-template-columns:1fr 1fr; gap:4mm; }
+    .choice-table { width:100%; height:15mm; border-collapse:collapse; font-size:8pt; }
+    .choice-table td { padding:1mm 2mm; border-right:1px solid var(--line); }
+    .choice-table td:last-child { border-right:0; }
+    .choice { white-space:nowrap; }
+    .check { display:inline-block; width:4.5mm; height:4.5mm; margin-left:1mm; border:1px solid var(--line); vertical-align:middle; }
+    .checked::after { content:"×"; display:block; margin-top:-1.2mm; font-family:Arial,sans-serif; font-size:14pt; font-weight:bold; text-align:center; }
+    .lines { padding:2mm 2.5mm 1mm; font-size:7.7pt; }
+    .line-row { display:flex; align-items:flex-end; min-height:5.1mm; white-space:nowrap; }
+    .line-row .fill { flex:1; min-width:8mm; margin-left:1mm; border-bottom:.45px dotted #555; font-family:Arial,sans-serif; font-size:7pt; }
+    .line-row .short { flex:.42; }
+    .brand-cell { display:grid; place-items:center; border-left:1px solid var(--line); }
+    .brand-box { width:25mm; height:25mm; display:grid; place-items:center; border:1px solid var(--line); font-family:Arial,sans-serif; font-size:6pt; text-align:center; }
+    .establishment { height:17mm; padding:1.2mm 2mm; font-size:7.7pt; }
+    .establishment .line-row { min-height:6.5mm; }
+    .herd { height:17mm; padding:1.5mm 2mm; display:flex; flex-wrap:wrap; align-content:center; gap:1.5mm 4mm; font-size:7.7pt; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:7pt; }
+    th,td { border:1px solid var(--line); padding:.5mm; text-align:center; font-weight:normal; }
+    th { line-height:.95; }
+    .cattle th { height:7mm; }
+    .cattle td { height:7mm; font-family:Arial,sans-serif; }
+    .vaccine td { height:11mm; padding:1mm 2mm; text-align:left; vertical-align:top; }
+    .vaccine .value { display:block; margin-top:1mm; font-family:Arial,sans-serif; font-size:8pt; text-align:center; }
+    .brucellosis th { height:5.2mm; }
+    .brucellosis td { height:7mm; font-family:Arial,sans-serif; }
+    .species th,.species td { height:5.3mm; padding:.25mm .6mm; }
+    .species td:nth-child(odd) { text-align:left; }
+    .species .qty { width:8%; text-align:center; font-family:Arial,sans-serif; }
+    .declaration { margin:.5mm 0; font-size:5.8pt; text-align:center; white-space:nowrap; }
+    .place-date { display:flex; height:8mm; align-items:flex-end; font-size:9pt; font-weight:bold; }
+    .place-date .fill { flex:1; margin-left:1mm; border-bottom:.45px dotted #555; font-family:Arial,sans-serif; font-size:7pt; font-weight:normal; }
+    .signature-box { height:27mm; padding:1mm 2mm; border:1px solid var(--line); border-radius:2mm; font-size:7pt; }
+    .signature-line { height:10mm; border-bottom:.45px dotted #555; display:flex; align-items:flex-end; justify-content:center; }
+    .signature-name { height:7mm; padding-top:1mm; border-bottom:.45px dotted #555; font-family:Arial,sans-serif; text-align:center; }
+    .signature-dni { height:6mm; padding-top:1.3mm; }
+    .observations { height:14mm; margin-top:1.2mm; font-size:8pt; font-weight:bold; }
+    .observations .rule { height:5.5mm; border-bottom:.45px dotted #555; }
+    .carbuncle-head { display:flex; align-items:flex-end; height:5mm; font-size:8pt; font-weight:bold; }
+    .carbuncle-head .fill { flex:1; margin-left:1mm; border-bottom:.45px dotted #555; }
+    .carbuncle td { height:10mm; vertical-align:top; }
+    .footer { display:grid; grid-template-columns:1fr 48mm 42mm; gap:3mm; height:13mm; align-items:end; margin-top:1mm; }
+    .copy-label { font-size:9pt; font-weight:bold; white-space:nowrap; }
+    .print-meta { border:1px solid var(--line); padding:.8mm; font-size:5.5pt; line-height:1.2; text-align:center; }
+    .act-number { display:flex; align-items:baseline; justify-content:flex-end; gap:2mm; white-space:nowrap; }
+    .act-number span { font-size:8pt; }
+    .act-number strong { font-family:monospace; font-size:14pt; letter-spacing:.5mm; }
+    .prefill { font-family:Arial,sans-serif; }
+    @page { size:A4 portrait; margin:0; }
+    @media print { body { background:#fff; } .sheet { margin:0; } }
+  </style>
+</head>
+<body>
+<main class="sheet">
+  <div class="form">
+    <header class="header">
+      <div class="header-logo-frame" aria-label="Ubicación reservada para el logo institucional"></div>
+      <h1>ACTA DE VACUNACIÓN</h1>
+      <p class="plan">CÓDIGO DE PLAN 175</p>
+      <p class="org">FUNDACIÓN CONTROL FIEBRE AFTOSA SAN CRISTÓBAL - ESTE</p>
+      <p class="address">Alvear 769 - Tel./Fax 03408 - 422992 - (S3070) SAN CRISTÓBAL - Santa Fe</p>
+    </header>
+
+    <div class="top-row">
+      <section><p class="section-title">1 - VACUNACIÓN</p><table class="choice-table border"><tr><td><div class="choice">Sistemática <i class="check checked"></i></div><div class="choice">Estratégica <i class="check"></i></div></td><td><span class="choice">Total <i class="check checked"></i></span>&nbsp;&nbsp;<span class="choice">Parcial <i class="check"></i></span></td></tr></table></section>
+      <section><p class="section-title">2 - PERÍODO</p><table class="choice-table border"><tr><td><div class="choice">Primero <i class="check"></i></div><div class="choice">Segundo <i class="check"></i></div></td><td><span class="choice">Totales <i class="check"></i></span>&nbsp;<span class="choice">Menores <i class="check checked"></i></span></td><td>Año: <strong class="prefill">[2026]</strong></td></tr></table></section>
+    </div>
+
+    <section class="section">
+      <p class="section-title">3 - PROPIETARIO</p>
+      <div class="owner border">
+        <div class="lines">
+          <div class="line-row"><strong>RENSPA:</strong><span class="fill prefill">[00/000/0/00000/00]</span></div>
+          <div class="line-row">Nombre y Apellido o Razón Social:<span class="fill prefill">[Nombre o razón social]</span></div>
+          <div class="line-row">Doc./CUIT N°:<span class="fill short prefill">[Número]</span>&nbsp;Domicilio:<span class="fill prefill">[Domicilio]</span></div>
+          <div class="line-row">C.P.:<span class="fill short prefill">[CP]</span>&nbsp;Localidad:<span class="fill prefill">[Localidad]</span></div>
+          <div class="line-row">Provincia:<span class="fill short prefill">[Provincia]</span>&nbsp;Régimen de Tenencia:<span class="fill prefill">[Régimen]</span></div>
+        </div>
+        <div class="brand-cell"><div class="brand-box">MARCA<br>2,5 × 2,5 cm</div></div>
+      </div>
+    </section>
+
+    <div class="two-col section">
+      <section><p class="section-title">4 - ESTABLECIMIENTO</p><div class="establishment border"><div class="line-row">Nombre:<span class="fill prefill">[Establecimiento]</span></div><div class="line-row">Ubicación:<span class="fill prefill">[Ubicación]</span>&nbsp;Cant. Has:<span class="fill short prefill">[Ha]</span></div></div></section>
+      <section><p class="section-title">5 - TIPO DE RODEO VACUNADO</p><div class="herd border"><span>Cría <i class="check"></i></span><span>Invernada <i class="check"></i></span><span>Mixto <i class="check"></i></span><span>Cabaña <i class="check"></i></span><span>Tambo <i class="check"></i></span><span>Feed Lot <i class="check"></i></span><span>Otro: __________</span></div></section>
+    </div>
+
+    <section class="section"><p class="section-title">6 - BOVINOS VACUNADOS CONTRA FIEBRE AFTOSA</p><table class="cattle"><thead><tr><th>Vacas</th><th>Toros</th><th>Toritos</th><th>Novillos<br>Bueyes</th><th>Novillitos</th><th>Vaquillonas</th><th>Terneras</th><th>Terneros</th><th><strong>TOTAL</strong></th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></section>
+
+    <section class="section"><p class="section-title">7 - VACUNA ANTIAFTOSA</p><table class="vaccine"><tr><td style="width:28%">Marca<span class="value prefill">[Marca]</span></td><td>Serie<span class="value prefill">[Serie / lote]</span></td><td style="width:24%">Vencimiento<span class="value prefill">[mm/aa]</span></td></tr></table></section>
+
+    <section class="section"><p class="section-title">8 - BRUCELOSIS</p><table class="brucellosis"><thead><tr><th colspan="3">Terneras Vacunadas</th><th colspan="3">Vacuna</th></tr><tr><th>Total</th><th>Parcial</th><th>Identificación</th><th>Marca</th><th>Serie</th><th>Vto.</th></tr></thead><tbody><tr><td></td><td></td><td></td><td class="prefill">[Marca]</td><td class="prefill">[Serie]</td><td class="prefill">[Vto.]</td></tr></tbody></table></section>
+
+    <section class="section">
+      <p class="section-title">9 - EXISTENCIA DE OTRAS ESPECIES</p>
+      <table class="species">
+        <thead><tr><th colspan="2">OVINOS</th><th colspan="2">PORCINOS</th><th colspan="2">CAPRINOS</th><th colspan="2">EQUINOS</th><th>OTRAS ESPEC.</th><th>Macho</th><th>Hembra</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Carneros</td><td class="qty"></td><td>Padrillos</td><td class="qty"></td><td>Chivos*</td><td class="qty"></td><td>Padrillos</td><td class="qty"></td><td>Aves</td><td></td><td></td><td></td></tr>
+          <tr><td>Ovejas</td><td class="qty"></td><td>Cerdas</td><td class="qty"></td><td>Chivas</td><td class="qty"></td><td>Caballos</td><td class="qty"></td><td>Caninos</td><td></td><td></td><td></td></tr>
+          <tr><td>Borrego/a</td><td class="qty"></td><td>Lechones</td><td class="qty"></td><td>Cabrito</td><td class="qty"></td><td>Yeguas</td><td class="qty"></td><td>Ciervos</td><td></td><td></td><td></td></tr>
+          <tr><td>Capones</td><td class="qty"></td><td>Capones</td><td class="qty"></td><td>Capón</td><td class="qty"></td><td>Potrillos</td><td class="qty"></td><td>Conejos</td><td></td><td></td><td></td></tr>
+          <tr><td>Cordero/a</td><td class="qty"></td><td>Cachorro/a</td><td class="qty"></td><td>(*) Castrón</td><td class="qty"></td><td>Mula/Burro</td><td class="qty"></td><td>Camélidos</td><td></td><td></td><td></td></tr>
+          <tr><td>Total</td><td class="qty"></td><td>Total</td><td class="qty"></td><td>Total</td><td class="qty"></td><td>Total</td><td class="qty"></td><td>Colmenas</td><td colspan="3"></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <p class="declaration">El Propietario o responsable declara bajo juramento que los datos consignados son verídicos, bajo lo prescripto en el Artículo 293 del Código Penal.</p>
+    <div class="place-date">LUGAR Y FECHA:<span class="fill"></span></div>
+
+    <div class="signatures">
+      <section><p class="section-title">10 - VACUNADOR</p><div class="signature-box"><div class="signature-line">Firma</div><div class="signature-name prefill">[Nombre y apellido · Matrícula]</div><div class="signature-dni">DNI N°: <span class="prefill">[Documento]</span></div></div></section>
+      <section><p class="section-title">11 - PROPIETARIO / RESPONSABLE</p><div class="signature-box"><div class="signature-line">Firma</div><div class="signature-name">Aclaración</div><div class="signature-dni">DNI N°:</div></div></section>
+    </div>
+
+    <div class="observations">OBSERVACIONES:<div class="rule"></div><div class="rule"></div></div>
+
+    <section><div class="carbuncle-head">VACUNACIÓN CARBUNCLO&nbsp;&nbsp; Total Vacunados:<span class="fill"></span></div><table class="carbuncle"><tr><td>Marca<br><span class="prefill">[Marca]</span></td><td>Serie<br><span class="prefill">[Serie]</span></td><td>Vencimiento<br><span class="prefill">[mm/aa]</span></td></tr></table></section>
+
+    <footer class="footer"><div class="copy-label">ORIGINAL: FUNDACIÓN</div><div class="print-meta">Fecha de impresión: [dd/mm/aa]<br>desde N° [00000000] hasta N° [00000000]</div><div class="act-number"><span>N°:</span><strong>00118953</strong></div></footer>
+  </div>
+</main>
+<script>
+  const copyLabels = ["ORIGINAL: FUNDACIÓN", "DUPLICADO: SENASA", "TRIPLICADO: PRODUCTOR"];
+  const originalSheet = document.querySelector(".sheet");
+  copyLabels.forEach((label, index) => {
+    const sheet = index === 0 ? originalSheet : originalSheet.cloneNode(true);
+    sheet.querySelector(".copy-label").textContent = label;
+    if (index > 0) document.body.appendChild(sheet);
+  });
+</script>
+</body>
+</html>

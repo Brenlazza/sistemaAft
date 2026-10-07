@@ -105,3 +105,19 @@ Para el nuevo modelo se propone separar:
 - lote o serie y vencimiento.
 
 Cada producto debería referenciar su laboratorio. Las marcas históricas deberán depurarse y relacionarse durante la migración, conservando el valor original para auditoría.
+
+## Circuito operativo confirmado para el nuevo sistema
+
+- La vacuna antiaftosa es el único producto inicial.
+- La presentación es fija: frascos de 125 cc.
+- El stock lleno se controla por cantidad de frascos.
+- Cada veterinaria compra y conserva la propiedad de sus vacunas.
+- Los frascos llegan y se almacenan físicamente en la UEL, separados por veterinaria y serie/lote.
+- La veterinaria autoriza manualmente el retiro por un vacunador o veterinario.
+- La UEL genera un remito, actualmente mediante Xubio, lo imprime y obtiene la firma del profesional que retira y asume responsabilidad.
+- El nuevo sistema debe implementar este circuito de remitos y descontar del stock de la veterinaria correcta.
+- Un remito puede incluir varios clientes/productores y establecimientos de destino; sus actas se suman para conciliar el retiro completo.
+- Los frascos abiertos devueltos se registran como sobrantes, separados de los frascos llenos y vinculados al productor/establecimiento donde se utilizaron.
+- Las condiciones no disponibles contempladas son `Decomisado` y `Roto`; se utilizan exclusivamente como bajas del stock físico de la UEL y no para cuadrar remitos entregados.
+
+Ver [lógica funcional de stock](logica-stock.md) para movimientos, remitos, saldos y devoluciones.
