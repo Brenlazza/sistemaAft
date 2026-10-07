@@ -47,3 +47,5 @@ Ver [flujo de remitos, devoluciones y conciliación](docs/flujo-remitos-concilia
 Ver [definición funcional de la pantalla de remitos](docs/pantalla-remitos.md).
 
 Ver [generación de preborradores de actas desde cada remito](docs/preborradores-actas-desde-remito.md).
+
+Ver [pantalla de devolución de actas, vacuna y conciliación](docs/pantalla-devolucion-conciliacion.md).

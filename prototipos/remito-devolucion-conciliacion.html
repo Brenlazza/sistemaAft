@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Devolución y conciliación — Remito R-000001</title>
+  <style>
+    :root { --brand:#8f1f2e; --dark:#671522; --ink:#17202a; --muted:#687582; --line:#dce1e7; --bg:#f3f5f7; --ok:#187548; --warn:#9a6500; --danger:#b3261e; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--bg); font:14px/1.4 Arial,sans-serif; }
+    button,input,select,textarea { font:inherit; }
+    button { cursor:pointer; }
+    .app { min-height:100vh; display:grid; grid-template-columns:220px 1fr; }
+    aside { padding:24px 14px; color:#fff; background:linear-gradient(180deg,var(--brand),var(--dark)); }
+    .identity { padding:0 10px 22px; border-bottom:1px solid #ffffff35; }
+    .identity strong { display:block; font-size:16px; }
+    .identity span { font-size:11px; opacity:.8; }
+    nav { margin-top:18px; display:grid; gap:4px; }
+    nav a { padding:10px 12px; color:#fff; text-decoration:none; border-radius:7px; opacity:.82; }
+    nav a.active,nav a:hover { background:#ffffff1f; opacity:1; }
+    main { min-width:0; }
+    .topbar { padding:13px 28px; display:flex; justify-content:space-between; align-items:center; background:#fff; border-bottom:1px solid var(--line); }
+    .topbar h1 { margin:0; font-size:21px; }
+    .topbar small { color:var(--muted); }
+    .content { max-width:1450px; margin:auto; padding:22px 28px 95px; }
+    .title { margin-bottom:16px; display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+    .title h2 { margin:0 0 4px; font-size:24px; }
+    .title p { margin:0; color:var(--muted); }
+    .badge { padding:6px 11px; border-radius:999px; color:#765000; background:#fff0ce; font-weight:bold; }
+    .tabs { display:flex; gap:4px; margin-bottom:14px; border-bottom:1px solid var(--line); }
+    .tabs a { padding:11px 14px; color:var(--muted); border-bottom:3px solid transparent; text-decoration:none; }
+    .tabs a.active { color:var(--brand); border-bottom-color:var(--brand); font-weight:bold; }
+    .panel { margin-bottom:14px; background:#fff; border:1px solid var(--line); border-radius:10px; box-shadow:0 1px 2px #0000000b; }
+    .panel-head { padding:14px 18px; display:flex; justify-content:space-between; align-items:center; gap:10px; border-bottom:1px solid var(--line); }
+    .panel-head h3 { margin:0; font-size:16px; }
+    .panel-head p { margin:2px 0 0; color:var(--muted); font-size:12px; }
+    .panel-body { padding:16px 18px; }
+    .summary { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; }
+    .card { padding:12px; border:1px solid var(--line); border-radius:8px; background:#f8fafb; }
+    .card span { display:block; color:var(--muted); font-size:10px; text-transform:uppercase; }
+    .card strong { display:block; margin-top:4px; font-size:20px; font-variant-numeric:tabular-nums; }
+    .card.result { border-color:#add7bf; background:#edf8f2; }
+    .card.result strong { color:var(--ok); }
+    .card.result.error { border-color:#efb2ad; background:#fff0ef; }
+    .card.result.error strong { color:var(--danger); }
+    table { width:100%; border-collapse:collapse; }
+    th { padding:9px 8px; color:#52606d; background:#f7f8fa; border-bottom:1px solid var(--line); font-size:10.5px; text-align:left; text-transform:uppercase; }
+    td { padding:9px 8px; border-bottom:1px solid #e7ebef; vertical-align:middle; }
+    tbody tr:last-child td { border-bottom:0; }
+    td input,td select { width:100%; min-width:90px; padding:7px 8px; border:1px solid #cbd2da; border-radius:5px; }
+    .num { text-align:right; font-variant-numeric:tabular-nums; }
+    .state { display:inline-block; padding:4px 7px; border-radius:999px; color:var(--ok); background:#e7f5ed; font-size:11px; font-weight:bold; white-space:nowrap; }
+    .state.pending { color:#7b5600; background:#fff2ce; }
+    .btn { padding:8px 12px; border:1px solid #cad1d8; border-radius:7px; color:#263442; background:#fff; font-weight:bold; text-decoration:none; }
+    .btn.primary { color:#fff; border-color:var(--brand); background:var(--brand); }
+    .btn.small { padding:6px 8px; font-size:11px; }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    label { display:block; margin-bottom:5px; color:#4f5c69; font-size:11px; font-weight:bold; }
+    input,select,textarea { width:100%; padding:8px 9px; border:1px solid #cbd2da; border-radius:6px; }
+    .notice { margin-top:12px; padding:11px 13px; color:#24583c; border-left:4px solid var(--ok); border-radius:5px; background:#edf8f2; }
+    .notice.error { color:#7a2420; border-left-color:var(--danger); background:#fff0ef; }
+    .footer { position:fixed; right:0; bottom:0; left:220px; padding:13px 28px; display:flex; justify-content:space-between; align-items:center; background:#ffffffed; border-top:1px solid var(--line); backdrop-filter:blur(7px); }
+    .actions { display:flex; gap:8px; }
+    .quiet { color:var(--muted); font-size:12px; }
+    @media(max-width:1050px){.app{grid-template-columns:1fr}aside{display:none}.footer{left:0}.summary{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:650px){.content,.topbar{padding-left:14px;padding-right:14px}.table-wrap{overflow:auto}.summary,.grid{grid-template-columns:1fr}.footer{position:static;align-items:stretch;flex-direction:column}.actions{flex-wrap:wrap}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="identity"><strong>Sistema AFT</strong><span>Fundación San Cristóbal Este</span></div>
+    <nav><a href="#">Inicio</a><a href="#">Campañas</a><a href="#">Padrón y productores</a><a class="active" href="remito-vacunas.html">Remitos</a><a href="#">Actas</a><a href="#">Stock UEL</a><a href="#">Informes</a></nav>
+  </aside>
+  <main>
+    <header class="topbar"><div><h1>Devolución y conciliación</h1><small>Remito R-000001 · Versión 2</small></div><a class="btn" href="remito-vacunas.html">Volver al remito</a></header>
+    <div class="content">
+      <div class="title"><div><h2>Remito R-000001</h2><p>Veterinaria San Martín · Dr. Juan Pérez · Lote AF-26091</p></div><span id="status" class="badge">En carga</span></div>
+      <div class="tabs"><a href="remito-vacunas.html">Retiro</a><a class="active" href="#acts">Actas vinculadas</a><a href="#returns">Devoluciones</a><a href="#reconciliation">Conciliación</a></div>
+
+      <section class="panel">
+        <div class="panel-head"><div><h3>Resumen del retiro</h3><p>Datos confirmados y bloqueados del remito.</p></div><span class="state">Firma vigente registrada</span></div>
+        <div class="panel-body summary">
+          <div class="card"><span>Frascos retirados</span><strong>1</strong></div>
+          <div class="card"><span>Dosis retiradas</span><strong>125</strong></div>
+          <div class="card"><span>Destinos</span><strong>3</strong></div>
+          <div class="card"><span>Actas entregadas</span><strong>3</strong></div>
+          <div class="card"><span>Lote</span><strong style="font-size:15px">AF-26091</strong></div>
+          <div class="card"><span>Vencimiento</span><strong style="font-size:15px">31/03/2027</strong></div>
+        </div>
+      </section>
+
+      <section id="acts" class="panel">
+        <div class="panel-head"><div><h3>Actas recibidas</h3><p>Solo las confirmadas suman dosis a la conciliación.</p></div><button class="btn small">Registrar recepción</button></div>
+        <div class="panel-body table-wrap">
+          <table>
+            <thead><tr><th>Acta</th><th>Productor / RENSPA</th><th>Estado físico</th><th>Estado digital</th><th>Lote usado</th><th class="num">Dosis vacunadas</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>00118953</td><td>Productor A<br><small>00/001/0/00001/00</small></td><td><span class="state">Devuelta</span></td><td><span class="state">Confirmada</span></td><td>AF-26091</td><td><input class="vaccinated num" type="number" min="0" value="50"></td><td><button class="btn small">Abrir</button></td></tr>
+              <tr><td>00118954</td><td>Productor B<br><small>00/001/0/00002/00</small></td><td><span class="state">Devuelta</span></td><td><span class="state">Confirmada</span></td><td>AF-26091</td><td><input class="vaccinated num" type="number" min="0" value="50"></td><td><button class="btn small">Abrir</button></td></tr>
+              <tr><td>00118955</td><td>Productor C<br><small>00/001/0/00003/00</small></td><td><span class="state">Devuelta</span></td><td><span class="state">Confirmada</span></td><td>AF-26091</td><td><input class="vaccinated num" type="number" min="0" value="15"></td><td><button class="btn small">Abrir</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="returns" class="panel">
+        <div class="panel-head"><div><h3>Devoluciones</h3><p>Frascos cerrados y remanentes abiertos regresan a stocks separados.</p></div><button class="btn small">+ Agregar sobrante</button></div>
+        <div class="panel-body">
+          <div class="grid">
+            <div><label>Frascos llenos devueltos · AF-26091</label><input id="full-bottles" type="number" min="0" max="1" value="0"></div>
+            <div><label>Dosis equivalentes</label><input id="full-doses" value="0" readonly></div>
+            <div><label>Dosis sobrantes devueltas</label><input id="leftover" type="number" min="0" value="15"></div>
+            <div><label>Acta de origen del sobrante</label><select><option>00118955 · Productor C</option><option>00118954 · Productor B</option><option>00118953 · Productor A</option></select></div>
+            <div><label>Fecha de devolución</label><input type="date" value="2026-10-07"></div>
+            <div><label>Responsable receptor UEL</label><select><option>Administrador UEL</option></select></div>
+            <div style="grid-column:span 2"><label>Observación</label><input value="Sobrante del último frasco abierto"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reconciliation" class="panel">
+        <div class="panel-head"><div><h3>Conciliación por lote</h3><p>Las cantidades no se compensan entre lotes diferentes.</p></div></div>
+        <div class="panel-body">
+          <div class="table-wrap"><table><thead><tr><th>Lote</th><th class="num">Retiradas</th><th class="num">Vacunadas</th><th class="num">Devolución esperada</th><th class="num">Devolución real</th><th class="num">Variación devolución</th></tr></thead><tbody><tr><td><strong>AF-26091</strong></td><td class="num">125</td><td id="lot-vaccinated" class="num">115</td><td id="lot-expected-return" class="num">10</td><td id="lot-actual-return" class="num">15</td><td id="lot-return-variance" class="num"><strong>+5</strong></td></tr></tbody></table></div>
+          <div class="summary" style="margin-top:14px">
+            <div class="card"><span>Retiradas</span><strong>125</strong></div>
+            <div class="card"><span>Vacunadas</span><strong id="total-vaccinated">115</strong></div>
+            <div class="card"><span>Devolución esperada</span><strong id="total-expected-return">10</strong></div>
+            <div class="card"><span>Devolución real</span><strong id="total-actual-return">15</strong></div>
+            <div id="result-card" class="card result error"><span>Variación devolución</span><strong id="total-return-variance">+5</strong></div>
+            <div class="card"><span>Uso inferido</span><strong id="total-implied-use">110</strong></div>
+            <div class="card"><span>Vacunación declarada</span><strong id="declared-vaccination">115</strong></div>
+            <div class="card"><span>Variación uso</span><strong id="total-use-variance">-5</strong></div>
+          </div>
+          <div id="notice" class="notice error">Se devolvieron 5 dosis más que las esperadas. Las 15 dosis reales ingresarán al stock de sobrantes y la diferencia quedará registrada.</div>
+          <div id="difference-explanation" class="grid" style="margin-top:14px">
+            <div><label>Motivo de la diferencia</label><select id="difference-type"><option value="">Seleccionar…</option><option>Devolución mayor que la esperada</option><option>Devolución menor que la esperada</option><option>Diferencia de medición</option><option>Otro</option></select></div>
+            <div style="grid-column:span 3"><label>Explicación obligatoria</label><textarea id="difference-note" rows="2" placeholder="Explique lo ocurrido para conservarlo en informes y auditoría"></textarea></div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <footer class="footer"><span class="quiet">Roturas y decomisos se registran únicamente desde Stock UEL.</span><div class="actions"><button class="btn">Guardar carga</button><button class="btn">Registrar devolución</button><button id="close-button" class="btn primary">Cerrar conciliación</button></div></footer>
+  </main>
+</div>
+<script>
+  function calculate() {
+    const withdrawn = 125;
+    const vaccinated = [...document.querySelectorAll('.vaccinated')].reduce((sum, input) => sum + (Number(input.value) || 0), 0);
+    const fullBottles = Number(document.querySelector('#full-bottles').value) || 0;
+    const fullDoses = fullBottles * 125;
+    const leftover = Number(document.querySelector('#leftover').value) || 0;
+    const actualReturn = fullDoses + leftover;
+    const expectedReturn = withdrawn - vaccinated;
+    const returnVariance = actualReturn - expectedReturn;
+    const impliedUse = withdrawn - actualReturn;
+    const useVariance = impliedUse - vaccinated;
+    const signed = value => value > 0 ? `+${value}` : String(value);
+    document.querySelector('#full-doses').value = String(fullDoses);
+    for (const id of ['lot-vaccinated','total-vaccinated']) document.querySelector(`#${id}`).textContent = String(vaccinated);
+    document.querySelector('#lot-expected-return').textContent = String(expectedReturn);
+    document.querySelector('#lot-actual-return').textContent = String(actualReturn);
+    document.querySelector('#lot-return-variance').innerHTML = `<strong>${signed(returnVariance)}</strong>`;
+    document.querySelector('#total-expected-return').textContent = String(expectedReturn);
+    document.querySelector('#total-actual-return').textContent = String(actualReturn);
+    document.querySelector('#total-return-variance').textContent = signed(returnVariance);
+    document.querySelector('#total-implied-use').textContent = String(impliedUse);
+    document.querySelector('#declared-vaccination').textContent = String(vaccinated);
+    document.querySelector('#total-use-variance').textContent = signed(useVariance);
+    const result = document.querySelector('#result-card');
+    const notice = document.querySelector('#notice');
+    const close = document.querySelector('#close-button');
+    const hasDifference = returnVariance !== 0;
+    const explanationComplete = document.querySelector('#difference-type').value && document.querySelector('#difference-note').value.trim();
+    result.classList.toggle('error', hasDifference);
+    notice.classList.toggle('error', hasDifference);
+    document.querySelector('#difference-explanation').style.display = hasDifference ? 'grid' : 'none';
+    close.disabled = hasDifference && !explanationComplete;
+    close.textContent = hasDifference ? 'Cerrar con diferencia' : 'Cerrar conciliación';
+    document.querySelector('#status').textContent = hasDifference ? 'Observado' : 'Cuadrado';
+    notice.textContent = !hasDifference
+      ? 'El lote y el remito están cuadrados. Puede cerrar la conciliación después de revisar la documentación.'
+      : returnVariance > 0
+        ? `Se devolvieron ${returnVariance} dosis más que las esperadas. Las ${actualReturn} dosis reales ingresarán al stock correspondiente y la diferencia quedará registrada.`
+        : `Se devolvieron ${Math.abs(returnVariance)} dosis menos que las esperadas. La devolución real ingresará al stock y la diferencia quedará registrada.`;
+  }
+  document.addEventListener('input', event => {
+    if (event.target.matches('.vaccinated,#full-bottles,#leftover,#difference-type,#difference-note')) calculate();
+  });
+  calculate();
+</script>
+</body>
+</html>

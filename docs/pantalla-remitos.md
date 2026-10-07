@@ -56,7 +56,7 @@ Campos:
 - documento adjunto, opcional hasta definir si será obligatorio;
 - observación de la autorización.
 
-Al elegir la veterinaria, los lotes disponibles se restringen a existencias llenas de esa propietaria y UEL.
+Al elegir la veterinaria, los lotes disponibles se restringen a existencias llenas y sobrantes reutilizables de esa propietaria y UEL.
 
 ### 2. Profesional receptor
 
@@ -99,16 +99,17 @@ Reglas:
 
 ### 4. Vacuna a entregar
 
-Grilla con una fila por serie/lote:
+Grilla con una fila por origen y serie/lote. Un mismo remito puede combinar frascos llenos y dosis sobrantes:
 
 | Campo | Comportamiento |
 |---|---|
+| Origen | `Lleno` o `Sobrante`, siempre de la veterinaria propietaria. |
 | Marca | Informativa, proveniente del lote. |
-| Serie/lote | Solo lotes llenos, vigentes y pertenecientes a la veterinaria seleccionada. |
+| Serie/lote | Solo lotes vigentes y pertenecientes a la veterinaria seleccionada. |
 | Vencimiento | Informativo, con alerta de proximidad. |
-| Stock disponible | Frascos llenos disponibles en la UEL. |
-| Frascos a retirar | Entero positivo y no superior al saldo. |
-| Dosis teóricas | Calculadas como frascos × 125. |
+| Stock disponible | Frascos si el origen es lleno; dosis si es sobrante. |
+| Cantidad a retirar | Frascos enteros para `Lleno`; dosis enteras para `Sobrante`. |
+| Dosis equivalentes | Frascos × 125 para `Lleno`; igual a la cantidad para `Sobrante`. |
 
 Se permite más de un lote en un remito. El total de dosis retiradas es la suma de todos sus detalles.
 
@@ -120,8 +121,9 @@ Tarjetas visibles:
 
 - destinos seleccionados;
 - dosis previstas;
-- frascos a retirar;
-- dosis teóricas retiradas;
+- frascos llenos a retirar;
+- dosis sobrantes a retirar;
+- dosis totales retiradas;
 - diferencia entre previsión y retiro;
 - alertas pendientes.
 
@@ -187,13 +189,16 @@ Resumen calculado:
 
 | Concepto | Cálculo |
 |---|---|
-| Dosis retiradas | Suma de frascos entregados × 125. |
+| Dosis retiradas | Frascos llenos entregados × 125 + dosis sobrantes entregadas. |
 | Dosis vacunadas | Suma de actas confirmadas y vigentes. |
 | Devolución llena | Frascos llenos devueltos × 125. |
 | Sobrantes | Suma de dosis abiertas devueltas. |
-| Diferencia | Retiradas − vacunadas − devolución llena − sobrantes. |
+| Devolución esperada | Retiradas − vacunadas. |
+| Uso inferido | Retiradas − devolución real. |
+| Variación de devolución | Devolución real − devolución esperada. |
+| Variación de uso | Uso inferido − vacunadas. |
 
-Si la diferencia es cero, el remito queda `Cuadrado`. Un usuario autorizado revisa firmas y documentación y ejecuta `Cerrar conciliación`, pasando a `Conciliado`.
+Si ambas variaciones son cero, el remito queda `Cuadrado`. Un usuario autorizado revisa firmas y documentación y ejecuta `Cerrar conciliación`, pasando a `Conciliado`.
 
 Si la diferencia no es cero:
 
@@ -201,7 +206,10 @@ Si la diferencia no es cero:
 - el estado queda `Observado`;
 - se exige motivo y detalle;
 - no se ofrece editar el resultado calculado;
-- una resolución autorizada genera un movimiento o registro adicional auditable.
+- la devolución real ingresa al stock correspondiente aunque sea superior a la esperada;
+- un usuario autorizado puede cerrarlo como `Conciliado con diferencia`, conservando valores, motivo y explicación para informes futuros.
+
+El detalle de carga y sus validaciones se define en [pantalla de devolución y conciliación](pantalla-devolucion-conciliacion.md).
 
 ## Incorporación posterior de destinos
 

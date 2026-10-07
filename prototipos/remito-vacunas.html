@@ -65,7 +65,7 @@
     td input,td select { min-width:110px; padding:7px 8px; }
     .num { text-align:right; font-variant-numeric:tabular-nums; }
     .valid { display:inline-block; padding:4px 7px; border-radius:999px; color:var(--ok); background:#e7f5ed; font-size:11px; font-weight:bold; }
-    .summary { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+    .summary { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; }
     .metric { padding:13px; border:1px solid var(--line); border-radius:8px; background:var(--soft); }
     .metric span { display:block; color:var(--muted); font-size:11px; text-transform:uppercase; }
     .metric strong { display:block; margin-top:4px; font-size:21px; font-variant-numeric:tabular-nums; }
@@ -128,7 +128,7 @@
       <section class="panel">
         <div class="panel-head"><div><h3>Veterinaria propietaria y autorización</h3><p>La vacuna se descontará únicamente del stock de esta veterinaria.</p></div><button class="btn small">Adjuntar autorización</button></div>
         <div class="panel-body grid">
-          <div class="span-2"><label class="required">Veterinaria propietaria</label><select id="vet"><option>Veterinaria San Martín</option><option>Veterinaria del Centro</option></select><span class="hint">Stock disponible en UEL: 18 frascos llenos</span></div>
+          <div class="span-2"><label class="required">Veterinaria propietaria</label><select id="vet"><option>Veterinaria San Martín</option><option>Veterinaria del Centro</option></select><span class="hint">Stock disponible en UEL: 18 frascos llenos · 80 dosis sobrantes</span></div>
           <div><label class="required">Referencia de autorización</label><input placeholder="Ej.: autorización 184/26"></div>
           <div><label class="required">Fecha de autorización</label><input type="date" value="2026-10-07"></div>
         </div>
@@ -158,12 +158,12 @@
       </section>
 
       <section class="panel">
-        <div class="panel-head"><div><h3>Vacuna a entregar</h3><p>Solo se muestran lotes llenos, vigentes y propiedad de la veterinaria seleccionada.</p></div><button id="add-lot" class="btn small">+ Agregar lote</button></div>
+        <div class="panel-head"><div><h3>Vacuna a entregar</h3><p>Puede combinar frascos llenos y dosis sobrantes de la misma veterinaria.</p></div><button id="add-lot" class="btn small">+ Agregar existencia</button></div>
         <div class="panel-body table-wrap">
           <table>
-            <thead><tr><th>Marca</th><th>Serie / lote</th><th>Vencimiento</th><th class="num">Disponible</th><th class="num">Frascos a retirar</th><th class="num">Dosis teóricas</th><th></th></tr></thead>
+            <thead><tr><th>Origen</th><th>Marca</th><th>Serie / lote</th><th>Vencimiento</th><th class="num">Disponible</th><th class="num">Cantidad</th><th>Unidad</th><th class="num">Dosis equivalentes</th><th></th></tr></thead>
             <tbody id="lots">
-              <tr><td>Biogénesis</td><td><select><option>AF-26091</option><option>AF-26088</option></select></td><td>31/03/2027</td><td class="num">18 frascos</td><td><input class="bottles num" type="number" min="1" max="18" value="1"></td><td class="lot-doses num">125</td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+              <tr><td><select class="stock-source"><option value="full">Lleno</option><option value="leftover">Sobrante</option></select></td><td>Biogénesis</td><td><select><option>AF-26091</option><option>AF-26088</option></select></td><td>31/03/2027</td><td class="available num">18 frascos</td><td><input class="stock-quantity num" type="number" min="1" max="18" value="1"></td><td class="stock-unit">frascos</td><td class="lot-doses num">125</td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
             </tbody>
           </table>
         </div>
@@ -175,7 +175,8 @@
           <div class="summary">
             <div class="metric"><span>Destinos</span><strong id="destination-count">3</strong></div>
             <div class="metric"><span>Dosis previstas</span><strong id="planned-total">125</strong></div>
-            <div class="metric"><span>Frascos</span><strong id="bottle-total">1</strong></div>
+            <div class="metric"><span>Frascos llenos</span><strong id="bottle-total">1</strong></div>
+            <div class="metric"><span>Dosis sobrantes</span><strong id="leftover-total">0</strong></div>
             <div class="metric accent"><span>Dosis retiradas</span><strong id="dose-total">125</strong></div>
             <div class="metric"><span>Diferencia prevista</span><strong id="forecast-difference">0</strong></div>
           </div>
@@ -185,7 +186,7 @@
     </div>
     <footer class="footer-actions">
       <span class="quiet">Los datos técnicos de auditoría no se muestran en esta pantalla.</span>
-      <div class="actions"><button class="btn danger">Anular</button><button class="btn">Guardar borrador</button><a class="btn" href="remito-vacunas-impresion.html" target="_blank">Ver remito</a><a class="btn" href="acta-vacunacion.html" target="_blank">Ver modelo de acta</a><button id="prepare-button" class="btn primary">Preparar retiro y generar 3 juegos</button></div>
+      <div class="actions"><button class="btn danger">Anular</button><button class="btn">Guardar borrador</button><a class="btn" href="remito-vacunas-impresion.html" target="_blank">Ver remito</a><a class="btn" href="acta-vacunacion.html" target="_blank">Ver modelo de acta</a><a class="btn" href="remito-devolucion-conciliacion.html">Ver devolución</a><button id="prepare-button" class="btn primary">Preparar retiro y generar 3 juegos</button></div>
     </footer>
   </main>
 </div>
@@ -194,7 +195,7 @@
   <tr><td><select><option>Seleccionar productor…</option><option>Productor A</option><option>Productor B</option><option>Productor C</option></select></td><td><select><option>Seleccionar RENSPA…</option></select></td><td>—</td><td><span class="valid">Vinculado</span></td><td><input class="planned num" type="number" min="0" value="0"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
 </template>
 <template id="lot-template">
-  <tr><td>Biogénesis</td><td><select><option>Seleccionar lote…</option><option>AF-26091</option><option>AF-26088</option></select></td><td>—</td><td class="num">—</td><td><input class="bottles num" type="number" min="1" value="1"></td><td class="lot-doses num">125</td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+  <tr><td><select class="stock-source"><option value="full">Lleno</option><option value="leftover">Sobrante</option></select></td><td>Biogénesis</td><td><select><option>Seleccionar lote…</option><option>AF-26091</option><option>AF-26088</option></select></td><td>—</td><td class="available num">18 frascos</td><td><input class="stock-quantity num" type="number" min="1" max="18" value="1"></td><td class="stock-unit">frascos</td><td class="lot-doses num">125</td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
 </template>
 <script>
   const destinations = document.querySelector('#destinations');
@@ -202,18 +203,29 @@
 
   function calculate() {
     const planned = [...document.querySelectorAll('.planned')].reduce((sum, field) => sum + (Number(field.value) || 0), 0);
-    const bottles = [...document.querySelectorAll('.bottles')].reduce((sum, field) => sum + (Number(field.value) || 0), 0);
+    let bottles = 0;
+    let leftoverDoses = 0;
+    let doses = 0;
     document.querySelectorAll('#lots tr').forEach(row => {
-      const count = Number(row.querySelector('.bottles')?.value) || 0;
+      const source = row.querySelector('.stock-source')?.value;
+      const quantity = Number(row.querySelector('.stock-quantity')?.value) || 0;
+      const isFull = source === 'full';
+      if (isFull) bottles += quantity; else leftoverDoses += quantity;
+      const equivalent = isFull ? quantity * 125 : quantity;
+      doses += equivalent;
+      row.querySelector('.stock-unit').textContent = isFull ? 'frascos' : 'dosis';
+      row.querySelector('.available').textContent = isFull ? '18 frascos' : '80 dosis';
+      const quantityField = row.querySelector('.stock-quantity');
+      quantityField.max = isFull ? '18' : '80';
       const target = row.querySelector('.lot-doses');
-      if (target) target.textContent = String(count * 125);
+      if (target) target.textContent = String(equivalent);
     });
-    const doses = bottles * 125;
     const difference = doses - planned;
     document.querySelector('#destination-count').textContent = String(destinations.children.length);
     document.querySelector('#prepare-button').textContent = `Preparar retiro y generar ${destinations.children.length} ${destinations.children.length === 1 ? 'juego' : 'juegos'}`;
     document.querySelector('#planned-total').textContent = String(planned);
     document.querySelector('#bottle-total').textContent = String(bottles);
+    document.querySelector('#leftover-total').textContent = String(leftoverDoses);
     document.querySelector('#dose-total').textContent = String(doses);
     document.querySelector('#forecast-difference').textContent = String(difference);
     const notice = document.querySelector('#notice');
@@ -229,7 +241,7 @@
     lots.append(document.querySelector('#lot-template').content.cloneNode(true)); calculate();
   });
   document.addEventListener('input', event => {
-    if (event.target.matches('.planned,.bottles')) calculate();
+    if (event.target.matches('.planned,.stock-quantity,.stock-source')) calculate();
   });
   document.addEventListener('click', event => {
     if (!event.target.matches('.remove')) return;

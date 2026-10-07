@@ -28,16 +28,18 @@ El objetivo es soportar campañas de vacunación antiaftosa, conservar el compon
 | Vacunas | `productos_vacuna` | Vacuna antiaftosa, marca y fabricante; queda preparado para futuros productos. |
 | Vacunas | `lotes_vacuna` | Serie/lote, vencimiento, producto y estado. |
 | Stock | `ubicaciones_stock` | UEL o profesional que mantiene la custodia física. |
-| Stock | `stock_veterinaria` | Propiedad de frascos llenos por veterinaria, UEL, lote y condición. |
+| Stock | `stock_veterinaria` | Saldos separados de frascos llenos y dosis sobrantes por veterinaria, UEL, lote y condición. |
 | Stock | `movimientos_stock` | Recepción, transferencia, devolución, consumo, rotura/decomiso en UEL o ajuste. |
 | Stock | `movimientos_stock_detalle` | Veterinaria propietaria, lote, cantidad de frascos o remanente y condición. |
 | Stock | `remitos_retiro` | Autorización, entrega y firma del profesional que retira desde la UEL. |
-| Stock | `remitos_retiro_detalle` | Serie/lote y cantidad de frascos llenos entregados. |
+| Stock | `remitos_retiro_detalle` | Origen lleno/sobrante, serie/lote, frascos o dosis entregadas. |
 | Stock | `remito_destinos` | Uno o más clientes/productores y establecimientos previstos para utilizar la vacuna de un remito. |
 | Stock | `versiones_remito` | Instantánea de cada emisión o modificación, con número de versión, motivo y estado de firma. |
 | Stock | `impresiones_remito` | Fecha, usuario, versión impresa y reimpresiones del comprobante. |
+| Stock | `devoluciones_remito` | Cabecera de cada devolución parcial vinculada al retiro, con fecha y receptor UEL. |
+| Stock | `devoluciones_remito_detalle` | Frascos llenos o dosis sobrantes reales por lote, acta y productor de origen. |
 | Stock | `sobrantes_vacuna` | Remanente abierto por veterinaria, lote, productor, establecimiento y acta. |
-| Stock | `conciliaciones_remito` | Retirado, suma vacunada, devoluciones, diferencia y estado de cierre. |
+| Stock | `conciliaciones_remito` | Retirado, vacunado, devolución esperada/real, uso inferido, variaciones y estado de cierre. |
 | Documentos | `series_acta` | Secuencias y rangos autorizados para numerar formularios. |
 | Documentos | `lotes_impresion_acta` | Emisión de juegos numerados y control de rangos impresos. |
 | Documentos | `formularios_acta` | Papel numerado, datos preimpresos, asignación y estado documental. |
@@ -90,6 +92,8 @@ erDiagram
 
     REMITOS_RETIRO ||--|{ REMITO_DESTINOS : incluye
     REMITOS_RETIRO ||--|{ VERSIONES_REMITO : versiona
+    REMITOS_RETIRO ||--o{ DEVOLUCIONES_REMITO : recibe
+    DEVOLUCIONES_REMITO ||--|{ DEVOLUCIONES_REMITO_DETALLE : detalla
     VERSIONES_REMITO ||--o{ IMPRESIONES_REMITO : imprime
     CLIENTES_PRODUCTORES ||--o{ REMITO_DESTINOS : recibe
     ESTABLECIMIENTOS ||--o{ REMITO_DESTINOS : identifica
@@ -127,6 +131,8 @@ DISTRUBUCION y DISTRI-VETE se reemplazan conceptualmente por movimientos con ori
 En la operación actual las veterinarias son propietarias de la vacuna y la UEL mantiene su custodia física y administración. El stock debe separarse simultáneamente por veterinaria, serie/lote y condición. Los retiros se documentan mediante remitos firmados y los sobrantes de frascos abiertos se mantienen separados de los frascos llenos, vinculados al productor, establecimiento y acta de origen.
 
 Un remito puede indicar varios productores/establecimientos de destino. Cada acta consume una parte del retiro para uno de esos destinos y la conciliación suma todas las actas confirmadas y vigentes. Las roturas y los decomisos son bajas exclusivas del stock físico de la UEL y no integran la conciliación de un remito entregado.
+
+Cada cierre de `conciliaciones_remito` conserva una instantánea por lote de las tres cantidades base —dosis retiradas, vacunadas y devueltas reales— y de los resultados calculados: devolución esperada, uso inferido, variación de devolución y variación de uso. Si el resultado no es exacto, también guarda estado `Conciliado con diferencia`, motivo catalogado, explicación, usuario autorizante y fecha. Las cantidades reales nunca se reemplazan por un ajuste para hacerlas coincidir.
 
 Si se agrega un destino después de la entrega, el mismo remito genera una nueva versión completa, se imprime nuevamente y requiere otra firma del profesional. La versión anterior y su firma permanecen inmutables para auditoría.
 

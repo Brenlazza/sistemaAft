@@ -127,9 +127,11 @@ Los sobrantes de frascos abiertos se concilian por separado según la cantidad r
 
 Para cada remito se suman todas las actas confirmadas y vigentes de sus destinos y se calcula:
 
-`diferencia = dosis retiradas - suma de dosis vacunadas - dosis devueltas en frascos llenos - dosis devueltas como sobrante`
+`devolución esperada = dosis retiradas llenas y sobrantes - suma de dosis vacunadas`
 
-La diferencia esperada es cero. Los descuadres quedan observados hasta su resolución autorizada. Ver [flujo de remitos y conciliación](flujo-remitos-conciliacion.md).
+`uso inferido = dosis retiradas llenas y sobrantes - dosis devueltas reales`
+
+Ambos controles deben coincidir con sus valores reales. Los descuadres positivos o negativos quedan observados y pueden cerrarse con motivo y autorización, conservando todas las cantidades declaradas. Ver [flujo de remitos y conciliación](flujo-remitos-conciliacion.md).
 
 Las roturas y los decomisos se utilizan exclusivamente para descontar el stock físico de la UEL. Se registran como movimientos separados y no forman parte de la conciliación del remito entregado a un profesional.
 

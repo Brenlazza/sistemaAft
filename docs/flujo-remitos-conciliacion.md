@@ -82,24 +82,32 @@ Los sobrantes nunca se convierten nuevamente en frascos llenos.
 
 ### 5. Conciliar el remito
 
-La conciliación utiliza:
+La conciliación conserva tres cantidades reales:
 
-`diferencia = dosis retiradas - suma de dosis vacunadas en actas vinculadas - dosis devueltas en frascos llenos - dosis devueltas como sobrante`
+- `R`: dosis retiradas desde stock lleno y sobrante;
+- `V`: dosis vacunadas en actas confirmadas;
+- `D`: dosis devueltas, sumando frascos llenos y sobrantes.
 
-La devolución de un frasco lleno equivale a 125 dosis.
+Se muestran dos controles:
+
+- devolución esperada: `R - V`, comparada con la devolución real `D`;
+- uso inferido: `R - D`, comparado con la vacunación declarada `V`.
+
+La diferencia neta firmada es `R - V - D`. Si es positiva faltan dosis por explicar; si es negativa se devolvieron más dosis que las esperadas. La devolución de un frasco lleno equivale a 125 dosis.
 
 Solo se suman actas confirmadas y vigentes. Un acta anulada deja de integrar el cálculo mediante su reversión auditada.
 
 Las roturas y los decomisos no justifican diferencias de un remito entregado. Se registran únicamente como bajas separadas del stock que permanece físicamente en la UEL, con motivo y autorización.
 
-El resultado esperado es cero. Si no coincide:
+El resultado exacto esperado es cero. Si no coincide:
 
 - el remito queda `Observado`;
 - se muestra el valor de la diferencia;
 - se exige motivo y observación;
-- no se cierra la conciliación automáticamente;
-- la resolución queda reservada a un usuario autorizado;
-- cualquier ajuste genera un movimiento auditable.
+- no se modifica ninguna cantidad real para forzar el cero;
+- la devolución declarada ingresa efectivamente al stock lleno o sobrante según corresponda;
+- la revisión y el cierre con diferencia quedan reservados a un usuario autorizado;
+- el motivo, la explicación y los valores quedan disponibles para informes futuros.
 
 ## Estados de conciliación
 
@@ -110,6 +118,7 @@ El resultado esperado es cero. Si no coincide:
 | Cuadrado | La diferencia calculada es cero. |
 | Observado | Existe diferencia o documentación incompleta. |
 | Conciliado | Un usuario autorizado revisó y cerró el circuito. |
+| Conciliado con diferencia | Se cerró el circuito con una diferencia explícita, explicada y auditada. |
 | Anulado | El remito fue anulado mediante un procedimiento auditado. |
 
 Un remito `Cuadrado` todavía puede requerir revisión documental antes de pasar a `Conciliado`.
@@ -136,6 +145,10 @@ Una rotura o decomiso se registra con un movimiento propio sobre el stock físic
 
 Si las dosis retiradas no coinciden con la suma de vacunaciones y devoluciones, el sistema conserva la diferencia y no permite ocultarla mediante la edición del saldo.
 
+### Devolución mayor que la esperada
+
+Se retiran 125 dosis, las actas confirman 100 vacunadas y regresan 30 dosis. La devolución esperada es 25, el uso inferido es 95, la variación de devolución es `+5` y la variación de uso es `-5`. Las 30 dosis reales ingresan al stock de sobrantes; el remito puede cerrarse como `Conciliado con diferencia` y las 5 dosis de variación permanecen visibles y auditables.
+
 ## Datos mínimos de la conciliación
 
 - remito;
@@ -148,7 +161,9 @@ Si las dosis retiradas no coinciden con la suma de vacunaciones y devoluciones, 
 - actas vinculadas y dosis vacunadas;
 - frascos llenos devueltos;
 - dosis sobrantes devueltas;
-- diferencia calculada;
+- devolución esperada y devolución real;
+- uso inferido y vacunación declarada;
+- variación de devolución y variación de uso;
 - estado;
 - observación y motivo cuando corresponda;
 - usuario y fecha de revisión privada.

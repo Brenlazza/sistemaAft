@@ -37,7 +37,9 @@ La condición del stock puede ser:
 | Tipo | Origen | Destino o efecto |
 |---|---|---|
 | Recepción | Compra de una veterinaria | Incrementa en la UEL el stock lleno perteneciente a esa veterinaria. |
-| Retiro con remito | Stock lleno de la veterinaria en la UEL | Entrega frascos al vacunador/veterinario autorizado. |
+| Retiro lleno con remito | Stock lleno de la veterinaria en la UEL | Entrega frascos enteros al vacunador/veterinario autorizado. |
+| Retiro sobrante con remito | Stock sobrante de la veterinaria en la UEL | Entrega una cantidad de dosis sobrantes reutilizables. |
+| Devolución llena | Vacunador/veterinario | Reingresa frascos sin abrir al stock lleno de la misma veterinaria y lote. |
 | Consumo | Stock del vacunador | Descuenta lo aplicado en un acta confirmada. |
 | Devolución de sobrante | Vacunador/veterinario | Ingresa en la UEL un sobrante abierto de la misma veterinaria y lo vincula al productor/establecimiento. |
 | Decomiso en UEL | Stock físico en la UEL | Pasa la existencia a condición `Decomisado` y descuenta su disponibilidad en la UEL. |
@@ -80,14 +82,16 @@ El nuevo sistema implementará el circuito de remitos que actualmente se gestion
 1. registrar la veterinaria propietaria y la autorización firmada;
 2. identificar al vacunador/veterinario autorizado para retirar;
 3. seleccionar uno o más destinos, vinculando en cada caso el cliente/productor canónico, el registro SENASA de la campaña y el establecimiento/RENSPA;
-4. seleccionar serie/lote y cantidad de frascos llenos;
+4. seleccionar en cada línea el origen `Lleno` o `Sobrante`, la serie/lote y la cantidad correspondiente;
 5. validar que exista saldo suficiente de esa veterinaria en la UEL;
 6. generar e imprimir el remito de retiro;
 7. obtener la firma del profesional que recibe y asume responsabilidad;
-8. confirmar la entrega y descontar los frascos del stock lleno de la veterinaria en la UEL;
-9. asignar la custodia de esos frascos al profesional receptor.
+8. confirmar la entrega y descontar cada línea del stock lleno o sobrante de la veterinaria en la UEL;
+9. asignar la custodia de esas existencias al profesional receptor.
 
-El remito conserva número, fecha, veterinaria, receptor, UEL, serie/lote, cantidad de frascos, destinos y firmas. Una entrega nunca se descuenta del stock de otra veterinaria, aunque coincidan marca y lote.
+El remito conserva número, fecha, veterinaria, receptor, UEL, origen de stock, serie/lote, frascos o dosis, destinos y firmas. Una entrega nunca se descuenta del stock de otra veterinaria, aunque coincidan marca y lote.
+
+Un remito puede combinar frascos llenos y dosis sobrantes. Las líneas llenas se expresan en frascos y las líneas sobrantes en dosis. Ambas pertenecen a la misma veterinaria propietaria.
 
 Un mismo remito puede abastecer a varios productores. Por ejemplo, un frasco de 125 dosis puede respaldar actas por 50, 50 y 25 animales de tres productores diferentes. Cada acta identifica un destino del remito y la conciliación suma las dosis de todas las actas vinculadas.
 
@@ -134,6 +138,10 @@ El saldo de frascos llenos se calcula como:
 
 `frascos llenos = frascos recibidos - frascos retirados - frascos rotos/decomisados ± ajustes`
 
+El saldo de sobrantes se calcula en dosis:
+
+`dosis sobrantes = dosis devueltas como sobrante - dosis sobrantes retiradas - dosis sobrantes rotas/decomisadas ± ajustes`
+
 Los borradores no forman parte del saldo. Los movimientos anulados se neutralizan mediante reversiones, manteniendo la trazabilidad.
 
 El sistema debe mostrar por separado:
@@ -172,7 +180,11 @@ Cuando el profesional retira un frasco lleno y no utiliza todo su contenido, dev
 
 El sobrante nunca vuelve a contarse como frasco lleno y se mide en dosis remanentes. Un frasco contiene 125 dosis: si se aplican 100, la devolución registra 25 dosis de sobrante. La cantidad aplicada y la cantidad realmente remanente se almacenan por separado.
 
-La conciliación detallada entre remito, vacunación y devolución se define en [flujo de remitos y conciliación](flujo-remitos-conciliacion.md). La diferencia esperada entre dosis retiradas, suma de dosis vacunadas en todas las actas vinculadas y devoluciones es cero; cualquier desvío queda observado y auditado.
+Las dosis sobrantes confirmadas quedan disponibles para nuevos remitos de la misma veterinaria. El saldo operativo se agrupa por veterinaria, UEL, lote y vencimiento, conservando internamente cada devolución, productor y acta de origen. Puede reutilizarse para otro productor sin perder esa trazabilidad.
+
+Cada remito permite `Añadir devolución`. Una devolución confirmada es un movimiento posterior vinculado al retiro original; no modifica sus cantidades. Puede haber varias devoluciones parciales para el mismo remito.
+
+La conciliación detallada entre remito, vacunación y devolución se define en [flujo de remitos y conciliación](flujo-remitos-conciliacion.md). Se comparan la devolución esperada contra la real y el uso inferido contra las dosis vacunadas. Las diferencias pueden ser positivas o negativas, quedan observadas y pueden cerrarse con explicación y autorización sin alterar las cantidades reales.
 
 Al finalizar una etapa o campaña, cada vacunador informa por serie/lote:
 
@@ -203,7 +215,6 @@ Los usuarios, fechas técnicas, valores anteriores y motivos internos quedan alm
 
 ## Decisiones pendientes
 
-1. Regla sanitaria y plazo de reutilización o descarte de un sobrante abierto.
-2. Si se admite alguna tolerancia distinta de cero durante la conciliación.
-3. Anticipación utilizada para considerar un lote próximo a vencer.
-4. Si la autorización manual de la veterinaria se adjunta escaneada o se conserva solo en papel.
+1. Plazo máximo durante el cual un sobrante abierto puede seguir disponible.
+2. Anticipación utilizada para considerar un lote próximo a vencer.
+3. Si la autorización manual de la veterinaria se adjunta escaneada o se conserva solo en papel.
