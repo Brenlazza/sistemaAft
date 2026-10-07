@@ -28,7 +28,7 @@ La entrada al módulo muestra una grilla con:
 
 Filtros: texto libre, número, campaña, UEL, veterinaria, profesional, productor/RENSPA, lote, fecha y estado. La búsqueda por productor debe encontrar el remito aunque tenga varios destinos.
 
-Acciones principales: `Nuevo remito`, `Abrir`, `Imprimir`, `Registrar devolución` y `Conciliar`, según estado y permisos.
+Acciones principales: `Nuevo remito`, `Abrir`, `Imprimir remito y actas`, `Registrar devolución` y `Conciliar`, según estado y permisos.
 
 ## Pantalla de alta y detalle
 
@@ -130,6 +130,8 @@ Acciones:
 - `Guardar borrador`;
 - `Registrar autorización`;
 - `Vista previa / imprimir`;
+- `Generar preborradores de actas`;
+- `Imprimir remito y actas`;
 - `Confirmar entrega`;
 - `Anular`, con motivo y permiso.
 
@@ -143,6 +145,12 @@ Acciones:
 - firma del receptor.
 
 La confirmación genera el movimiento de salida y cambia el estado a `Entregado` en una única transacción.
+
+### Preborradores antes del retiro
+
+Una vez confirmados los destinos, la pantalla genera un preborrador por productor/establecimiento. Un remito con tres destinos muestra tres juegos de acta. Cada uno puede previsualizarse individualmente o imprimirse junto con el remito mediante `Imprimir remito y actas`.
+
+Los preborradores contienen los datos conocidos del productor, establecimiento, profesional, campaña y vacuna. Las cantidades previstas no se colocan en los casilleros de vacunación. Al confirmar la entrega, los juegos impresos quedan registrados como entregados al profesional, sin afectar todavía consumo ni cobertura.
 
 ## Pantalla después de la entrega
 
@@ -158,6 +166,7 @@ Grilla:
 - dosis vacunadas;
 - estado del acta;
 - alerta por destino o lote inconsistente.
+- estado del preborrador físico: generado, impreso, entregado, devuelto o cargado.
 
 Solo las actas `Confirmadas` y vigentes suman a la conciliación. Desde esta grilla se puede abrir el acta, pero no modificarla silenciosamente.
 

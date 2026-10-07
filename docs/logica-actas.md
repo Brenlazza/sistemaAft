@@ -13,6 +13,8 @@ El sistema debe distinguir:
 
 Esta separación permite registrar formularios impresos, entregados, dañados, extraviados o anulados sin inventar una vacunación.
 
+En la interfaz, el formulario preimpreso vinculado a un destino del remito se presenta como `Preborrador de acta`. Esta denominación operativa no significa que exista una vacunación: hasta su regreso y confirmación solo controla el documento físico y sus datos conocidos.
+
 ## Formulario numerado
 
 Cada formulario posee:
@@ -57,13 +59,13 @@ Una reimpresión no cambia el número ni crea un formulario nuevo. Registra fech
 
 La emisión debe ejecutarse como una única operación:
 
-1. Seleccionar campaña activa, UEL, vacunador y establecimiento.
+1. Tomar campaña, UEL, vacunador y establecimiento desde el destino confirmado del remito.
 2. Verificar que el vacunador esté habilitado.
 3. Verificar que el establecimiento esté habilitado para recibir un acta en la campaña.
-4. Verificar que la vacuna prevista pertenezca al stock disponible del vacunador o a una entrega confirmada.
+4. Verificar que la vacuna prevista corresponda al retiro preparado o entregado.
 5. Reservar el siguiente número disponible.
 6. Guardar una instantánea de todos los datos que serán impresos.
-7. Generar las tres páginas con geometría idéntica y destinos diferentes.
+7. Generar las tres páginas con geometría idéntica y destinos de copia diferentes.
 8. Registrar el lote de impresión y pasar el formulario a `Impreso`.
 
 Si falla cualquier paso, no debe quedar un número parcialmente emitido. Si el documento ya fue generado, el número nunca vuelve a utilizarse.
@@ -79,6 +81,7 @@ Se preimprimen los datos conocidos:
 - marca del ganado cuando esté digitalizada;
 - vacunador, matrícula y DNI;
 - vacuna, serie/lote y vencimiento previstos;
+- número del remito de origen como referencia administrativa;
 
 Se completan en campo:
 
@@ -89,6 +92,8 @@ Se completan en campo:
 - diferencias respecto de los datos preimpresos;
 - observaciones;
 - firmas y aclaraciones.
+
+Las dosis previstas del destino en el remito no se preimprimen como cantidades vacunadas. Los casilleros por categoría permanecen vacíos hasta que el profesional registre lo realmente aplicado.
 
 Cuando se utiliza otra serie/lote, el vacunador corrige el papel y explica el cambio. La carga conserva el valor preimpreso y registra por separado el valor efectivamente utilizado.
 

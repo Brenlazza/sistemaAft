@@ -93,6 +93,7 @@ erDiagram
     VERSIONES_REMITO ||--o{ IMPRESIONES_REMITO : imprime
     CLIENTES_PRODUCTORES ||--o{ REMITO_DESTINOS : recibe
     ESTABLECIMIENTOS ||--o{ REMITO_DESTINOS : identifica
+    REMITO_DESTINOS ||--o{ FORMULARIOS_ACTA : preimprime
     REMITO_DESTINOS ||--o{ ACTAS_VACUNACION : abastece
 
     CAMPANIAS ||--o{ PADRON_CAMPANIA : define
@@ -112,6 +113,8 @@ La aplicación debe guardar explícitamente el resultado: vacunado, sin existenc
 ### Formulario físico separado del acta digital
 
 El número impreso pertenece al formulario físico y queda ocupado desde su emisión, incluso si el documento se anula, extravía o nunca produce una vacunación. El acta digital aparece cuando se transcriben los datos de campo. Esta separación evita registrar vacunaciones ficticias para controlar papel numerado y permite auditar entrega, devolución y reimpresión.
+
+Cada destino confirmado de un remito puede originar un `formulario_acta` preimpreso, mostrado al usuario como preborrador. El formulario conserva el vínculo con `remito_destinos`; generarlo, imprimirlo o entregarlo no crea consumo ni cobertura. Cuando regresa completado, origina o completa la `acta_vacunacion` correspondiente.
 
 ### Existencias separadas de animales vacunados
 

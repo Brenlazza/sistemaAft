@@ -185,7 +185,7 @@
     </div>
     <footer class="footer-actions">
       <span class="quiet">Los datos técnicos de auditoría no se muestran en esta pantalla.</span>
-      <div class="actions"><button class="btn danger">Anular</button><button class="btn">Guardar borrador</button><a class="btn" href="remito-vacunas-impresion.html" target="_blank">Vista previa / imprimir</a><button class="btn primary">Confirmar entrega</button></div>
+      <div class="actions"><button class="btn danger">Anular</button><button class="btn">Guardar borrador</button><a class="btn" href="remito-vacunas-impresion.html" target="_blank">Ver remito</a><a class="btn" href="acta-vacunacion.html" target="_blank">Ver modelo de acta</a><button id="prepare-button" class="btn primary">Preparar retiro y generar 3 juegos</button></div>
     </footer>
   </main>
 </div>
@@ -211,6 +211,7 @@
     const doses = bottles * 125;
     const difference = doses - planned;
     document.querySelector('#destination-count').textContent = String(destinations.children.length);
+    document.querySelector('#prepare-button').textContent = `Preparar retiro y generar ${destinations.children.length} ${destinations.children.length === 1 ? 'juego' : 'juegos'}`;
     document.querySelector('#planned-total').textContent = String(planned);
     document.querySelector('#bottle-total').textContent = String(bottles);
     document.querySelector('#dose-total').textContent = String(doses);

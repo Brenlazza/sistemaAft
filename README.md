@@ -45,3 +45,5 @@ Ver [lógica funcional de stock de vacunas](docs/logica-stock.md).
 Ver [flujo de remitos, devoluciones y conciliación](docs/flujo-remitos-conciliacion.md).
 
 Ver [definición funcional de la pantalla de remitos](docs/pantalla-remitos.md).
+
+Ver [generación de preborradores de actas desde cada remito](docs/preborradores-actas-desde-remito.md).

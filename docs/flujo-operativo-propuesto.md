@@ -72,9 +72,11 @@ El sistema valida:
 
 La confirmación descuenta frascos llenos del stock de la veterinaria en la UEL y asigna su custodia al profesional receptor. Los sobrantes de frascos utilizados regresan a la UEL como un stock separado, manteniendo veterinaria propietaria, lote, productor, establecimiento y acta de origen. Los decomisos, roturas y ajustes se registran como movimientos separados.
 
+Antes de que el profesional se retire, el sistema genera un preborrador de acta por cada destino confirmado. Se imprimen el remito y los juegos triplicados; el profesional firma el remito y se lleva la vacuna y las actas para completarlas en campo. Ver [preborradores de actas desde el remito](preborradores-actas-desde-remito.md).
+
 ## 5. Registrar el acta
 
-El flujo inicial será híbrido: el sistema emite cada formulario como un juego de tres ejemplares con el mismo número —original para la Fundación, duplicado para SENASA y triplicado para el productor—. Los datos del establecimiento, del vacunador y de la vacuna asignada salen preimpresos. El vacunador completa en papel los datos de campo y luego un operador los transcribe. Ver [diseño de actas numeradas](actas-papel-digital.md) y [lógica funcional de actas](logica-actas.md).
+El flujo inicial será híbrido: a partir de cada destino del remito, el sistema emite un preborrador como juego de tres ejemplares con el mismo número —original para la Fundación, duplicado para SENASA y triplicado para el productor—. Los datos del establecimiento, del vacunador y de la vacuna asignada salen preimpresos. Las dosis previstas del remito no se copian como animales vacunados. El vacunador completa en papel los datos reales y luego un operador los transcribe. Ver [diseño de actas numeradas](actas-papel-digital.md), [preborradores desde el remito](preborradores-actas-desde-remito.md) y [lógica funcional de actas](logica-actas.md).
 
 El acta identifica:
 
