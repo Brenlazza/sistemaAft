@@ -40,6 +40,10 @@ Mantener una entidad `unidades_ejecutoras` con una clave interna y el código hi
 
 Los movimientos de stock, entregas y actas deberán referenciar formalmente a la UEL responsable. El nuevo sistema debería registrar también estado activo y fechas de vigencia.
 
+Operativamente se confirmó una sede principal en San Cristóbal, donde funcionan diez veterinarias, y cinco subcentros dependientes en otras localidades, cada uno con una o más veterinarias. Conviene conservar una sola `unidad_ejecutora` institucional y agregar `centros_stock` jerárquicos con tipo `Principal` o `Subcentro`, ubicación, responsable y centro padre. Así una transferencia cambia la ubicación física sin fingir que existe otra UEL ni cambiar la veterinaria propietaria.
+
+Ver [flujo de stock entre UEL principal y subcentros](flujo-stock-centros.md).
+
 ## Pendiente
 
 - Confirmar la expansión oficial de la sigla UEL y su función operativa.

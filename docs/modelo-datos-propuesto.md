@@ -20,6 +20,8 @@ El objetivo es soportar campañas de vacunación antiaftosa, conservar el compon
 | Existencias | `existencias_detalle` | Cantidad por categoría animal. |
 | Catálogos | `categorias_animales` | Vacas, vaquillonas, terneros, terneras, búfalos, etc. |
 | Organización | `unidades_ejecutoras` | UEL responsable de stock, distribución y actas. |
+| Organización | `centros_stock` | Sede principal y subcentros dependientes, con localidad, responsable y jerarquía. |
+| Organización | `centro_veterinaria` | Veterinarias que operan en cada centro, con vigencia; admite varias por subcentro. |
 | Personas | `vacunadores` | Persona habilitada, matrícula, tipo veterinario/idóneo y vigencia. |
 | Organización | `veterinarias` | Veterinaria o punto operativo asociado al acta. |
 | Comercial | `empresas` | Empresa láctea, cooperativa u organización receptora. |
@@ -28,7 +30,12 @@ El objetivo es soportar campañas de vacunación antiaftosa, conservar el compon
 | Vacunas | `productos_vacuna` | Vacuna antiaftosa, marca y fabricante; queda preparado para futuros productos. |
 | Vacunas | `lotes_vacuna` | Serie/lote, vencimiento, producto y estado. |
 | Stock | `ubicaciones_stock` | UEL o profesional que mantiene la custodia física. |
-| Stock | `stock_veterinaria` | Saldos separados de frascos llenos y dosis sobrantes por veterinaria, UEL, lote y condición. |
+| Stock | `recepciones_stock` | Cabecera de cada tanda recibida en San Cristóbal, con fecha/hora, comprobante y responsables. |
+| Stock | `recepciones_stock_detalle` | Lotes, vencimientos, frascos, temperatura, sensores y estado inicial sin asignar. |
+| Stock | `asignaciones_stock` | Asignación o reasignación autorizada de existencias a una veterinaria. |
+| Stock | `transferencias_stock` | Traslados internos entre sede principal y subcentros. |
+| Stock | `transferencias_stock_detalle` | Veterinaria, lote, condición y cantidades trasladadas. |
+| Stock | `stock_veterinaria` | Saldos separados por centro, veterinaria o estado sin asignar, lote y condición. |
 | Stock | `movimientos_stock` | Recepción, transferencia, devolución, consumo, rotura/decomiso en UEL o ajuste. |
 | Stock | `movimientos_stock_detalle` | Veterinaria propietaria, lote, cantidad de frascos o remanente y condición. |
 | Stock | `remitos_retiro` | Autorización, entrega y firma del profesional que retira desde la UEL. |
@@ -45,6 +52,8 @@ El objetivo es soportar campañas de vacunación antiaftosa, conservar el compon
 | Documentos | `formularios_acta` | Papel numerado, datos preimpresos, asignación y estado documental. |
 | Documentos | `impresiones_acta` | Original, duplicado, triplicado y reimpresiones. |
 | Documentos | `eventos_formulario_acta` | Entrega, devolución, extravío, anulación y demás trazabilidad física. |
+| Documentos | `plantillas_senasa` | Tipo, versión, vigencia y archivo base de cada acta o planilla oficial. |
+| Documentos | `impresiones_senasa` | Documento generado, campaña, plantilla, fecha, usuario y registros de origen. |
 | Vacunación | `actas_vacunacion` | Cabecera: campaña, establecimiento, fecha, número, UEL, vacunador y estado. |
 | Vacunación | `aplicaciones_acta` | Programa/enfermedad, resultado o razón y cantidades de la intervención. |
 | Vacunación | `aplicaciones_detalle` | Categoría animal, animales vacunados, lote y dosis utilizadas. |
@@ -89,6 +98,12 @@ erDiagram
     LABORATORIOS ||--o{ PRODUCTOS_VACUNA : fabrica
     MOVIMIENTOS_STOCK ||--o{ MOVIMIENTOS_STOCK_DETALLE : contiene
     LOTES_VACUNA ||--o{ MOVIMIENTOS_STOCK_DETALLE : mueve
+    UNIDADES_EJECUTORAS ||--|{ CENTROS_STOCK : administra
+    CENTROS_STOCK ||--|{ CENTRO_VETERINARIA : habilita
+    VETERINARIAS ||--o{ CENTRO_VETERINARIA : opera
+    CENTROS_STOCK ||--o{ RECEPCIONES_STOCK : recibe
+    RECEPCIONES_STOCK ||--|{ RECEPCIONES_STOCK_DETALLE : contiene
+    CENTROS_STOCK ||--o{ TRANSFERENCIAS_STOCK : origina
 
     REMITOS_RETIRO ||--|{ REMITO_DESTINOS : incluye
     REMITOS_RETIRO ||--|{ VERSIONES_REMITO : versiona

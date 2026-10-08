@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recepción y distribución de vacunas</title>
+  <style>
+    :root{--navy:#17324d;--blue:#376887;--senasa:#1599a8;--ink:#17212b;--muted:#65727e;--line:#cfd6dc;--bg:#eef1f3;--paper:#fff;--head:#d9d9d9;--ok:#217149;--warn:#a56700;--red:#a82b25}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.35 Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:225px 1fr}aside{padding:22px 14px;background:var(--navy);color:#fff}.brand{padding:0 10px 20px;border-bottom:1px solid #ffffff35}.brand strong{display:block;font-size:17px}.brand span{font-size:11px;opacity:.75}nav{display:grid;gap:4px;margin-top:18px}nav a{padding:10px 12px;border-radius:6px;color:#fff;text-decoration:none;opacity:.8}nav a.active,nav a:hover{background:#ffffff18;opacity:1}main{min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 26px;background:#fff;border-bottom:1px solid var(--line)}.topbar h1{margin:0;font-size:21px}.topbar small{color:var(--muted)}.content{max-width:1480px;margin:auto;padding:22px 26px 100px}.steps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}.step{padding:12px 15px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--muted)}.step.active{border-color:var(--senasa);box-shadow:inset 4px 0 var(--senasa);color:var(--ink)}.step strong{display:block}.paper{margin-bottom:16px;background:var(--paper);border:1px solid #bfc7ce;box-shadow:0 2px 8px #24344212}.official-head{display:grid;grid-template-columns:1fr 130px;min-height:74px;border-bottom:1px solid #7d858b}.official-title{display:grid;place-items:center;padding:12px;text-align:center;font-size:15px;font-weight:bold}.senasa{display:grid;place-items:center;border-left:1px solid #7d858b;color:var(--senasa);font-size:23px;font-weight:bold;letter-spacing:-1px}.section-title{padding:6px 10px;background:var(--head);font-size:12px;font-weight:bold;text-align:center;text-transform:uppercase}.paper-body{padding:14px 16px}.form-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px 12px}.span-2{grid-column:span 2}.span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-6{grid-column:span 6}label{display:block;margin-bottom:4px;color:#4e5963;font-size:10.5px;font-weight:bold;text-transform:uppercase}input,select,textarea{width:100%;padding:7px 8px;border:1px solid #bfc8cf;border-radius:3px;background:#fff}input[readonly]{background:#f2f4f5;color:#53606b}.checks{display:flex;gap:16px;align-items:center}.checks label{display:flex;gap:5px;align-items:center;margin:0;font-size:12px;text-transform:none}.checks input{width:auto}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}th{padding:7px 6px;background:#e2e4e6;border:1px solid #aeb6bc;font-size:9.5px;text-align:left;text-transform:uppercase}td{padding:6px;border:1px solid #c5ccd2;vertical-align:middle}td input,td select{min-width:95px;padding:6px}.num{text-align:right;font-variant-numeric:tabular-nums}.state{display:inline-block;padding:4px 8px;border-radius:999px;background:#e7f4ec;color:var(--ok);font-size:11px;font-weight:bold}.summary{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}.metric{padding:11px;border:1px solid var(--line);background:#f7f9fa}.metric span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase}.metric strong{display:block;margin-top:3px;font-size:21px}.metric.pending{border-color:#dfbd78;background:#fff8e7}.metric.pending strong{color:var(--warn)}.notice{margin-top:12px;padding:10px 12px;border-left:4px solid var(--senasa);background:#eaf6f7;color:#21545a}.notice.error{border-left-color:var(--red);background:#fff0ef;color:#7b2722}.panel-actions{display:flex;justify-content:space-between;gap:10px;padding:12px 16px;border-top:1px solid var(--line);background:#f7f8f9}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{padding:8px 11px;border:1px solid #bdc6cd;border-radius:5px;background:#fff;color:#25323e;font-weight:bold;text-decoration:none}.btn.primary{border-color:var(--navy);background:var(--navy);color:#fff}.btn.senasa{border-color:var(--senasa);background:var(--senasa);color:#fff}.quiet{color:var(--muted);font-size:11px}.add{margin-top:9px}.footer{position:fixed;left:225px;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:12px 26px;border-top:1px solid var(--line);background:#ffffffef;backdrop-filter:blur(7px)}
+    .btn.senasa{display:inline-block;place-items:normal;font-size:14px;letter-spacing:normal}
+    @media(max-width:1050px){.app{grid-template-columns:1fr}aside{display:none}.footer{left:0}.form-grid{grid-template-columns:repeat(2,1fr)}.span-2,.span-3,.span-4,.span-6{grid-column:span 2}.summary{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:650px){.content,.topbar{padding-left:12px;padding-right:12px}.steps,.summary{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.span-2,.span-3,.span-4,.span-6{grid-column:auto}.official-head{grid-template-columns:1fr 95px}.footer{position:static;align-items:stretch;flex-direction:column}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside><div class="brand"><strong>Sistema AFT</strong><span>Fundación San Cristóbal Este</span></div><nav><a href="#">Inicio</a><a href="#">Campañas</a><a class="active" href="#">Stock UEL</a><a href="remito-vacunas.html">Remitos</a><a href="#">Actas</a><a href="#">Informes</a></nav></aside>
+  <main>
+    <header class="topbar"><div><h1>Recepción y distribución</h1><small>Depósito principal San Cristóbal</small></div><span class="state">Recepción controlada</span></header>
+    <div class="content">
+      <div class="steps"><div class="step active"><strong>1. Recepción y control</strong>Registrar la llegada con los campos del acta SENASA.</div><div class="step active"><strong>2. Distribución</strong>Asignar veterinarias y trasladar a subcentros.</div></div>
+
+      <section class="paper">
+        <div class="official-head"><div class="official-title">ACTA DE RECEPCIÓN DE VACUNAS<br>CAMPAÑA DE VACUNACIÓN CONTRA LA FIEBRE AFTOSA</div><div class="senasa">senasa</div></div>
+        <div class="paper-body">
+          <div class="form-grid">
+            <div class="span-2"><label>Campaña</label><div class="checks"><label><input type="radio" name="campaign"> Primera</label><label><input type="radio" name="campaign" checked> Segunda</label><label>Año <input style="width:78px" value="2026"></label></div></div>
+            <div><label>Fecha de llegada</label><input type="date" value="2026-10-07"></div><div><label>Hora</label><input type="time" value="08:30"></div>
+            <div class="span-2"><label>Centro receptor</label><input value="San Cristóbal — Principal" readonly></div>
+            <div class="span-2"><label>Ente Sanitario Local</label><input value="Fundación Control Fiebre Aftosa San Cristóbal Este" readonly></div>
+            <div><label>Plan N.°</label><input value="175"></div><div><label>Oficina SENASA</label><input value="San Cristóbal"></div>
+            <div class="span-2"><label>Remito/s acompañantes</label><input value="R-18426, R-18427"></div>
+          </div>
+        </div>
+        <div class="section-title">Detalle de la vacuna recibida</div>
+        <div class="paper-body table-wrap">
+          <table><thead><tr><th>Fecha</th><th>Vacuna / marca</th><th>Serie</th><th class="num">Total envases</th><th class="num">Total dosis</th><th>Fecha vto.</th><th>T.° recepción</th><th>Estado sensores</th><th></th></tr></thead><tbody id="receipts">
+            <tr><td><input type="date" value="2026-10-07"></td><td><select><option>Biogénesis</option><option>CDV</option></select></td><td><input value="AF-26091"></td><td><input class="received-bottles num" type="number" min="1" value="100"></td><td class="received-doses num">12500</td><td><input type="date" value="2027-03-31"></td><td><input value="4,2 °C"></td><td><select><option>Conforme</option><option>Observado</option><option>Sin sensor</option></select></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+          </tbody></table>
+          <button id="add-reception" class="btn add">+ Agregar lote</button>
+          <div class="form-grid" style="margin-top:13px"><div class="span-3"><label>Integridad de las conservadoras</label><select><option>Conforme</option><option>Observada</option></select></div><div class="span-3"><label>Observaciones</label><input value="Conservadoras íntegras y cadena de frío verificada"></div></div>
+        </div>
+        <div class="panel-actions"><span class="quiet">Los nombres de entrega y recepción son opcionales; el usuario del sistema queda auditado.</span><div class="actions"><button class="btn">Guardar borrador</button><a class="btn" href="acta-recepcion-vacunas-impresion.html" target="_blank">Vista previa A4</a><button class="btn senasa">Confirmar recepción</button></div></div>
+      </section>
+
+      <section class="paper">
+        <div class="official-head"><div class="official-title">DISTRIBUCIÓN DE VACUNAS RECIBIDAS<br>ASIGNACIÓN A VETERINARIAS Y SUBCENTROS</div><div class="senasa">stock</div></div>
+        <div class="section-title">Distribución posterior al control de recepción</div>
+        <div class="paper-body table-wrap">
+          <table><thead><tr><th>Serie</th><th>Centro destino</th><th>Veterinaria</th><th class="num">Envases</th><th class="num">Dosis</th><th>Efecto</th><th></th></tr></thead><tbody id="allocations">
+            <tr><td><select><option>AF-26091</option></select></td><td><select class="center"><option value="main">San Cristóbal — Principal</option><option value="sub">Ceres — Subcentro</option><option value="sub">San Guillermo — Subcentro</option></select></td><td><select class="vet"><option>Veterinaria San Martín</option><option>Veterinaria del Centro</option></select></td><td><input class="allocated-bottles num" type="number" min="0" value="40"></td><td class="allocated-doses num">5000</td><td class="effect">Asignación local</td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+            <tr><td><select><option>AF-26091</option></select></td><td><select class="center"><option value="main">San Cristóbal — Principal</option><option value="sub" selected>Ceres — Subcentro</option><option value="sub">San Guillermo — Subcentro</option></select></td><td><select class="vet"><option>Veterinaria Ceres Norte</option><option>Veterinaria Ceres Sur</option></select></td><td><input class="allocated-bottles num" type="number" min="0" value="30"></td><td class="allocated-doses num">3750</td><td class="effect">Asignación + transferencia</td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+          </tbody></table>
+          <button id="add-allocation" class="btn add">+ Agregar distribución</button>
+          <div class="summary"><div class="metric"><span>Envases recibidos</span><strong id="received-total">100</strong></div><div class="metric"><span>Envases distribuidos</span><strong id="allocated-total">70</strong></div><div class="metric"><span>Dosis distribuidas</span><strong id="allocated-dose-total">8750</strong></div><div class="metric pending"><span>Sin asignar</span><strong id="unassigned-total">30</strong></div><div class="metric"><span>Estado</span><strong id="distribution-state" style="font-size:15px">Distribución parcial válida</strong></div></div>
+          <div id="distribution-notice" class="notice">Quedan 30 frascos visibles como stock sin asignar en San Cristóbal. Puede confirmar sin distribuirlos.</div>
+        </div>
+        <div class="panel-actions"><span class="quiet">Cada subcentro confirmará temperatura y cantidades reales recibidas.</span><div class="actions"><button class="btn">Guardar distribución</button><a class="btn" href="acta-subcentro-impresion.html" target="_blank">Ver acta de subcentro</a><button id="confirm-distribution" class="btn primary">Confirmar distribución</button></div></div>
+      </section>
+    </div>
+    <footer class="footer"><span class="quiet">El stock sin asignar permanece disponible y auditable en el depósito principal.</span><div class="actions"><button class="btn">Volver a recepciones</button><button class="btn primary">Ver stock por centro</button></div></footer>
+  </main>
+</div>
+<template id="receipt-template"><tr><td><input type="date" value="2026-10-07"></td><td><select><option>Biogénesis</option><option>CDV</option></select></td><td><input placeholder="Serie"></td><td><input class="received-bottles num" type="number" min="1" value="1"></td><td class="received-doses num">125</td><td><input type="date"></td><td><input placeholder="°C"></td><td><select><option>Conforme</option><option>Observado</option><option>Sin sensor</option></select></td><td><button class="remove" aria-label="Quitar">×</button></td></tr></template>
+<template id="allocation-template"><tr><td><select><option>AF-26091</option></select></td><td><select class="center"><option value="main">San Cristóbal — Principal</option><option value="sub">Ceres — Subcentro</option><option value="sub">San Guillermo — Subcentro</option></select></td><td><select class="vet"><option>Seleccionar veterinaria…</option><option>Veterinaria San Martín</option></select></td><td><input class="allocated-bottles num" type="number" min="0" value="0"></td><td class="allocated-doses num">0</td><td class="effect">Asignación local</td><td><button class="remove" aria-label="Quitar">×</button></td></tr></template>
+<script>
+  const receipts=document.querySelector('#receipts'); const allocations=document.querySelector('#allocations');
+  function calculate(){
+    let received=0; document.querySelectorAll('.received-bottles').forEach(field=>{const value=Number(field.value)||0;received+=value;field.closest('tr').querySelector('.received-doses').textContent=String(value*125)});
+    let allocated=0; document.querySelectorAll('#allocations tr').forEach(row=>{const value=Number(row.querySelector('.allocated-bottles')?.value)||0;allocated+=value;row.querySelector('.allocated-doses').textContent=String(value*125);row.querySelector('.effect').textContent=row.querySelector('.center').value==='sub'?'Asignación + transferencia':'Asignación local'});
+    const unassigned=received-allocated; document.querySelector('#received-total').textContent=String(received);document.querySelector('#allocated-total').textContent=String(allocated);document.querySelector('#allocated-dose-total').textContent=String(allocated*125);document.querySelector('#unassigned-total').textContent=String(unassigned);
+    const notice=document.querySelector('#distribution-notice');const button=document.querySelector('#confirm-distribution');const state=document.querySelector('#distribution-state');
+    if(unassigned<0){notice.textContent=`La distribución supera lo recibido por ${Math.abs(unassigned)} frascos.`;notice.classList.add('error');button.disabled=true;state.textContent='Exceso inválido'}else{notice.textContent=unassigned===0?'Toda la recepción está distribuida.':'Quedan '+unassigned+' frascos visibles como stock sin asignar en San Cristóbal. Puede confirmar sin distribuirlos.';notice.classList.remove('error');button.disabled=false;state.textContent=unassigned===0?'Distribución completa':'Distribución parcial válida'}
+  }
+  document.querySelector('#add-reception').onclick=()=>{receipts.append(document.querySelector('#receipt-template').content.cloneNode(true));calculate()};
+  document.querySelector('#add-allocation').onclick=()=>{allocations.append(document.querySelector('#allocation-template').content.cloneNode(true));calculate()};
+  document.addEventListener('input',e=>{if(e.target.matches('.received-bottles,.allocated-bottles,.center'))calculate()});
+  document.addEventListener('click',e=>{if(!e.target.matches('.remove'))return;const body=e.target.closest('tbody');if(body.children.length>1)e.target.closest('tr').remove();calculate()});calculate();
+</script>
+</body>
+</html>

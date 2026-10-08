@@ -49,3 +49,11 @@ Ver [definición funcional de la pantalla de remitos](docs/pantalla-remitos.md).
 Ver [generación de preborradores de actas desde cada remito](docs/preborradores-actas-desde-remito.md).
 
 Ver [pantalla de devolución de actas, vacuna y conciliación](docs/pantalla-devolucion-conciliacion.md).
+
+Ver [flujo de stock entre la UEL principal y los subcentros](docs/flujo-stock-centros.md).
+
+Ver [formularios y planillas oficiales SENASA relevados](docs/formularios-senasa-relevados.md).
+
+Ver [pantallas de recepción y distribución de stock](docs/pantalla-recepcion-distribucion-stock.md).
+
+Abrir el [prototipo de recepción y distribución](prototipos/stock-recepcion-distribucion.html).

@@ -8,19 +8,21 @@ Mantener trazabilidad completa desde la recepción de una serie/lote hasta su ap
 
 En la primera versión la vacuna antiaftosa es el único producto administrado. No se necesita todavía un catálogo operativo de productos diferentes. Toda existencia se diferencia por:
 
-- veterinaria propietaria;
+- veterinaria propietaria o estado `Sin asignar`;
 - serie/lote textual;
 - fecha de vencimiento;
 - condición del stock;
-- ubicación física o responsable actual.
+- centro, ubicación física o responsable actual.
 
 La presentación es fija: frascos de 125 cc equivalentes operativamente a 125 dosis. Para los frascos cerrados se almacena una cantidad entera de frascos y su equivalente se calcula multiplicando por 125. Dos series o stocks pertenecientes a veterinarias diferentes nunca se mezclan. El número de serie/lote se almacena como texto para conservar letras y ceros iniciales.
 
 ## Ubicaciones
 
-El stock puede estar en:
+La UEL principal se encuentra en San Cristóbal y administra subcentros dependientes en otras localidades. El stock puede estar en:
 
-- depósito o UEL;
+- depósito principal de San Cristóbal;
+- un subcentro;
+- en tránsito entre centros;
 - poder del vacunador o veterinario que lo retiró.
 
 La veterinaria es propietaria del stock, pero no necesariamente su ubicación física: los frascos comprados llegan a la UEL, donde se almacenan y administran separados por veterinaria. La entrega cambia la custodia al profesional que los retira, sin cambiar la veterinaria propietaria.
@@ -36,7 +38,9 @@ La condición del stock puede ser:
 
 | Tipo | Origen | Destino o efecto |
 |---|---|---|
-| Recepción | Compra de una veterinaria | Incrementa en la UEL el stock lleno perteneciente a esa veterinaria. |
+| Recepción central | Proveedor u origen externo | Incrementa en San Cristóbal el stock lleno, asignado a una veterinaria o pendiente de asignación. |
+| Asignación | Stock sin asignar | Identifica la veterinaria a la que corresponden los frascos sin cambiar necesariamente su ubicación. |
+| Transferencia entre centros | Principal o subcentro | Cambia la ubicación física y custodia sin alterar la veterinaria propietaria ni el total general. |
 | Retiro lleno con remito | Stock lleno de la veterinaria en la UEL | Entrega frascos enteros al vacunador/veterinario autorizado. |
 | Retiro sobrante con remito | Stock sobrante de la veterinaria en la UEL | Entrega una cantidad de dosis sobrantes reutilizables. |
 | Devolución llena | Vacunador/veterinario | Reingresa frascos sin abrir al stock lleno de la misma veterinaria y lote. |
@@ -57,21 +61,26 @@ La condición del stock puede ser:
 
 Un movimiento confirmado no se modifica ni elimina. Cualquier corrección genera otro movimiento vinculado.
 
-## Recepción en la UEL
+## Recepción en la UEL principal
 
-Las veterinarias compran la vacuna y son propietarias de las cantidades adquiridas. Los frascos llegan físicamente a la UEL para su almacenamiento y administración. Para confirmar una recepción se requiere:
+Los frascos llegan físicamente a San Cristóbal para su almacenamiento y administración. Cada tanda se registra como una recepción independiente, incluso cuando coincide con otra en lote y vencimiento. Para confirmar una recepción se requiere:
 
-- veterinaria propietaria;
+- estado inicial `Sin asignar`;
 - laboratorio y marca;
 - serie/lote y vencimiento;
 - cantidad entera positiva de frascos cerrados de 125 cc;
-- fecha efectiva;
-- UEL receptora;
+- fecha y hora efectiva;
+- centro receptor principal;
 - origen o proveedor;
 - comprobante cuando corresponda;
+- responsables que entregan y reciben;
+- temperatura de recepción y estado de sensores;
+- control de integridad de las conservadoras;
 - usuario responsable.
 
-La recepción suma los frascos al stock lleno de la veterinaria correspondiente dentro de la UEL. El sistema permite recibir la misma serie en fechas diferentes, manteniendo cada comprobante y movimiento.
+La recepción suma los frascos al stock lleno del centro principal. El sistema permite recibir la misma serie en fechas y horas diferentes, manteniendo cada comprobante y movimiento.
+
+Aunque exista una distribución prevista, primero se confirma toda la llegada y sus controles. Luego una operación conjunta de distribución determina qué cantidades corresponden a cada veterinaria y dónde quedarán disponibles. Para veterinarias de San Cristóbal solo cambia la asignación; para veterinarias de un subcentro también genera una transferencia interna. Ambos efectos permanecen diferenciados y se detallan en [flujo de stock entre UEL principal y subcentros](flujo-stock-centros.md).
 
 ## Autorización y retiro mediante remito
 
@@ -129,7 +138,7 @@ Si una campaña admite excepcionalmente vacunar categorías bovinas o bubalinas 
 
 ## Cálculo de saldo
 
-Para cada veterinaria propietaria, UEL y serie/lote se mantienen dos saldos separados:
+Para cada centro, veterinaria propietaria o estado `Sin asignar`, y serie/lote se mantienen dos saldos separados:
 
 - `stock lleno`: cantidad entera de frascos cerrados de 125 cc;
 - `stock sobrante`: remanentes de frascos abiertos devueltos.
@@ -180,7 +189,7 @@ Cuando el profesional retira un frasco lleno y no utiliza todo su contenido, dev
 
 El sobrante nunca vuelve a contarse como frasco lleno y se mide en dosis remanentes. Un frasco contiene 125 dosis: si se aplican 100, la devolución registra 25 dosis de sobrante. La cantidad aplicada y la cantidad realmente remanente se almacenan por separado.
 
-Las dosis sobrantes confirmadas quedan disponibles para nuevos remitos de la misma veterinaria. El saldo operativo se agrupa por veterinaria, UEL, lote y vencimiento, conservando internamente cada devolución, productor y acta de origen. Puede reutilizarse para otro productor sin perder esa trazabilidad.
+Las dosis sobrantes confirmadas quedan disponibles para nuevos remitos de la misma veterinaria. El saldo operativo se agrupa por veterinaria, centro, lote y vencimiento, conservando internamente cada devolución, productor y acta de origen. Puede reutilizarse para otro productor sin perder esa trazabilidad.
 
 Cada remito permite `Añadir devolución`. Una devolución confirmada es un movimiento posterior vinculado al retiro original; no modifica sus cantidades. Puede haber varias devoluciones parciales para el mismo remito.
 

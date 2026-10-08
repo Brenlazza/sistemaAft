@@ -111,8 +111,12 @@ Cada producto debería referenciar su laboratorio. Las marcas históricas deber�
 - La vacuna antiaftosa es el único producto inicial.
 - La presentación es fija: frascos de 125 cc.
 - El stock lleno se controla por cantidad de frascos.
-- Cada veterinaria compra y conserva la propiedad de sus vacunas.
-- Los frascos llegan y se almacenan físicamente en la UEL, separados por veterinaria y serie/lote.
+- San Cristóbal funciona como depósito principal y existen subcentros dependientes en otras localidades.
+- Cada tanda recibida en San Cristóbal se registra por separado con fecha/hora, lote, vencimiento y cantidad.
+- Los frascos ingresan `Sin asignar`; una distribución conocida de antemano se confirma recién después de la llegada y sus controles.
+- La asignación a una veterinaria y el traslado físico a un subcentro son operaciones diferentes y trazables.
+- Cada veterinaria conserva la propiedad de las cantidades que le fueron asignadas.
+- Los frascos se mantienen separados simultáneamente por centro, veterinaria y serie/lote.
 - La veterinaria autoriza manualmente el retiro por un vacunador o veterinario.
 - La UEL genera un remito, actualmente mediante Xubio, lo imprime y obtiene la firma del profesional que retira y asume responsabilidad.
 - El nuevo sistema debe implementar este circuito de remitos y descontar del stock de la veterinaria correcta.
@@ -121,3 +125,5 @@ Cada producto debería referenciar su laboratorio. Las marcas históricas deber�
 - Las condiciones no disponibles contempladas son `Decomisado` y `Roto`; se utilizan exclusivamente como bajas del stock físico de la UEL y no para cuadrar remitos entregados.
 
 Ver [lógica funcional de stock](logica-stock.md) para movimientos, remitos, saldos y devoluciones.
+
+Ver [flujo de stock entre UEL principal y subcentros](flujo-stock-centros.md) para recepciones, asignaciones y transferencias internas.
