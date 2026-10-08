@@ -67,3 +67,5 @@ Ver [recepción de transferencias en subcentros](docs/pantalla-recepcion-transfe
 Ver [panel operativo del subcentro](docs/pantalla-inicio-subcentro.md) y abrir su [prototipo de inicio local](prototipos/inicio-subcentro.html).
 
 Abrir el [prototipo de remito limitado al subcentro](prototipos/remito-subcentro.html).
+
+Ver [pantalla de carga y confirmación del acta](docs/pantalla-carga-confirmacion-acta.md) y abrir su [prototipo navegable](prototipos/carga-acta-vacunacion.html).

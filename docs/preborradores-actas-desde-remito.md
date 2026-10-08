@@ -57,7 +57,7 @@ Cada preborrador toma una instantánea de:
 - establecimiento, domicilio y ubicación;
 - régimen, hectáreas y tipo de rodeo cuando estén disponibles;
 - marca del ganado cuando esté digitalizada;
-- profesional, matrícula y documento;
+- profesional y matrícula;
 - veterinaria propietaria;
 - vacuna, marca, serie/lote y vencimiento previstos;
 - fecha de impresión;
@@ -73,10 +73,12 @@ El número de remito puede imprimirse en una zona administrativa o código de re
 - existencias de otras especies;
 - resultados o motivos sanitarios;
 - observaciones;
-- firmas y aclaraciones;
+- firmas, aclaraciones y DNI del vacunador y del propietario o responsable;
 - cualquier corrección del lote realmente utilizado.
 
 Las dosis previstas cargadas en el remito no deben copiarse en los casilleros de animales vacunados. Son una estimación logística, no un hecho sanitario.
+
+Las firmas y los DNI quedan en blanco para ser completados manualmente en los tres ejemplares físicos. No se controlan mediante tildes en la carga digital.
 
 ## Entrega al profesional
 
@@ -103,6 +105,8 @@ Cuando vuelve un acta:
 5. se cargan las devoluciones o sobrantes;
 6. se valida y confirma el acta;
 7. recién entonces se actualizan consumo, cobertura y conciliación.
+
+La transcripción y sus controles se detallan en la [pantalla de carga y confirmación del acta](pantalla-carga-confirmacion-acta.md).
 
 El operador no crea otra acta si ya existe un preborrador para ese formulario: completa el registro asociado.
 

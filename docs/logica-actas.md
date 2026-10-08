@@ -79,7 +79,7 @@ Se preimprimen los datos conocidos:
 - propietario, RENSPA y establecimiento;
 - domicilio, ubicación, régimen, hectáreas y tipo de rodeo;
 - marca del ganado cuando esté digitalizada;
-- vacunador, matrícula y DNI;
+- vacunador y matrícula;
 - vacuna, serie/lote y vencimiento previstos;
 - número del remito de origen como referencia administrativa;
 
@@ -91,7 +91,9 @@ Se completan en campo:
 - brucelosis y carbunclo cuando correspondan;
 - diferencias respecto de los datos preimpresos;
 - observaciones;
-- firmas y aclaraciones.
+- firmas, aclaraciones y DNI del vacunador y del propietario o responsable.
+
+Las firmas y los DNI de ambas partes se completan exclusivamente a mano sobre los tres ejemplares físicos. No se preimprimen, no se transcriben al sistema y no se representan mediante tildes digitales.
 
 Las dosis previstas del destino en el remito no se preimprimen como cantidades vacunadas. Los casilleros por categoría permanecen vacíos hasta que el profesional registre lo realmente aplicado.
 
@@ -101,11 +103,13 @@ Cuando se utiliza otra serie/lote, el vacunador corrige el papel y explica el ca
 
 1. Buscar el formulario por número o escanear su código.
 2. Mostrar bloqueada la instantánea de datos preimpresos.
-3. Transcribir fecha, cantidades, correcciones, observaciones y firmas requeridas.
+3. Transcribir fecha, cantidades, correcciones y observaciones.
 4. Seleccionar el remito utilizado, verificar que el productor/establecimiento sea uno de sus destinos y registrar el lote realmente aplicado.
 5. Comparar totales escritos con la suma de categorías.
 6. Guardar como borrador o enviar a revisión.
 7. Confirmar solamente cuando todas las validaciones obligatorias se cumplan.
+
+La disposición concreta de campos y controles se define en la [pantalla de carga y confirmación del acta](pantalla-carga-confirmacion-acta.md).
 
 La operación debe ser idempotente: repetir accidentalmente el envío no puede crear dos actas ni consumir dos veces el stock.
 
@@ -155,17 +159,17 @@ El estado del acta no reemplaza al estado del formulario. Por ejemplo, un formul
 ### Integridad documental
 
 - lugar y fecha completos;
-- firma del vacunador;
-- firma del propietario o responsable, o motivo documentado de ausencia;
 - correcciones legibles y justificadas;
 - adjunto del acta cuando la política lo haga obligatorio.
+
+Las firmas y los DNI se completan manualmente en el acta física. Su presencia no se registra mediante tildes ni condiciona la confirmación digital.
 
 ## Efectos de la confirmación
 
 La confirmación debe realizarse en una sola transacción:
 
 1. Bloquear el acta para evitar confirmaciones simultáneas.
-2. Crear el movimiento de consumo por lote.
+2. Imputar el consumo por lote dentro de la custodia del remito, sin volver a descontar el stock del centro que ya salió al confirmar la entrega.
 3. Recalcular la suma de dosis vacunadas de todas las actas confirmadas y vigentes vinculadas al remito.
 4. Actualizar el cumplimiento del establecimiento en la campaña.
 5. Cambiar el acta a `Confirmada`.

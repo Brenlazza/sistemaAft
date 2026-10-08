@@ -13,7 +13,7 @@ La emisión debería completar automáticamente:
 - número de acta;
 - campaña y tipo total/parcial;
 - UEL responsable;
-- vacunador, matrícula y DNI;
+- vacunador y matrícula;
 - marca, serie/lote y vencimiento de la vacuna asignada;
 - RENSPA/Ficha;
 - productor, tipo y número de documento;
@@ -35,11 +35,13 @@ Los datos se guardan como una instantánea de lo impreso. Si luego cambia el pro
 - dosis utilizadas;
 - diferencias encontradas respecto del padrón;
 - observaciones;
-- firma y aclaración del productor o responsable;
-- firma y aclaración del vacunador; la matrícula y el DNI ya figuran preimpresos;
+- firma, aclaración y DNI del productor o responsable;
+- firma, aclaración y DNI del vacunador; la matrícula ya figura preimpresa;
 - motivo cuando no se pudo vacunar.
 
 La lista definitiva debe compararse con el acta actual. Los campos que puedan conocerse al imprimir deben evitarse en la sección manuscrita.
+
+Las firmas y los DNI se completan únicamente en papel. La carga posterior no incluye tildes de presencia ni captura digital de esos datos.
 
 Si en campo se utiliza una vacuna diferente de la preimpresa, el vacunador debe corregir marca, serie/lote y vencimiento de forma legible y explicar el cambio en observaciones. La carga posterior registra el dato impreso y el efectivamente utilizado.
 

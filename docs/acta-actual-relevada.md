@@ -127,7 +127,7 @@ Vacuna:
 - propietario, documento y domicilio;
 - RENSPA y establecimiento;
 - ubicación, hectáreas, régimen y tipo de rodeo;
-- vacunador, matrícula y DNI, porque se conocen antes de emitir;
+- vacunador y matrícula, porque se conocen antes de emitir;
 - vacuna, serie/lote y vencimiento, porque se conocen antes de emitir.
 
 Si un dato preimpreso puede cambiar durante la visita, el papel debe ofrecer una forma clara de marcar «sin cambios» o consignar una corrección. La carga posterior conservará tanto lo impreso como lo verificado en campo.
@@ -141,7 +141,7 @@ Si un dato preimpreso puede cambiar durante la visita, el papel debe ofrecer una
 - sección de brucelosis cuando corresponda;
 - carbunclo cuando corresponda;
 - observaciones;
-- firmas, aclaraciones y documentos exigidos.
+- firmas, aclaraciones y DNI exigidos, completados manualmente en papel.
 
 ## Cambios derivados para el modelo
 
