@@ -6,6 +6,8 @@ Recibir las actas que regresan del campo, registrar frascos llenos y sobrantes d
 
 La conciliación se calcula por serie/lote y también como total del remito. Cuadrar solamente el total no alcanza si existen diferencias entre lotes.
 
+La principal y los subcentros utilizan exactamente esta misma pantalla, estados, cálculos y validaciones. No existe una devolución especial para subcentros. El centro receptor se obtiene del remito original y queda bloqueado.
+
 El [prototipo navegable](../prototipos/remito-devolucion-conciliacion.html) permite modificar dosis vacunadas, frascos llenos y sobrantes para observar el recálculo automático. Una diferencia no impide registrar lo ocurrido: exige motivo y permite cerrar como `Conciliado con diferencia`.
 
 ## Acceso
@@ -14,6 +16,7 @@ La pantalla se abre desde un remito `Entregado`, `En carga`, `Cuadrado` u `Obser
 
 - número y versión vigente del remito;
 - campaña y UEL;
+- centro físico que emitió el remito y recibirá la devolución;
 - veterinaria propietaria;
 - profesional receptor;
 - lotes y frascos retirados;
@@ -65,6 +68,8 @@ La cantidad debe ser entera, no negativa y no puede superar los frascos retirado
 
 Al confirmar, los frascos regresan al stock lleno de la misma veterinaria, UEL y lote.
 
+También regresan al mismo centro físico que emitió el remito. El operador no puede elegir otro depósito durante la devolución.
+
 ## 3. Devolución de sobrantes
 
 Cada sobrante de frasco abierto se registra por separado con:
@@ -81,6 +86,8 @@ Cada sobrante de frasco abierto se registra por separado con:
 La cantidad debe ser mayor que cero y menor que 125 por frasco abierto. Si se devuelven sobrantes provenientes de más de un frasco o acta, se cargan en líneas separadas para conservar su origen.
 
 El sobrante ingresa al stock de sobrantes de la veterinaria propietaria. Nunca vuelve automáticamente al stock de frascos llenos.
+
+En un subcentro, ese ingreso se registra en el stock de sobrantes local de la misma veterinaria. La sede principal no recibe ni suma automáticamente esa devolución.
 
 ## 4. Dos controles por lote
 
@@ -182,6 +189,8 @@ El cierre guarda una instantánea de retiradas, vacunadas, devoluciones, devoluc
 - observar diferencias;
 - resolver observaciones;
 - cerrar o reabrir la conciliación.
+
+El usuario de subcentro solo abre remitos emitidos por su centro y puede registrar allí las mismas devoluciones que la principal. Resolver diferencias, reabrir o cerrar con diferencia continúa sujeto a los permisos especiales definidos para su cuenta.
 
 ## Informes derivados
 

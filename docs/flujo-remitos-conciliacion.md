@@ -8,6 +8,8 @@ La presentación es un frasco de 125 cc equivalente operativamente a 125 dosis. 
 
 Cada retiro pertenece a una veterinaria propietaria y a un profesional receptor, pero puede destinarse a uno o más productores/establecimientos. El remito, sus destinos, las actas y las devoluciones deben quedar vinculados para poder reconstruir el circuito completo.
 
+También pertenece a un único centro físico de salida. En la principal se utilizan existencias confirmadas en San Cristóbal; en cada subcentro se utilizan exclusivamente existencias confirmadas allí y pertenecientes a una veterinaria vinculada a ese centro. Una transferencia pendiente o el stock de otro centro no pueden alimentar el remito.
+
 ## Flujo completo
 
 ### 1. Preparar el retiro
@@ -15,6 +17,7 @@ Cada retiro pertenece a una veterinaria propietaria y a un profesional receptor,
 La veterinaria propietaria autoriza que un vacunador/veterinario retire vacuna de su stock almacenado en la UEL. Se registran:
 
 - veterinaria propietaria;
+- centro físico de salida, determinado por el acceso del operador;
 - uno o más destinos, cada uno formado por cliente/productor canónico, registro SENASA de la campaña, establecimiento y RENSPA;
 - campaña;
 - profesional autorizado;
@@ -34,10 +37,11 @@ El operador puede modificar la sugerencia con motivo cuando existan circunstanci
 El sistema genera el remito. Al entregar la vacuna:
 
 1. se valida el stock lleno de la veterinaria propietaria;
-2. se imprimen veterinaria, profesional, lote, cantidad y los destinos previstos;
-3. el profesional receptor firma el retiro;
-4. el remito pasa a `Entregado`;
-5. los frascos salen del stock lleno en UEL y pasan a custodia del profesional.
+2. se valida que ese stock esté físicamente disponible en el centro que emite el remito;
+3. se imprimen veterinaria, profesional, lote, cantidad y los destinos previstos;
+4. el profesional receptor firma el retiro;
+5. el remito pasa a `Entregado`;
+6. los frascos salen del stock lleno en UEL y pasan a custodia del profesional.
 
 Un remito puede corresponder a varios productores/establecimientos. Los destinos seleccionados quedan como líneas del remito y la conciliación se realiza sobre la suma de todas las actas vinculadas.
 
@@ -79,6 +83,8 @@ Ejemplo confirmado:
 - diferencia: 0.
 
 Los sobrantes nunca se convierten nuevamente en frascos llenos.
+
+La devolución se registra en el mismo centro que emitió el remito. El procedimiento es idéntico en San Cristóbal y en los subcentros: frascos cerrados vuelven a `Lleno` y remanentes abiertos vuelven a `Sobrante`, siempre bajo la misma veterinaria y lote. No se diseña un circuito paralelo para los subcentros.
 
 ### 5. Conciliar el remito
 
@@ -188,6 +194,9 @@ Los informes agregados deben permitir abrir el detalle hasta llegar al remito, a
 ## Reglas de integridad
 
 - un remito entregado tiene exactamente una veterinaria propietaria, un profesional receptor y uno o más destinos de productor/establecimiento;
+- un remito tiene exactamente un centro de salida y todas sus líneas pertenecen simultáneamente a ese centro y a su veterinaria propietaria;
+- un operador de subcentro solo puede utilizar veterinarias vinculadas a su centro asignado;
+- una transferencia no recibida no forma parte del saldo utilizable en remitos;
 - todo destino debe vincular un cliente/productor canónico con el registro SENASA y establecimiento correspondiente;
 - toda acta confirmada que consume vacuna debe indicar el remito y uno de sus destinos;
 - un remito puede vincular muchas actas y la conciliación utiliza la suma de sus dosis confirmadas y vigentes;

@@ -70,13 +70,13 @@
 <div class="app">
   <aside>
     <div class="identity"><strong>Sistema AFT</strong><span>Fundación San Cristóbal Este</span></div>
-    <nav><a href="#">Inicio</a><a href="#">Campañas</a><a href="#">Padrón y productores</a><a class="active" href="remito-vacunas.html">Remitos</a><a href="#">Actas</a><a href="#">Stock UEL</a><a href="#">Informes</a></nav>
+    <nav><a id="home-link" href="#">Inicio</a><a href="#">Campañas</a><a href="#">Padrón y productores</a><a id="remittance-nav" class="active" href="remito-vacunas.html">Remitos</a><a href="#">Actas</a><a href="#">Stock UEL</a><a href="#">Informes</a></nav>
   </aside>
   <main>
-    <header class="topbar"><div><h1>Devolución y conciliación</h1><small>Remito R-000001 · Versión 2</small></div><a class="btn" href="remito-vacunas.html">Volver al remito</a></header>
+    <header class="topbar"><div><h1>Devolución y conciliación</h1><small>Remito R-000001 · Versión 2 · <span id="center-context">Centro San Cristóbal</span></small></div><a id="back-remittance" class="btn" href="remito-vacunas.html">Volver al remito</a></header>
     <div class="content">
       <div class="title"><div><h2>Remito R-000001</h2><p>Veterinaria San Martín · Dr. Juan Pérez · Lote AF-26091</p></div><span id="status" class="badge">En carga</span></div>
-      <div class="tabs"><a href="remito-vacunas.html">Retiro</a><a class="active" href="#acts">Actas vinculadas</a><a href="#returns">Devoluciones</a><a href="#reconciliation">Conciliación</a></div>
+      <div class="tabs"><a id="withdrawal-link" href="remito-vacunas.html">Retiro</a><a class="active" href="#acts">Actas vinculadas</a><a href="#returns">Devoluciones</a><a href="#reconciliation">Conciliación</a></div>
 
       <section class="panel">
         <div class="panel-head"><div><h3>Resumen del retiro</h3><p>Datos confirmados y bloqueados del remito.</p></div><span class="state">Firma vigente registrada</span></div>
@@ -87,6 +87,7 @@
           <div class="card"><span>Actas entregadas</span><strong>3</strong></div>
           <div class="card"><span>Lote</span><strong style="font-size:15px">AF-26091</strong></div>
           <div class="card"><span>Vencimiento</span><strong style="font-size:15px">31/03/2027</strong></div>
+          <div class="card"><span>Centro receptor</span><strong id="return-center" style="font-size:15px">San Cristóbal</strong></div>
         </div>
       </section>
 
@@ -113,7 +114,7 @@
             <div><label>Dosis sobrantes devueltas</label><input id="leftover" type="number" min="0" value="15"></div>
             <div><label>Acta de origen del sobrante</label><select><option>00118955 · Productor C</option><option>00118954 · Productor B</option><option>00118953 · Productor A</option></select></div>
             <div><label>Fecha de devolución</label><input type="date" value="2026-10-07"></div>
-            <div><label>Responsable receptor UEL</label><select><option>Administrador UEL</option></select></div>
+            <div><label>Responsable receptor del centro</label><select><option id="receiver-option">Responsable de San Cristóbal</option></select></div>
             <div style="grid-column:span 2"><label>Observación</label><input value="Sobrante del último frasco abierto"></div>
           </div>
         </div>
@@ -141,10 +142,20 @@
         </div>
       </section>
     </div>
-    <footer class="footer"><span class="quiet">Roturas y decomisos se registran únicamente desde Stock UEL.</span><div class="actions"><button class="btn">Guardar carga</button><button class="btn">Registrar devolución</button><button id="close-button" class="btn primary">Cerrar conciliación</button></div></footer>
+    <footer class="footer"><span class="quiet">Roturas y decomisos se registran únicamente desde el stock del centro.</span><div class="actions"><button class="btn">Guardar carga</button><button class="btn">Registrar devolución</button><button id="close-button" class="btn primary">Cerrar conciliación</button></div></footer>
   </main>
 </div>
 <script>
+  const viewContext = new URLSearchParams(location.search).get('context');
+  if (viewContext === 'subcentro') {
+    document.querySelector('#center-context').textContent = 'Subcentro Ceres';
+    document.querySelector('#return-center').textContent = 'Ceres';
+    document.querySelector('#receiver-option').textContent = 'Responsable de Ceres';
+    document.querySelector('#home-link').href = 'inicio-subcentro.html';
+    document.querySelector('#remittance-nav').href = 'remito-subcentro.html';
+    document.querySelector('#back-remittance').href = 'remito-subcentro.html';
+    document.querySelector('#withdrawal-link').href = 'remito-subcentro.html';
+  }
   function calculate() {
     const withdrawn = 125;
     const vaccinated = [...document.querySelectorAll('.vaccinated')].reduce((sum, input) => sum + (Number(input.value) || 0), 0);

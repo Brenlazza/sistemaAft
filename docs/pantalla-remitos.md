@@ -6,7 +6,11 @@ Registrar en una sola operación la autorización de una veterinaria, la entrega
 
 La pantalla representa un remito principal. No se crea un remito separado por productor cuando la vacuna proviene del mismo retiro.
 
+Todo remito pertenece además a un único centro físico de salida. Un usuario de subcentro recibe ese centro desde su sesión y solamente puede retirar stock de las veterinarias activamente vinculadas a dicho subcentro. Si el centro tiene una sola veterinaria, se completa automáticamente; si tiene varias, la lista queda restringida a ellas.
+
 Existe un [prototipo navegable de la pantalla](../prototipos/remito-vacunas.html) para revisar la distribución, la incorporación de destinos y el cálculo automático de frascos y dosis. Su acción `Vista previa / imprimir` abre el [modelo imprimible A4](../prototipos/remito-vacunas-impresion.html), basado en el remito de referencia utilizado actualmente.
+
+El [prototipo de remito del subcentro](../prototipos/remito-subcentro.html) muestra el centro fijado por la sesión y una única veterinaria asociada en el ejemplo de Ceres.
 
 ## Vistas del módulo
 
@@ -40,6 +44,7 @@ Siempre visible:
 - estado;
 - campaña;
 - UEL de salida;
+- centro físico de salida;
 - fecha prevista o efectiva del retiro;
 - usuario y fecha técnica, solo en auditoría privada.
 
@@ -57,6 +62,12 @@ Campos:
 - observación de la autorización.
 
 Al elegir la veterinaria, los lotes disponibles se restringen a existencias llenas y sobrantes reutilizables de esa propietaria y UEL.
+
+En un subcentro, la restricción completa es:
+
+`centro de la sesión + veterinaria vinculada al centro + lote + condición + saldo confirmado disponible`
+
+No se incluyen transferencias en tránsito, observadas o pendientes de control. Para utilizar vacuna ubicada en otro centro debe completarse primero una transferencia interna; nunca se cambia el centro de salida del remito para saltear ese circuito.
 
 ### 2. Profesional receptor
 
@@ -148,6 +159,8 @@ Acciones:
 
 La confirmación genera el movimiento de salida y cambia el estado a `Entregado` en una única transacción.
 
+Al guardar, autorizar y confirmar, el servidor vuelve a comprobar que el usuario tiene alcance sobre el centro, que la veterinaria sigue vinculada y que cada existencia continúa disponible en esa misma combinación. El filtro visual no reemplaza estos controles.
+
 ### Preborradores antes del retiro
 
 Una vez confirmados los destinos, la pantalla genera un preborrador por productor/establecimiento. Un remito con tres destinos muestra tres juegos de acta. Cada uno puede previsualizarse individualmente o imprimirse junto con el remito mediante `Imprimir remito y actas`.
@@ -182,6 +195,8 @@ Permite registrar:
 - observaciones.
 
 No ofrece opciones de rotura ni decomiso. Esas bajas se cargan desde el módulo de stock UEL.
+
+La pantalla es la misma para la sede principal y los subcentros. El centro receptor queda fijado por el remito: una devolución de un remito emitido en Ceres reingresa al stock de Ceres, manteniendo veterinaria, lote y condición.
 
 ### Conciliación
 
@@ -278,6 +293,7 @@ Cada impresión debe registrar de manera privada versión, fecha, usuario, motiv
 - imprimir o reimprimir;
 - registrar devolución;
 - agregar destino posterior;
+- operar únicamente los centros y veterinarias asignados;
 - revisar diferencia;
 - cerrar conciliación;
 - anular.

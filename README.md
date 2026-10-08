@@ -57,3 +57,13 @@ Ver [formularios y planillas oficiales SENASA relevados](docs/formularios-senasa
 Ver [pantallas de recepción y distribución de stock](docs/pantalla-recepcion-distribucion-stock.md).
 
 Abrir el [prototipo de recepción y distribución](prototipos/stock-recepcion-distribucion.html).
+
+Ver [pantalla de stock por centros](docs/pantalla-stock-centros.md) y abrir su [prototipo navegable](prototipos/stock-centros.html).
+
+Ver [pantalla de movimientos de stock](docs/pantalla-movimientos-stock.md) y abrir su [prototipo auditable](prototipos/stock-movimientos.html).
+
+Ver [recepción de transferencias en subcentros](docs/pantalla-recepcion-transferencia-subcentro.md) y abrir su [prototipo de control físico](prototipos/transferencia-recepcion-subcentro.html).
+
+Ver [panel operativo del subcentro](docs/pantalla-inicio-subcentro.md) y abrir su [prototipo de inicio local](prototipos/inicio-subcentro.html).
+
+Abrir el [prototipo de remito limitado al subcentro](prototipos/remito-subcentro.html).

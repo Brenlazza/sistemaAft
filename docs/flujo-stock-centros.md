@@ -98,12 +98,21 @@ Estados sugeridos:
 
 La transferencia no cambia el stock total de la Fundación ni la veterinaria propietaria: solamente cambia la ubicación y la custodia. Si asignación y traslado se realizan al mismo tiempo, la interfaz puede ofrecer una acción única, pero internamente registra ambos movimientos.
 
+### Validación del subcentro
+
+Cada subcentro opera con cuentas individuales limitadas a su propio centro. Una transferencia `En tránsito` no ingresa automáticamente a su saldo disponible. El usuario receptor compara físicamente marca, lote, vencimiento, envases, dosis, temperatura, integridad y documentación con lo declarado por la principal.
+
+Si todo coincide, la aceptación registra los controles y crea el movimiento de entrada local en una única transacción. Desde ese momento el stock puede utilizarse en remitos del subcentro. Si existe una diferencia, la transferencia queda `Observada` y no se habilita para retiros hasta su resolución. Una recepción con diferencia requiere autorización superior e ingresa solamente la cantidad efectivamente comprobada, conservando por separado lo enviado, lo recibido y la diferencia.
+
+La definición completa está en [Recepción de transferencias en subcentros](pantalla-recepcion-transferencia-subcentro.md).
+
 ## 4. Retirar para vacunación
 
 El remito de retiro se emite desde el centro que entrega físicamente la vacuna:
 
 - una veterinaria de San Cristóbal retira del saldo disponible en el centro principal;
 - una veterinaria abastecida en otro lugar retira del saldo disponible en ese subcentro;
+- el usuario del subcentro solamente puede seleccionar veterinarias activamente asociadas a su centro;
 - no se permite retirar en un centro existencias que figuran físicamente en otro;
 - el remito puede combinar frascos llenos y dosis sobrantes de la misma veterinaria disponibles en ese centro.
 
@@ -142,6 +151,8 @@ El sistema debe mostrar, como mínimo:
 3. Después del control se distribuyen 50 frascos a Veterinaria A de San Cristóbal y 30 a Veterinaria B del subcentro Ceres; quedan 60 sin asignar.
 4. La confirmación conserva los 50 de Veterinaria A en el depósito principal y genera la transferencia de los 30 de Veterinaria B hacia Ceres.
 5. Los remitos de Ceres solamente pueden utilizar los 30 frascos confirmados allí. Los remitos de San Cristóbal pueden utilizar los 50 que permanecen en el centro principal.
+
+Antes del paso 5, un usuario habilitado de Ceres debe controlar y aceptar la transferencia. Mientras figure `En tránsito` u `Observada`, los 30 frascos no están disponibles para ningún remito de Ceres.
 
 ## Controles esenciales
 

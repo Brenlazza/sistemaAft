@@ -58,6 +58,7 @@ La relación entre usuario y campaña debe guardar:
 - usuario;
 - campaña;
 - una o varias UEL, cuando corresponda;
+- uno o varios centros de stock, cuando corresponda;
 - fecha desde y hasta;
 - permisos adicionales concedidos;
 - administrador que autorizó la asignación;
@@ -76,11 +77,39 @@ Los permisos se representan por acciones independientes:
 | Formularios | Consultar, emitir, entregar, recibir, reimprimir, anular, declarar extravío. |
 | Actas | Consultar, crear borrador, modificar, observar, confirmar, rectificar, anular. |
 | Stock | Consultar, recibir, transferir, devolver, ajustar, conciliar. |
+| Transferencias internas | Consultar bandeja, preparar, despachar, controlar recepción, aceptar conforme, observar, resolver diferencia y anular. |
 | Remitos | Consultar, crear borrador, autorizar, confirmar entrega, imprimir, agregar destino posterior, registrar nueva firma, devolver, revisar, conciliar y anular. |
 | Informes | Consultar, exportar. |
 | Administración | Usuarios, roles, catálogos, parámetros y auditoría. |
 
 Esto permite ampliar un coordinador concreto sin convertirlo en administrador general.
+
+## Operador de subcentro
+
+El operador de subcentro utiliza una cuenta individual vinculada a uno o más centros concretos. Puede, según los permisos concedidos:
+
+- consultar su stock local por veterinaria, lote y condición;
+- consultar y controlar transferencias dirigidas a su centro;
+- aceptar una transferencia conforme;
+- informar diferencias sin modificar lo declarado por la principal;
+- emitir remitos desde existencias ya recibidas en su centro;
+- gestionar actas, devoluciones y conciliaciones originadas en su centro;
+- consultar informes operativos locales.
+
+No puede:
+
+- recibir una transferencia dirigida a otro centro;
+- disponer de vacuna que continúa en tránsito u observada;
+- consultar el stock detallado de la principal o de otros subcentros;
+- autorizar por sí solo una recepción con diferencia;
+- ajustar, reasignar o revertir saldos sin permiso superior;
+- administrar usuarios, centros, veterinarias o parámetros globales.
+
+Las devoluciones no tienen una variante simplificada: el operador utiliza el circuito completo de la principal, limitado a remitos y stock de su centro.
+
+La principal y los dos administradores generales mantienen una vista consolidada de todos los centros. El responsable de cada subcentro solamente ve su alcance operativo.
+
+El ingreso diario de este rol se describe en el [panel operativo del subcentro](pantalla-inicio-subcentro.md).
 
 ## Datos privados
 

@@ -35,10 +35,13 @@ El objetivo es soportar campañas de vacunación antiaftosa, conservar el compon
 | Stock | `asignaciones_stock` | Asignación o reasignación autorizada de existencias a una veterinaria. |
 | Stock | `transferencias_stock` | Traslados internos entre sede principal y subcentros. |
 | Stock | `transferencias_stock_detalle` | Veterinaria, lote, condición y cantidades trasladadas. |
+| Stock | `recepciones_transferencia` | Control de destino, fecha/hora, temperatura, responsable, usuario, estado y versión recibida. |
+| Stock | `recepciones_transferencia_detalle` | Cantidades enviadas y comprobadas, lote, vencimiento, integridad y diferencias por línea. |
+| Stock | `incidencias_transferencia` | Diferencias informadas, evidencia, resolución, autorización y movimientos correctivos. |
 | Stock | `stock_veterinaria` | Saldos separados por centro, veterinaria o estado sin asignar, lote y condición. |
 | Stock | `movimientos_stock` | Recepción, transferencia, devolución, consumo, rotura/decomiso en UEL o ajuste. |
 | Stock | `movimientos_stock_detalle` | Veterinaria propietaria, lote, cantidad de frascos o remanente y condición. |
-| Stock | `remitos_retiro` | Autorización, entrega y firma del profesional que retira desde la UEL. |
+| Stock | `remitos_retiro` | Centro físico de salida, veterinaria propietaria, autorización, entrega y firma del profesional receptor. |
 | Stock | `remitos_retiro_detalle` | Origen lleno/sobrante, serie/lote, frascos o dosis entregadas. |
 | Stock | `remito_destinos` | Uno o más clientes/productores y establecimientos previstos para utilizar la vacuna de un remito. |
 | Stock | `versiones_remito` | Instantánea de cada emisión o modificación, con número de versión, motivo y estado de firma. |
@@ -70,6 +73,7 @@ El objetivo es soportar campañas de vacunación antiaftosa, conservar el compon
 | Seguridad | `usuarios` | Identidad de acceso, estado y datos mínimos de autenticación. |
 | Seguridad | `roles` y `permisos` | Acciones autorizadas con denegación por defecto. |
 | Seguridad | `usuario_campania` | Alcance del coordinador por campaña, UEL, vigencia y permisos adicionales. |
+| Seguridad | `usuario_centro` | Centros de stock accesibles por cada usuario, vigencia y permisos locales. |
 
 ## Relación central
 
@@ -104,6 +108,9 @@ erDiagram
     CENTROS_STOCK ||--o{ RECEPCIONES_STOCK : recibe
     RECEPCIONES_STOCK ||--|{ RECEPCIONES_STOCK_DETALLE : contiene
     CENTROS_STOCK ||--o{ TRANSFERENCIAS_STOCK : origina
+    TRANSFERENCIAS_STOCK ||--o| RECEPCIONES_TRANSFERENCIA : confirma
+    RECEPCIONES_TRANSFERENCIA ||--|{ RECEPCIONES_TRANSFERENCIA_DETALLE : comprueba
+    TRANSFERENCIAS_STOCK ||--o{ INCIDENCIAS_TRANSFERENCIA : observa
 
     REMITOS_RETIRO ||--|{ REMITO_DESTINOS : incluye
     REMITOS_RETIRO ||--|{ VERSIONES_REMITO : versiona
@@ -168,6 +175,7 @@ El cliente/productor canónico es el maestro utilizado para facturación y puede
 - El número de acta requiere una regla de unicidad cuyo ámbito debe definirse: campaña, UEL, talonario u otro.
 - Un lote usa identificador textual y fecha de vencimiento; admite letras y ceros iniciales.
 - Toda cantidad incluye unidad y debe ser no negativa; los ajustes negativos se expresan por el tipo/dirección del movimiento.
+- Cada remito conserva `centro_stock_id`; todos sus detalles deben consumir saldos disponibles de ese centro y de la veterinaria propietaria de la cabecera.
 - Los catálogos admiten vigencia para preservar valores históricos sin seguir ofreciéndolos en nuevas cargas.
 - Los estados «Sin Datos», «Libre» y «En Saneamiento» son distintos y no se convierten entre sí.
 - Las fechas administrativas de campaña y períodos se validan contra superposiciones.

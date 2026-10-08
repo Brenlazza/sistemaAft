@@ -126,7 +126,7 @@ No se permiten asignaciones superiores al saldo recibido. La distribución puede
 
 ## Recepción en el subcentro
 
-Cada subcentro confirma lo que recibió indicando:
+Cada subcentro ingresa con sus propias cuentas, limitadas al centro asignado, y confirma lo que recibió indicando:
 
 - fecha y hora;
 - temperatura de recepción;
@@ -136,6 +136,8 @@ Cada subcentro confirma lo que recibió indicando:
 - firma manual en el acta impresa.
 
 Si coincide, la transferencia pasa a `Recibida` y el stock queda disponible para remitos del subcentro. Si no coincide, pasa a `Observada`; se conserva lo enviado y lo recibido sin reemplazar ninguno de los valores.
+
+La validación detallada y sus permisos se definen en [Recepción de transferencias en subcentros](pantalla-recepcion-transferencia-subcentro.md).
 
 ## Vista de stock posterior
 
