@@ -10,7 +10,7 @@ El [prototipo navegable](../prototipos/carga-acta-vacunacion.html) muestra una c
 
 Puede abrirse desde:
 
-- la bandeja de actas pendientes;
+- la [bandeja de actas pendientes](pantalla-bandeja-actas.md);
 - un remito entregado;
 - la conciliación del remito;
 - la búsqueda por número de formulario, productor o RENSPA.
@@ -27,7 +27,7 @@ Se muestran como solo lectura los datos preimpresos:
 - número y versión vigente del remito;
 - veterinaria propietaria;
 - profesional receptor y vacunador previsto;
-- cliente/productor, documento y RENSPA;
+- cliente/productor y, cuando existan, documento y RENSPA;
 - establecimiento, domicilio y ubicación;
 - tipo de rodeo, régimen y hectáreas;
 - marca ganadera, cuando esté digitalizada;
@@ -152,6 +152,7 @@ Repetir por error una confirmación no puede producir un segundo consumo ni dupl
 4. Se actualiza la cobertura del establecimiento y la campaña.
 5. Se recalculan dosis vacunadas y diferencias de la conciliación.
 6. Se registra la actividad privada de auditoría.
+7. Si hubo vacunación, se genera una única [línea pendiente de facturación](facturacion-por-actas.md) con la cantidad real de animales y la tarifa congelada de la campaña. Los datos comerciales pendientes no revierten la confirmación sanitaria.
 
 El remito ya descontó la vacuna del stock del centro al momento de la entrega. Por eso confirmar el acta no vuelve a descontar el depósito: transforma parte de lo retirado en uso aplicado. El retorno de frascos o sobrantes se registra por la devolución separada.
 

@@ -23,7 +23,7 @@ Cada formulario posee:
 - número visible de ocho posiciones;
 - campaña y código de plan;
 - UEL emisora;
-- establecimiento/RENSPA asignado;
+- establecimiento o referencia operativa asignada y RENSPA cuando exista;
 - vacunador asignado;
 - vacuna y serie/lote previstos;
 - instantánea de los datos preimpresos;
@@ -76,7 +76,7 @@ Se preimprimen los datos conocidos:
 
 - campaña, período y año;
 - número de acta y rango de impresión;
-- propietario, RENSPA y establecimiento;
+- productor, establecimiento o referencia operativa, y RENSPA cuando exista;
 - domicilio, ubicación, régimen, hectáreas y tipo de rodeo;
 - marca del ganado cuando esté digitalizada;
 - vacunador y matrícula;
@@ -175,6 +175,7 @@ La confirmación debe realizarse en una sola transacción:
 5. Cambiar el acta a `Confirmada`.
 6. Cambiar el formulario a `Cargado`.
 7. Registrar usuario, fecha y resultado de las validaciones.
+8. Crear de forma idempotente la [línea facturable](facturacion-por-actas.md) correspondiente, separando cualquier tarea comercial pendiente de los efectos sanitarios y de stock.
 
 Si falla el consumo de stock o cualquier validación, no se confirma ninguna parte de la operación.
 

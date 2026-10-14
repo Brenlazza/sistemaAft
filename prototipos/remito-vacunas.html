@@ -76,6 +76,20 @@
     .actions { display:flex; gap:8px; }
     .quiet { color:var(--muted); font-size:12px; }
     .remove { width:30px; height:30px; border:0; color:var(--danger); background:transparent; font-size:18px; }
+    .modal-backdrop { position:fixed; inset:0; z-index:20; padding:20px; display:grid; place-items:center; background:#17202ab8; }
+    .modal-backdrop[hidden] { display:none; }
+    .modal { width:min(850px,100%); max-height:92vh; overflow:auto; border-radius:12px; background:#fff; box-shadow:0 22px 70px #0005; }
+    .modal-head,.modal-foot { padding:15px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; border-bottom:1px solid var(--line); }
+    .modal-head h2 { margin:0; font-size:20px; }
+    .modal-head button { border:0; background:transparent; font-size:24px; }
+    .modal-body { padding:18px; }
+    .modal-foot { justify-content:flex-end; border-top:1px solid var(--line); border-bottom:0; }
+    .choice { display:grid; grid-template-columns:1fr auto; gap:9px; }
+    .divider { margin:17px 0; display:flex; align-items:center; gap:10px; color:var(--muted); font-size:11px; text-transform:uppercase; }
+    .divider::before,.divider::after { content:""; height:1px; flex:1; background:var(--line); }
+    .info { margin-top:12px; padding:11px 13px; color:#28565a; background:#eef8f8; border-left:4px solid #168e99; border-radius:5px; }
+    .form-error { margin-top:8px; color:var(--danger); font-size:12px; font-weight:bold; }
+    .internal-id { color:var(--navy); font-size:10px; font-weight:bold; }
     @media (max-width:1000px) {
       .app { grid-template-columns:1fr; } aside { display:none; }
       .footer-actions { left:0; } .grid { grid-template-columns:repeat(2,1fr); }
@@ -144,10 +158,10 @@
       </section>
 
       <section class="panel">
-        <div class="panel-head"><div><h3>Productores y establecimientos de destino</h3><p>Puede seleccionar varios destinos para un mismo retiro.</p></div><button id="add-destination" class="btn small">+ Agregar destino</button></div>
+        <div class="panel-head"><div><h3>Productores y establecimientos de destino</h3><p>Puede seleccionar varios destinos, incluso productores fuera del padrón o sin RENSPA.</p></div><button id="add-destination" class="btn small" type="button">+ Agregar destino</button></div>
         <div class="panel-body table-wrap">
           <table>
-            <thead><tr><th>Cliente / productor</th><th>RENSPA</th><th>Establecimiento</th><th>Vínculo SENASA</th><th class="num">Dosis previstas</th><th></th></tr></thead>
+            <thead><tr><th>Cliente / productor</th><th>RENSPA</th><th>Establecimiento</th><th>Referencia SENASA</th><th class="num">Dosis estimadas</th><th></th></tr></thead>
             <tbody id="destinations">
               <tr><td><select><option>Productor A</option><option>Productor B</option><option>Productor C</option></select></td><td><select><option>00/001/0/00001/00</option></select></td><td>Establecimiento Norte</td><td><span class="valid">Vinculado</span></td><td><input class="planned num" type="number" min="0" value="50"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
               <tr><td><select><option>Productor B</option><option>Productor A</option><option>Productor C</option></select></td><td><select><option>00/001/0/00002/00</option></select></td><td>La Esperanza</td><td><span class="valid">Vinculado</span></td><td><input class="planned num" type="number" min="0" value="50"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
@@ -191,8 +205,40 @@
   </main>
 </div>
 
+<div id="destination-modal" class="modal-backdrop" hidden>
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="destination-title">
+    <div class="modal-head">
+      <div><h2 id="destination-title">Agregar productor al remito</h2><span class="quiet">Busque un registro existente o cree un destino operativo.</span></div>
+      <button id="close-destination" type="button" aria-label="Cerrar">×</button>
+    </div>
+    <div class="modal-body">
+      <h3>Buscar existente</h3>
+      <div class="choice"><select id="existing-destination"><option>María Fernández — El Ombú — sin RENSPA</option><option>Productor sin inscripción formal — destino interno</option></select><button id="use-existing" class="btn" type="button">Agregar existente</button></div>
+      <div class="divider">o realizar alta rápida</div>
+      <div class="info">Solo la referencia del productor es obligatoria. RENSPA, CUIT y establecimiento pueden quedar sin informar; no ingrese datos supuestos.</div>
+      <div class="grid" style="margin-top:14px">
+        <div class="span-2"><label class="required">Nombre, razón social o referencia</label><input id="quick-name" autocomplete="off" placeholder="Ej.: Productor conocido como Don José"></div>
+        <div><label>Establecimiento</label><input id="quick-establishment" placeholder="Opcional"></div>
+        <div><label>Localidad o referencia rural</label><input id="quick-location" placeholder="Opcional"></div>
+        <div><label>RENSPA</label><input id="quick-renspa" placeholder="No informado"></div>
+        <div><label>CUIT / CUIL / DNI</label><input id="quick-document" placeholder="No informado"></div>
+        <div><label>Teléfono</label><input id="quick-phone" placeholder="Opcional"></div>
+        <div><label>Dosis estimadas</label><input id="quick-planned" type="number" min="0" value="0"></div>
+        <div class="span-2"><label>Origen</label><input value="Alta durante campaña · UEL San Cristóbal" readonly></div>
+        <div class="span-2"><label>Observación</label><input id="quick-note" placeholder="Dato útil para identificarlo o completar después"></div>
+      </div>
+      <div id="duplicate-warning" class="notice" hidden><strong>Posible coincidencia:</strong> existe un registro con nombre parecido. Puede revisarlo o continuar; la advertencia no bloquea.</div>
+      <div id="quick-error" class="form-error" hidden>Ingrese una referencia para identificar al productor.</div>
+    </div>
+    <div class="modal-foot"><button id="cancel-destination" class="btn" type="button">Cancelar</button><button id="save-destination" class="btn primary" type="button">Guardar y agregar al remito</button></div>
+  </section>
+</div>
+
 <template id="destination-template">
-  <tr><td><select><option>Seleccionar productor…</option><option>Productor A</option><option>Productor B</option><option>Productor C</option></select></td><td><select><option>Seleccionar RENSPA…</option></select></td><td>—</td><td><span class="valid">Vinculado</span></td><td><input class="planned num" type="number" min="0" value="0"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+  <tr><td><select><option>Seleccionar o crear productor…</option><option>Productor A</option><option>Productor B</option><option>Productor C</option><option>Alta interna sin inscripción</option></select></td><td><select><option>No informado</option><option>Seleccionar RENSPA…</option></select></td><td>Sin nombre informado</td><td><span class="status warning">Fuera del padrón</span></td><td><input class="planned num" type="number" min="0" value="0"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
+</template>
+<template id="quick-destination-template">
+  <tr><td><strong class="quick-name"></strong><br><span class="internal-id"></span></td><td class="quick-renspa"></td><td class="quick-establishment"></td><td><span class="valid">Alta interna · Disponible</span></td><td><input class="planned num" type="number" min="0" value="0"></td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
 </template>
 <template id="lot-template">
   <tr><td><select class="stock-source"><option value="full">Lleno</option><option value="leftover">Sobrante</option></select></td><td>Biogénesis</td><td><select><option>Seleccionar lote…</option><option>AF-26091</option><option>AF-26088</option></select></td><td>—</td><td class="available num">18 frascos</td><td><input class="stock-quantity num" type="number" min="1" max="18" value="1"></td><td class="stock-unit">frascos</td><td class="lot-doses num">125</td><td><button class="remove" aria-label="Quitar">×</button></td></tr>
@@ -200,6 +246,8 @@
 <script>
   const destinations = document.querySelector('#destinations');
   const lots = document.querySelector('#lots');
+  const destinationModal = document.querySelector('#destination-modal');
+  let internalSequence = 3498;
 
   function calculate() {
     const planned = [...document.querySelectorAll('.planned')].reduce((sum, field) => sum + (Number(field.value) || 0), 0);
@@ -231,12 +279,50 @@
     const notice = document.querySelector('#notice');
     notice.textContent = difference === 0
       ? 'La previsión coincide con las dosis teóricas del retiro.'
-      : `Existe una diferencia prevista de ${difference} dosis. Al confirmar se solicitará un motivo.`;
+      : `Existe una diferencia prevista de ${difference} dosis. Es informativa y no bloquea el retiro.`;
   }
 
   document.querySelector('#add-destination').addEventListener('click', () => {
-    destinations.append(document.querySelector('#destination-template').content.cloneNode(true)); calculate();
+    destinationModal.hidden = false;
+    document.querySelector('#quick-name').focus();
   });
+  function closeDestinationModal() {
+    destinationModal.hidden = true;
+    document.querySelector('#quick-error').hidden = true;
+  }
+  document.querySelector('#close-destination').addEventListener('click', closeDestinationModal);
+  document.querySelector('#cancel-destination').addEventListener('click', closeDestinationModal);
+  document.querySelector('#use-existing').addEventListener('click', () => {
+    destinations.append(document.querySelector('#destination-template').content.cloneNode(true));
+    closeDestinationModal();
+    calculate();
+  });
+  document.querySelector('#save-destination').addEventListener('click', () => {
+    const name = document.querySelector('#quick-name').value.trim();
+    if (!name) {
+      document.querySelector('#quick-error').hidden = false;
+      document.querySelector('#quick-name').focus();
+      return;
+    }
+    const fragment = document.querySelector('#quick-destination-template').content.cloneNode(true);
+    fragment.querySelector('.quick-name').textContent = name;
+    fragment.querySelector('.internal-id').textContent = `PROD-INT-${String(internalSequence++).padStart(6,'0')}`;
+    fragment.querySelector('.quick-renspa').textContent = document.querySelector('#quick-renspa').value.trim() || 'No informado';
+    fragment.querySelector('.quick-establishment').textContent = document.querySelector('#quick-establishment').value.trim() || 'Sin nombre informado';
+    fragment.querySelector('.planned').value = document.querySelector('#quick-planned').value || '0';
+    destinations.append(fragment);
+    ['quick-name','quick-establishment','quick-location','quick-renspa','quick-document','quick-phone','quick-note'].forEach(id => document.querySelector(`#${id}`).value = '');
+    document.querySelector('#quick-planned').value = '0';
+    document.querySelector('#duplicate-warning').hidden = true;
+    closeDestinationModal();
+    calculate();
+  });
+  document.querySelector('#quick-name').addEventListener('input', event => {
+    document.querySelector('#duplicate-warning').hidden = event.target.value.trim().length < 4;
+    document.querySelector('#quick-error').hidden = true;
+  });
+  destinationModal.addEventListener('click', event => { if (event.target === destinationModal) closeDestinationModal(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && !destinationModal.hidden) closeDestinationModal(); });
   document.querySelector('#add-lot').addEventListener('click', () => {
     lots.append(document.querySelector('#lot-template').content.cloneNode(true)); calculate();
   });

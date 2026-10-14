@@ -90,13 +90,17 @@ Grilla repetible con una fila por destino:
 | Campo | Comportamiento |
 |---|---|
 | Cliente/productor | Se busca en el maestro canónico utilizado para facturación. |
-| RENSPA | Se elige entre los vínculos SENASA resueltos para la campaña. |
+| RENSPA | Se muestra cuando existe; puede quedar `No informado`. |
 | Establecimiento | Se completa desde el vínculo seleccionado. |
-| Estado SENASA | Debe ser `Vinculado`; un caso pendiente u observado bloquea la entrega. |
+| Estado SENASA | Informativo: vinculado, pendiente, observado o no incluido. Nunca bloquea la entrega. |
 | Dosis previstas | Entero no negativo; sirve para calcular una sugerencia, pero no consume stock. |
 | Observación | Opcional, propia del destino. |
 
 Acciones por fila: `Ver productor`, `Cambiar`, `Quitar`. Acción general: `Agregar productor/establecimiento`.
+
+La selección consulta el [padrón operativo de productores y establecimientos](pantalla-productores-establecimientos.md), pero también permite crear o elegir productores no incluidos en SENASA y sin RENSPA. Los estados pendientes u observados aparecen con una alerta informativa y siguen siendo destinos confirmables.
+
+`Agregar productor/establecimiento` permite buscar un registro existente o realizar un [alta rápida desde el remito](pantalla-alta-rapida-productor.md). El alta asigna un identificador interno y devuelve inmediatamente el nuevo destino seleccionado al remito. RENSPA, documento, datos fiscales y nombre del establecimiento son opcionales y pueden completarse después. Las coincidencias posibles generan una advertencia no bloqueante.
 
 Reglas:
 
@@ -124,7 +128,7 @@ Grilla con una fila por origen y serie/lote. Un mismo remito puede combinar fras
 
 Se permite más de un lote en un remito. El total de dosis retiradas es la suma de todos sus detalles.
 
-La pantalla compara dosis previstas y dosis teóricas. Una diferencia en esta etapa genera una advertencia, no reemplaza la conciliación real posterior. Si se retiran menos dosis que las previstas o una cantidad superior a la sugerida, se solicita un motivo.
+La pantalla compara dosis previstas y dosis teóricas solo como referencia. Una diferencia puede deberse a nacimientos, muertes, movimientos o a una estimación desactualizada de SENASA; no bloquea ni exige justificar la vacunación. La conciliación real posterior utiliza retiro, vacunación efectiva y devolución.
 
 ### 5. Resumen antes de entregar
 
@@ -152,10 +156,12 @@ Acciones:
 
 - veterinaria y autorización;
 - profesional habilitado;
-- al menos un destino SENASA vinculado;
+- al menos un destino operativo identificado internamente, tenga o no vínculo SENASA o RENSPA;
 - al menos un lote con stock suficiente;
 - fecha efectiva;
 - firma del receptor.
+
+Antes de `Generar preborradores de actas`, abrir la vista previa o ejecutar `Imprimir remito y actas`, el servidor verifica que el profesional no tenga juegos entregados hace más de 7 días todavía sin resolución. Si está bloqueado, el remito puede continuar como borrador, pero no se generan ni imprimen nuevas actas para ese vacunador. La bandeja centraliza las demoras, los seguimientos y las excepciones autorizadas en [bandeja de actas y control de demora](pantalla-bandeja-actas.md).
 
 La confirmación genera el movimiento de salida y cambia el estado a `Entregado` en una única transacción.
 
@@ -231,7 +237,7 @@ El detalle de carga y sus validaciones se define en [pantalla de devolución y c
 Después de entregar el remito puede agregarse un productor no previsto. La pantalla ofrecerá `Agregar destino posterior` antes del cierre de la conciliación y exigirá:
 
 - campaña compatible;
-- vínculo cliente/productor–SENASA resuelto;
+- productor identificado internamente, con o sin vínculo SENASA y con o sin RENSPA;
 - motivo obligatorio;
 - usuario con permiso;
 - constancia de que el destino no figuraba en la impresión anterior.

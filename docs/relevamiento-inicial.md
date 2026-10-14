@@ -66,14 +66,14 @@ Los campos siguientes son candidatos, no un esquema definitivo ni una transcripc
 | vacunas_aplicadas | Vincular las dosis aplicadas con sus lotes. | Acta, lote y dosis. Permite varios lotes por acta si la operación lo requiere. |
 | categorias_animales | Mantener las categorías empleadas en actas e informes. | Código, descripción, especie y vigencia según reglas reales. |
 | padron_campaña | Conservar los establecimientos y productores esperados al inicio de cada campaña. | Campaña, referencias al padrón y situación inicial. Necesario para definir correctamente quiénes no vacunaron y evitar que cambios posteriores alteren informes históricos. |
-| vinculos_padron_cliente | Relacionar obligatoriamente cada registro SENASA operativo con el cliente/productor canónico. | Importación, fila SENASA, cliente/productor, establecimiento, método y estado de conciliación. |
+| vinculos_padron_cliente | Relacionar de forma trazable cada registro SENASA con el cliente/productor canónico cuando exista evidencia suficiente; la relación pendiente no impide operar. | Importación, fila SENASA, cliente/productor, establecimiento, método y estado de conciliación. |
 | ubicaciones | Normalizar localidades y otras divisiones si TABGEO lo justifica. | Códigos y jerarquías existentes. |
 
 ## Relaciones y reglas que debemos confirmar
 
 La captura posterior de Relaciones aporta claves visibles, incluida Ficha en ESTABLECIMIENTOS y claves compuestas en VACUNA, VACUNABT y TABGEO. Ver [detalle de relaciones](relaciones-access.md). Los campos visibles de VACUNA y VACUNABT sugieren registros de vacunación; su equivalencia con las tablas propuestas aún no está definida.
 
-- Cada registro SENASA utilizado debe vincularse directamente con el cliente/productor canónico y su establecimiento; resta precisar las reglas automáticas de coincidencia para cada formato de importación.
+- Los registros SENASA se relacionan con el cliente/productor y el establecimiento cuando existe evidencia suficiente. La ausencia de vínculo, RENSPA o inscripción no bloquea la vacunación; resta precisar las reglas automáticas de coincidencia para cada formato de importación.
 - Qué animales debe incluir cada campaña y cómo se registran existencias y vacunados.
 - Las actas parciales y varias visitas están admitidas; cada visita lleva acta, fecha, lote y consumo propios. Queda por definir el tratamiento específico de revacunaciones.
 - El historial de correcciones y anulaciones se conservará mediante rectificaciones y movimientos inversos; queda por validar el procedimiento oficial de autorización.

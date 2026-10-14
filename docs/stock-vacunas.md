@@ -127,3 +127,5 @@ Cada producto debería referenciar su laboratorio. Las marcas históricas deber�
 Ver [lógica funcional de stock](logica-stock.md) para movimientos, remitos, saldos y devoluciones.
 
 Ver [flujo de stock entre UEL principal y subcentros](flujo-stock-centros.md) para recepciones, asignaciones y transferencias internas.
+
+Ver también el [padrón operativo de veterinarias](pantalla-veterinarias.md) y la [ficha de stock y actividad por veterinaria](pantalla-ficha-veterinaria.md).

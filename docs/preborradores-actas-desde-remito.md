@@ -39,8 +39,10 @@ El sistema crea un preborrador por cada fila de `remito_destinos`. Para generarl
 - veterinaria propietaria definida;
 - profesional receptor habilitado;
 - lote o lotes previstos;
-- destinos con vínculo cliente/productor–SENASA resuelto;
+- destinos identificados internamente, estén vinculados, pendientes, fuera del padrón o sin RENSPA;
 - campaña y UEL activas.
+
+Antes de generar o imprimir, el servidor comprueba si el profesional tiene actas entregadas hace más de 7 días todavía sin resolución. Si existe al menos una, bloquea nuevas preimpresiones destinadas a ese vacunador, muestra las actas demoradas y permite únicamente una excepción limitada y auditada por un perfil autorizado. La regla completa se define en la [bandeja de actas y control de demora](pantalla-bandeja-actas.md).
 
 Si un remito tiene tres destinos, se generan tres juegos de acta diferentes. No se genera un acta conjunta para varios productores.
 
@@ -53,7 +55,7 @@ Cada preborrador toma una instantánea de:
 - número del remito de origen;
 - cliente/productor;
 - documento o CUIT disponible;
-- RENSPA;
+- RENSPA, cuando exista; de lo contrario se imprime `No informado`;
 - establecimiento, domicilio y ubicación;
 - régimen, hectáreas y tipo de rodeo cuando estén disponibles;
 - marca del ganado cuando esté digitalizada;
@@ -138,5 +140,7 @@ Si el profesional no vacuna a uno de los destinos:
 - no generar automáticamente actas adicionales solo porque sobren dosis;
 - no duplicar un juego por repetir una solicitud de impresión;
 - una reimpresión conserva el mismo formulario y registra versión y motivo;
-- un acta confirmada conserva el vínculo con el remito y destino que originaron su preborrador.
+- un acta confirmada conserva el vínculo con el remito y destino que originaron su preborrador;
+- una reimpresión del mismo juego no reinicia el plazo de devolución;
+- un acta demorada bloquea nuevas preimpresiones para el mismo vacunador, no para todo el centro.
 

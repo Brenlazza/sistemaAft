@@ -34,7 +34,7 @@ Cada fila puede quedar:
 
 Al aprobar la conciliación se genera el padrón de campaña. Esta instantánea define los establecimientos esperados y permite calcular pendientes sin que los cambios posteriores alteren el informe histórico.
 
-Todo registro SENASA utilizado en el flujo debe quedar vinculado directamente con un cliente/productor canónico, que es la identidad utilizada también para facturar. Si no existe, se crea el cliente y luego se completa el vínculo. Ver [relación entre clientes/productores y padrón SENASA](clientes-productores-senasa.md).
+La conciliación relaciona registros SENASA con clientes/productores para mejorar la identificación y evitar duplicados, pero no condiciona la vacunación. Si un productor no figura, no tiene RENSPA o aún no está inscripto, se crea un registro interno con los datos disponibles y puede operar de inmediato. Ver [relación entre clientes/productores y padrón SENASA](clientes-productores-senasa.md).
 
 ## 3. Recibir vacunas
 
@@ -57,7 +57,7 @@ La veterinaria propietaria presenta una autorización manual firmada para que un
 
 Cada línea identifica la veterinaria propietaria, lote y cantidad de frascos llenos. El remito se imprime y lo firma el profesional receptor, quien asume responsabilidad por lo retirado.
 
-El encabezado del remito permite seleccionar uno o más destinos. Cada destino vincula el cliente/productor canónico con su registro SENASA, establecimiento y RENSPA. Un mismo retiro puede utilizarse en varias vacunaciones: por ejemplo, 125 dosis pueden distribuirse en actas de 50, 50 y 25 animales de tres productores diferentes.
+El encabezado del remito permite seleccionar uno o más destinos. Cada destino conserva el cliente/productor interno y, cuando existen, su registro SENASA, establecimiento y RENSPA. Un mismo retiro puede utilizarse en varias vacunaciones: por ejemplo, 125 dosis pueden distribuirse en actas de 50, 50 y 25 animales de tres productores diferentes.
 
 Si luego del retiro debe incorporarse otro productor, se agrega al mismo remito. El sistema genera una versión nueva del documento completo, lo identifica como reimpresión modificada y exige que el profesional vuelva a firmarlo. El número de remito no cambia y las versiones anteriores quedan conservadas para auditoría.
 
@@ -68,7 +68,7 @@ El sistema valida:
 - stock lleno suficiente perteneciente a esa veterinaria;
 - autorización de la veterinaria;
 - campaña activa;
-- al menos un destino con su vínculo cliente/productor–SENASA resuelto.
+- al menos un destino identificado internamente; SENASA, RENSPA e inscripción pueden quedar no informados.
 
 La confirmación descuenta frascos llenos del stock de la veterinaria en la UEL y asigna su custodia al profesional receptor. Los sobrantes de frascos utilizados regresan a la UEL como un stock separado, manteniendo veterinaria propietaria, lote, productor, establecimiento y acta de origen. Los decomisos, roturas y ajustes se registran como movimientos separados.
 

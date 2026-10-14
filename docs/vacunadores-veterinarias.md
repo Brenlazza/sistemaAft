@@ -27,10 +27,13 @@ Fuente: captura de Vista Diseño de `VACUNADOR1`. Origen confirmado: `D:\DiscoDp
 
 El campo `Tipo` confirma que el vacunador puede ser veterinario o idóneo. Todavía falta conocer los valores exactos almacenados y qué habilitación exige cada tipo.
 
+La administración propuesta se desarrolla en el [padrón operativo de vacunadores](pantalla-vacunadores.md) y en la [ficha individual](pantalla-ficha-vacunador.md).
+
 ### Consecuencias para el nuevo modelo
 
 - Usar una clave interna para la persona y conservar Matricula como identificador profesional único, con su formato original.
 - Separar datos personales, medios de contacto y habilitaciones cuando se conozcan las reglas actuales.
+- Permitir varios medios de contacto por persona, indicando tipo, número normalizado, vigencia, preferencia y autorización para avisos operativos. El teléfono histórico de Access se conserva como fuente durante la migración, pero no se supone validado para WhatsApp.
 - Modelar el tipo o rol mediante un catálogo validado y con vigencia, porque una persona puede cambiar su condición o habilitación.
 - Registrar estado activo, fecha de alta/baja y alcance territorial si el proceso lo requiere.
 - No identificar automáticamente `VACUNADOR` con `Veterinarias`: el primero representa personas; la segunda tabla se usa desde VACUNA mediante `idVeterinario` y debe relevarse por separado.
@@ -39,6 +42,7 @@ El campo `Tipo` confirma que el vacunador puede ser veterinario o idóneo. Todav
 
 - Valores permitidos en `Tipo` y reglas de habilitación.
 - Tamaños de Nombre, Domicilio, Telefono y Tipo.
+- Validación de teléfonos vigentes y autorización de cada vacunador para recibir avisos operativos por WhatsApp.
 - Datos históricos duplicados, matrículas vencidas o vacunadores sin matrícula.
 
 ## VETERINARIAS
@@ -53,6 +57,8 @@ Fuente: captura de Vista Diseño de la tabla local `Veterinarias`. A diferencia 
 El selector del formulario Vacunacion muestra `Veterinaria` y guarda `IdVeterinario` en `VACUNA.idVeterinario`. A pesar del nombre singular del campo, la entidad representa una veterinaria o establecimiento, no la persona vacunadora. La persona se registra por separado mediante `Matricula` y VACUNADOR.
 
 No se observa una relación formal de Veterinarias en el diagrama aportado. Tampoco hay domicilio, localidad, contacto, estado o responsable en esta tabla.
+
+La administración propuesta se desarrolla en el [padrón operativo de veterinarias](pantalla-veterinarias.md) y en la [ficha de stock y actividad](pantalla-ficha-veterinaria.md).
 
 ### Consecuencias para el nuevo modelo
 

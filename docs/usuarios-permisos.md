@@ -1,5 +1,7 @@
 # Usuarios, roles y permisos
 
+La definición detallada de la administración de cuentas, alcances, cajas y acceso efectivo se encuentra en la [pantalla de usuarios y permisos](pantalla-usuarios-permisos.md).
+
 ## Objetivo
 
 Controlar qué información y acciones puede utilizar cada persona. La primera versión tendrá dos usuarios administradores con acceso completo y otros usuarios que actuarán como coordinadores de campaña con alcance limitado.
@@ -79,10 +81,14 @@ Los permisos se representan por acciones independientes:
 | Stock | Consultar, recibir, transferir, devolver, ajustar, conciliar. |
 | Transferencias internas | Consultar bandeja, preparar, despachar, controlar recepción, aceptar conforme, observar, resolver diferencia y anular. |
 | Remitos | Consultar, crear borrador, autorizar, confirmar entrega, imprimir, agregar destino posterior, registrar nueva firma, devolver, revisar, conciliar y anular. |
+| Facturación | Consultar, preparar liquidación, revisar, emitir, registrar factura externa, ajustar y anular. |
+| Cajas | Consultar caja propia, abrir, cobrar, revertir, cerrar, rendir, supervisar y consultar global. |
 | Informes | Consultar, exportar. |
 | Administración | Usuarios, roles, catálogos, parámetros y auditoría. |
 
 Esto permite ampliar un coordinador concreto sin convertirlo en administrador general.
+
+Los permisos comerciales son independientes. Asignar `caja.cobrar` no concede `facturacion.emitir`, y asignar `facturacion.emitir` no permite abrir una caja ni registrar cobros. Cada usuario de caja conserva una sesión y rendición propias.
 
 ## Operador de subcentro
 

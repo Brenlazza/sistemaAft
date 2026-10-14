@@ -40,6 +40,8 @@ Ver [lógica funcional de emisión, carga y confirmación de actas](docs/logica-
 
 Ver [definición inicial de usuarios, roles y permisos](docs/usuarios-permisos.md).
 
+Ver [pantalla de administración de usuarios, alcances y permisos](docs/pantalla-usuarios-permisos.md) y abrir su [prototipo navegable](prototipos/usuarios-permisos.html).
+
 Ver [lógica funcional de stock de vacunas](docs/logica-stock.md).
 
 Ver [flujo de remitos, devoluciones y conciliación](docs/flujo-remitos-conciliacion.md).
@@ -69,3 +71,33 @@ Ver [panel operativo del subcentro](docs/pantalla-inicio-subcentro.md) y abrir s
 Abrir el [prototipo de remito limitado al subcentro](prototipos/remito-subcentro.html).
 
 Ver [pantalla de carga y confirmación del acta](docs/pantalla-carga-confirmacion-acta.md) y abrir su [prototipo navegable](prototipos/carga-acta-vacunacion.html).
+
+Ver [bandeja de actas y control de demora](docs/pantalla-bandeja-actas.md) y abrir su [prototipo operativo](prototipos/bandeja-actas.html).
+
+Ver [modelo operativo de actas, demoras y seguimiento](docs/modelo-operativo-actas.md).
+
+Ver [ficha operativa del vacunador](docs/pantalla-ficha-vacunador.md) y abrir su [prototipo con indicadores](prototipos/ficha-vacunador.html).
+
+Ver [padrón operativo de vacunadores](docs/pantalla-vacunadores.md) y abrir su [prototipo comparativo](prototipos/vacunadores.html).
+
+Ver [padrón operativo de veterinarias](docs/pantalla-veterinarias.md) y abrir su [prototipo comparativo](prototipos/veterinarias.html).
+
+Ver [ficha operativa de la veterinaria](docs/pantalla-ficha-veterinaria.md) y abrir su [prototipo de stock y actividad](prototipos/ficha-veterinaria.html).
+
+Ver [convenios con veterinarias antes de la campaña](docs/convenios-veterinarias-campania.md) y abrir su [prototipo de preparación, impresión y firma](prototipos/convenios-campania.html).
+
+Ver [padrón operativo de productores y establecimientos](docs/pantalla-productores-establecimientos.md) y abrir su [prototipo de conciliación](prototipos/productores-establecimientos.html).
+
+Ver [alta rápida de un productor desde el remito](docs/pantalla-alta-rapida-productor.md), incluso cuando no posee RENSPA ni identificación legal completa.
+
+Ver [bandeja de altas internas de productores](docs/pantalla-altas-internas-productores.md) y abrir su [prototipo de revisión no bloqueante](prototipos/altas-internas-productores.html).
+
+Ver [importación y conciliación de clientes de facturación](docs/importacion-clientes-facturacion.md) y abrir su [prototipo basado en el Excel relevado](prototipos/importacion-clientes-facturacion.html).
+
+Ver [facturación por animales vacunados](docs/facturacion-por-actas.md) y abrir su [prototipo de liquidación desde actas](prototipos/liquidacion-facturacion.html).
+
+Ver [flujo futuro de cajas y cobranzas](docs/flujo-cajas-cobranzas.md) y abrir su [prototipo de caja individual por usuario](prototipos/caja-cobranzas.html).
+
+Ver [ficha del cliente/productor](docs/pantalla-ficha-productor.md) y abrir su [prototipo de establecimientos y actividad](prototipos/ficha-productor.html).
+
+Ver [asistente de importación del padrón SENASA](docs/pantalla-importacion-padron-senasa.md) y abrir su [prototipo paso a paso](prototipos/importacion-padron-senasa.html).
