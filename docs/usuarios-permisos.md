@@ -2,6 +2,8 @@
 
 La definición detallada de la administración de cuentas, alcances, cajas y acceso efectivo se encuentra en la [pantalla de usuarios y permisos](pantalla-usuarios-permisos.md).
 
+La trazabilidad privada de las operaciones sensibles se desarrolla en la [pantalla de auditoría](pantalla-auditoria.md).
+
 ## Objetivo
 
 Controlar qué información y acciones puede utilizar cada persona. La primera versión tendrá dos usuarios administradores con acceso completo y otros usuarios que actuarán como coordinadores de campaña con alcance limitado.

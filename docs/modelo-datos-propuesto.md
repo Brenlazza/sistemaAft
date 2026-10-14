@@ -12,6 +12,10 @@ El objetivo es soportar campañas de vacunación antiaftosa, conservar el compon
 |---|---|---|
 | Campañas | `campanias` | Año, tipo total/parcial, fechas, estado y reglas de población objetivo. |
 | Campañas | `periodos_campania` | Semanas o cortes administrativos propios de una campaña. |
+| Campañas | `campania_centros` | Centros participantes, vigencia, responsable y capacidades operativas habilitadas. |
+| Campañas | `campania_categorias` | Categorías previstas, obligatoriedad, orden y regla de cobertura. |
+| Campañas | `reglas_campania` | Parámetros versionados de actas, demoras, excepciones y cierre. |
+| Campañas | `versiones_configuracion_campania` | Instantánea, motivo, usuario y fecha de cada configuración preparada o activa. |
 | Personas | `clientes_productores` | Identidad canónica e identificador interno; documento, contacto y datos comerciales son completables y no condicionan la operación sanitaria. |
 | Personas | `contactos_cliente_productor` | Teléfonos, correos y otros contactos privados, con tipo, preferencia, verificación y vigencia. |
 | Personas | `alias_cliente_productor` | Nombres originales, anteriores o alternativos conservados para reconocer importaciones y evitar duplicados. |
@@ -113,7 +117,10 @@ El objetivo es soportar campañas de vacunación antiaftosa, conservar el compon
 | Sanidad | `protocolos_laboratorio` | Laboratorio, protocolo, muestras y estado. |
 | Sanidad | `resultados_laboratorio` | Resultado por prueba o muestra. |
 | Geografía | `provincias`, `departamentos`, `localidades` | Jerarquía territorial normalizada con códigos históricos. |
-| Auditoría | `auditoria_cambios` | Usuario, fecha, acción y valores relevantes de cambios sensibles. |
+| Auditoría | `auditoria_cambios` | Cabecera inmutable: usuario, fecha del servidor, alcance efectivo, módulo, acción, resultado, entidad, registro y motivo. |
+| Auditoría | `auditoria_cambios_detalle` | Campo afectado y valores anterior/nuevo de cada evento, con protección de datos sensibles. |
+| Auditoría | `auditoria_relaciones` | Vínculo entre un evento y la operación anterior que corrige, revierte o aprueba. |
+| Auditoría | `auditoria_exportaciones` | Filtros, formato, usuario, fecha y resultado de cada descarga autorizada. |
 | Seguridad | `usuarios` | Identidad de acceso, estado y datos mínimos de autenticación. |
 | Seguridad | `roles` y `permisos` | Plantillas y catálogo de acciones autorizables, con denegación por defecto. |
 | Seguridad | `usuario_roles` | Roles asignados a cada usuario, vigencia y administrador que los autorizó. |
@@ -128,6 +135,13 @@ El objetivo es soportar campañas de vacunación antiaftosa, conservar el compon
 ```mermaid
 erDiagram
     CAMPANIAS ||--o{ ACTAS_VACUNACION : organiza
+    CAMPANIAS ||--o{ PERIODOS_CAMPANIA : divide
+    CAMPANIAS ||--|{ CAMPANIA_CENTROS : habilita
+    CENTROS_STOCK ||--o{ CAMPANIA_CENTROS : participa
+    CAMPANIAS ||--|{ CAMPANIA_CATEGORIAS : configura
+    CATEGORIAS_ANIMALES ||--o{ CAMPANIA_CATEGORIAS : referencia
+    CAMPANIAS ||--|{ REGLAS_CAMPANIA : versiona
+    CAMPANIAS ||--|{ VERSIONES_CONFIGURACION_CAMPANIA : conserva
     ESTABLECIMIENTOS ||--o{ ACTAS_VACUNACION : recibe
     UNIDADES_EJECUTORAS ||--o{ ACTAS_VACUNACION : gestiona
     VACUNADORES ||--o{ ACTAS_VACUNACION : realiza
@@ -188,6 +202,10 @@ erDiagram
     USUARIOS ||--o{ USUARIO_CENTRO : limita
     CENTROS_STOCK ||--o{ USUARIO_CENTRO : habilita
     USUARIOS ||--o{ EVENTOS_ACCESO_USUARIO : audita
+    USUARIOS ||--o{ AUDITORIA_CAMBIOS : ejecuta
+    AUDITORIA_CAMBIOS ||--|{ AUDITORIA_CAMBIOS_DETALLE : detalla
+    AUDITORIA_CAMBIOS ||--o{ AUDITORIA_RELACIONES : vincula
+    USUARIOS ||--o{ AUDITORIA_EXPORTACIONES : genera
 
     CLIENTES_PRODUCTORES ||--o{ PRODUCTOR_ESTABLECIMIENTO : participa
     CLIENTES_PRODUCTORES ||--o{ CONTACTOS_CLIENTE_PRODUCTOR : posee

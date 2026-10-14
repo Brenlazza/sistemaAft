@@ -28,6 +28,8 @@ Ver [relación entre clientes/productores y registros del padrón SENASA](docs/c
 
 Ver [calendario y campañas](docs/campanias-calendario.md).
 
+Ver [pantalla de configuración y activación de campaña](docs/pantalla-configuracion-campania.md) y abrir su [prototipo administrativo](prototipos/configuracion-campania.html).
+
 Ver [borrador inicial del modelo de datos propuesto](docs/modelo-datos-propuesto.md).
 
 Ver [flujo operativo propuesto para una campaña antiaftosa](docs/flujo-operativo-propuesto.md).
@@ -41,6 +43,8 @@ Ver [lógica funcional de emisión, carga y confirmación de actas](docs/logica-
 Ver [definición inicial de usuarios, roles y permisos](docs/usuarios-permisos.md).
 
 Ver [pantalla de administración de usuarios, alcances y permisos](docs/pantalla-usuarios-permisos.md) y abrir su [prototipo navegable](prototipos/usuarios-permisos.html).
+
+Ver [pantalla privada de auditoría e historial crítico](docs/pantalla-auditoria.md) y abrir su [prototipo de consulta inmutable](prototipos/auditoria.html).
 
 Ver [lógica funcional de stock de vacunas](docs/logica-stock.md).
 

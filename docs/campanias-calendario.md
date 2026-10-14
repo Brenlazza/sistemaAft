@@ -32,3 +32,5 @@ Crear `campañas` como entidad principal y, solo cuando el negocio lo requiera, 
 Los períodos deben validarse para evitar superposiciones dentro de la misma campaña. Año y mes se derivarán de las fechas para informes, salvo que exista una regla administrativa que requiera conservar etiquetas específicas.
 
 Antes del inicio también se preparan los [convenios de campaña con cada veterinaria](convenios-veterinarias-campania.md), tomando los datos institucionales y parámetros aprobados para el período.
+
+La administración integral se desarrolla en la [pantalla de configuración y activación de campaña](pantalla-configuracion-campania.md).
